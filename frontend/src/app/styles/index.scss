@@ -1,0 +1,8 @@
+@import "./reset";
+@import "./normalize";
+
+body {
+  inline-size: 100%;
+  block-size: 100dvh;
+  @include flex;
+}
