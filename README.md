@@ -12,20 +12,20 @@
 
 **Frontend:**
 
-- React + TypeScript
-- Redux (управление состоянием)
-- React Router (навигация)
-- SCSS (стилизация)
-- WebSocket — уведомления в реальном времени
+- **Next.js** + **TypeScript** (App Router)
+- **Redux Toolkit** (управление состоянием)
+- **SCSS Modules** (стилизация с глобальными переменными/миксинами)
+- **WebSocket** — уведомления в реальном времени
+- **Axios** — HTTP-клиент
 
 **Backend:**
 
-- Node.js + Express + TypeScript
-- TypeORM (схемы без декораторов) + PostgreSQL
-- JWT (аутентификация)
-- WebSocket — для согласований и оповещений
+- **Node.js** + **Express** + **TypeScript**
+- **TypeORM** (схемы без декораторов) + **PostgreSQL**
+- **JWT** (аутентификация)
+- **WebSocket** — для согласований и оповещений
 
 **Инфраструктура:**
 
-- Vite (сборка фронтенда)
-- Docker (контейнеризация)
+- **Docker** (контейнеризация)
+- **Git** (контроль версий)
