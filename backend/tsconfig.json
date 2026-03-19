@@ -17,12 +17,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@errors/*": ["src/errors/*"],
-      "@middlewares/*": ["src/middlewares/*"],
-      "@models/*": ["src/models/*"],
-      "@routes/*": ["src/routes/*"],
-      "@utils/*": ["src/utils/*"]
+      "@modules/*": ["src/modules/*"],
+      "@agreement/*": ["src/modules/agreement/*"],
+      "@discount/*": ["src/modules/discount/*"],
+      "@notification/*": ["src/modules/notification/*"],
+      "@product/*": ["src/modules/product/*"],
+      "@user/*": ["src/modules/user/*"],
+      "@shared/*": ["src/shared/*"],
+      "@errors/*": ["src/shared/errors/*"],
+      "@middlewares/*": ["src/shared/middlewares/*"],
+      "@utils/*": ["src/shared/utils/*"]
     }
   },
   "include": ["src/**/*"],

@@ -1,6 +1,6 @@
-import { IDiscount } from "./discount.types";
+import { IDiscount } from "@discount/discount.types";
 
-type TOption = {
+export type TOption = {
   id: string;
   name: string;
   price: number;
