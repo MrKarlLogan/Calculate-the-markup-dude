@@ -5,7 +5,7 @@ import cors from "cors";
 import { errors } from "celebrate";
 import { AppDataSource } from "./data-source";
 import { errorHandler } from "@shared/middlewares/error-handler";
-import routes from "./routes";
+import routes from "@routes/app.routes";
 
 const app = express();
 

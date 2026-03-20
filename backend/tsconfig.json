@@ -23,6 +23,7 @@
       "@notification/*": ["src/modules/notification/*"],
       "@product/*": ["src/modules/product/*"],
       "@user/*": ["src/modules/user/*"],
+      "@routes/*": ["src/routes/*"],
       "@shared/*": ["src/shared/*"],
       "@errors/*": ["src/shared/errors/*"],
       "@middlewares/*": ["src/shared/middlewares/*"],

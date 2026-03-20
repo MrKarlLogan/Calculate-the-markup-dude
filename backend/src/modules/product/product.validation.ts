@@ -1,6 +1,5 @@
 import { NAME_FROM_VALIDATION } from "@/shared/constants";
 import { celebrate, Joi, Segments } from "celebrate";
-import { updateProduct } from "./product.controller";
 
 export const productValidation = {
   createProduct() {

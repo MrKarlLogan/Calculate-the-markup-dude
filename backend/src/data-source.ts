@@ -1,10 +1,10 @@
 import { DataSource } from "typeorm";
 import config from "./config";
-import { Option, Product } from "./modules/product";
-import { User } from "./modules/user";
-import { Discount } from "./modules/discount";
-import { PriceAgreement } from "./modules/agreement";
-import { Notification } from "./modules/notification";
+import { Option, Product } from "@modules/product";
+import { User } from "@modules/user";
+import { Discount } from "@modules/discount";
+import { PriceAgreement } from "@modules/agreement";
+import { Notification } from "@modules/notification";
 
 export const AppDataSource = new DataSource({
   type: "postgres",

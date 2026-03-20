@@ -1,17 +1,9 @@
-import {
-  AppDataSource,
-  DiscountRepository,
-  OptionRepository,
-  ProductRepository,
-} from "@/data-source";
+import { ProductRepository } from "@/data-source";
 import { DB_RELATIONS } from "@/shared/constants";
 import InternalServerError from "@/shared/errors/internal-server-error";
 import NotFoundError from "@/shared/errors/not-found-error";
 import { type NextFunction, type Request, type Response } from "express";
 import { IProduct } from "./product.types";
-import { Product } from "./product.model";
-import { Option } from "./option.model";
-import { Discount } from "../discount/discount.model";
 
 export const findAllProducts = async (
   _req: Request,
