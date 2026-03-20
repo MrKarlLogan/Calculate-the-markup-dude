@@ -30,6 +30,8 @@ export const Option = new EntitySchema<
       type: "many-to-one",
       target: DB_TABLES.PRODUCT,
       joinColumn: { name: "productId" },
+      onDelete: "CASCADE",
+      orphanedRowAction: "delete",
     },
   },
 });

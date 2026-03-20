@@ -21,6 +21,7 @@ export const USER_ROLES = {
 export const ROUTE_PATH = {
   TEST: "/test",
   PRODUCTS: "/products",
+  NOT_FOUND: "/*path",
 } as const;
 
 export const NAME_FROM_VALIDATION = {

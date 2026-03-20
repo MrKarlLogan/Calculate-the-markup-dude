@@ -1,5 +1,6 @@
 import { NAME_FROM_VALIDATION } from "@/shared/constants";
 import { celebrate, Joi, Segments } from "celebrate";
+import { updateProduct } from "./product.controller";
 
 export const productValidation = {
   createProduct() {
@@ -16,11 +17,11 @@ export const productValidation = {
             Joi.object().keys({
               name: Joi.string()
                 .required()
-                .min(3)
+                .min(2)
                 .max(20)
                 .messages({
                   "string.empty": `Наименование ${NAME_FROM_VALIDATION.OPTION} обязательно`,
-                  "string.min": `Наименование ${NAME_FROM_VALIDATION.OPTION} должно быть не короче 3 символов`,
+                  "string.min": `Наименование ${NAME_FROM_VALIDATION.OPTION} должно быть не короче 2 символов`,
                   "string.max": `Наименование ${NAME_FROM_VALIDATION.OPTION} не должно превышать 20 символов`,
                 }),
               price: Joi.number()
@@ -73,5 +74,8 @@ export const productValidation = {
           .default([]),
       }),
     });
+  },
+  updateProduct() {
+    return this.createProduct();
   },
 };
