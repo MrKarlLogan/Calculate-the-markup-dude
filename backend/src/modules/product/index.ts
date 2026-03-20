@@ -3,3 +3,4 @@
 export * from "./product.model";
 export * from "./option.model";
 export * from "./product.types";
+export * from "./product.routes";

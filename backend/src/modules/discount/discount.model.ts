@@ -1,8 +1,11 @@
 import { EntitySchema } from "typeorm";
 import { IDiscount } from "./discount.types";
-import { DB_TABLES } from "@/shared/constants";
+import { DB_RELATIONS, DB_TABLES } from "@/shared/constants";
+import { IProduct } from "../product";
 
-export const Discount = new EntitySchema<IDiscount & { productId: string }>({
+export const Discount = new EntitySchema<
+  IDiscount & { productId: string; product: IProduct }
+>({
   name: DB_TABLES.DISCOUNT,
   columns: {
     id: {
@@ -18,6 +21,13 @@ export const Discount = new EntitySchema<IDiscount & { productId: string }>({
     },
     productId: {
       type: "uuid",
+    },
+  },
+  relations: {
+    [DB_RELATIONS.PRODUCT]: {
+      type: "many-to-one",
+      target: DB_TABLES.PRODUCT,
+      joinColumn: { name: "productId" },
     },
   },
 });

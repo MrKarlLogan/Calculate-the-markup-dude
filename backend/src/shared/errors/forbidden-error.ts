@@ -1,11 +1,8 @@
-// Токен есть, но роль не позволяет
-
 class ForbiddenError extends Error {
   public statusCode: number;
 
-  constructor(message: string) {
+  constructor(message: string = "Недостаточно прав для доступа к ресурсу") {
     super(message);
-
     this.statusCode = 403;
   }
 }

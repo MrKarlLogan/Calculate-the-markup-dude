@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { IProduct } from "./index";
-import { DB_TABLES } from "@/shared/constants";
+import { DB_RELATIONS, DB_TABLES } from "@/shared/constants";
 
 export const Product = new EntitySchema<IProduct>({
   name: DB_TABLES.PRODUCT,
@@ -15,13 +15,13 @@ export const Product = new EntitySchema<IProduct>({
     },
   },
   relations: {
-    options: {
+    [DB_RELATIONS.OPTIONS]: {
       type: "one-to-many",
       target: DB_TABLES.OPTION,
       inverseSide: "product",
       cascade: true,
     },
-    discounts: {
+    [DB_RELATIONS.DISCOUNTS]: {
       type: "one-to-many",
       target: DB_TABLES.DISCOUNT,
       inverseSide: "product",

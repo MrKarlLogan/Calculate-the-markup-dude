@@ -1,11 +1,8 @@
-// Ресурс не найден в базе данных или по указанному пути
-
 class NotFoundError extends Error {
   public statusCode: number;
 
-  constructor(message: string) {
+  constructor(message: string = "Запрашиваемый ресурс не был найден") {
     super(message);
-
     this.statusCode = 404;
   }
 }

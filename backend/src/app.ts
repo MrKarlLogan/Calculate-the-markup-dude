@@ -2,7 +2,10 @@ import express from "express";
 import config from "./config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { errors } from "celebrate";
 import { AppDataSource } from "./data-source";
+import { errorHandler } from "@shared/middlewares/error-handler";
+import routes from "./routes";
 
 const app = express();
 
@@ -17,10 +20,10 @@ app.use(
   }),
 );
 
-// Временный роут
-app.use("/", (_req, res) => {
-  res.send({ message: "Сервер пока не отдаёт данные, но уже работает" });
-});
+app.use(routes);
+
+app.use(errors());
+app.use(errorHandler);
 
 const boostrap = async () => {
   try {
