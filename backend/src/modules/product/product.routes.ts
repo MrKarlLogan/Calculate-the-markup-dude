@@ -12,6 +12,6 @@ export const routesProduct = Router();
 
 routesProduct.get("/", findAllProducts);
 routesProduct.get("/:id", findProductById);
-routesProduct.post("/", productValidation.createProduct(), createProduct);
-routesProduct.put("/:id", productValidation.updateProduct(), updateProduct);
+routesProduct.post("/", productValidation, createProduct);
+routesProduct.put("/:id", productValidation, updateProduct);
 routesProduct.delete("/:id", deleteProduct);

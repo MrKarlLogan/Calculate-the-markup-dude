@@ -10,14 +10,6 @@ import { notificationValidation } from "./notification.validation";
 export const routesNotification = Router();
 
 routesNotification.get("/", findNotifications);
-routesNotification.post(
-  "/",
-  notificationValidation.createNotification(),
-  createNotification,
-);
-routesNotification.put(
-  "/:id",
-  notificationValidation.updateNotification(),
-  updateNotification,
-);
+routesNotification.post("/", notificationValidation, createNotification);
+routesNotification.put("/:id", notificationValidation, updateNotification);
 routesNotification.delete("/:id", deleteNotification);
