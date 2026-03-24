@@ -1,9 +1,9 @@
+import { type NextFunction, type Request, type Response } from "express";
 import { ProductRepository } from "@/data-source";
+import { IProduct } from "./product.types";
 import { DB_RELATIONS } from "@/shared/constants";
 import InternalServerError from "@/shared/errors/internal-server-error";
 import NotFoundError from "@/shared/errors/not-found-error";
-import { type NextFunction, type Request, type Response } from "express";
-import { IProduct } from "./product.types";
 
 export const findAllProducts = async (
   _req: Request,
@@ -63,14 +63,9 @@ export const createProduct = async (
     const newProduct = ProductRepository.create(data);
     const savedProduct = await ProductRepository.save(newProduct);
 
-    const productWithRelations = await ProductRepository.findOne({
-      where: { id: savedProduct.id },
-      relations: [DB_RELATIONS.OPTIONS, DB_RELATIONS.DISCOUNTS],
-    });
-
     res.status(201).json({
       success: true,
-      data: productWithRelations,
+      data: savedProduct,
       message: "Продукт успешно создан",
     });
   } catch (error) {
@@ -128,15 +123,10 @@ export const deleteProduct = async (
 ) => {
   try {
     const id = req.params.id.toString();
+    const result = await ProductRepository.delete(id);
 
-    const deletedProduct = await ProductRepository.findOne({
-      where: { id },
-    });
-
-    if (!deletedProduct)
+    if (result.affected === 0)
       return next(new NotFoundError(`Товар с id: ${id} не найден`));
-
-    await ProductRepository.remove(deletedProduct);
 
     res.status(200).json({
       success: true,

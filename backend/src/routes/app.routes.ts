@@ -1,10 +1,12 @@
 import { Router, type Request, type Response } from "express";
 import { ROUTE_PATH } from "@/shared/constants";
 import { routesProduct } from "@/modules/product";
+import { routesNotification } from "@/modules/notification";
 
 const routes = Router();
 
 routes.use(ROUTE_PATH.PRODUCTS, routesProduct);
+routes.use(ROUTE_PATH.NOTIFICATION, routesNotification);
 
 routes.use(ROUTE_PATH.TEST, (_req: Request, res: Response) => {
   res.send({

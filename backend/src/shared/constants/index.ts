@@ -21,6 +21,7 @@ export const USER_ROLES = {
 export const ROUTE_PATH = {
   TEST: "/test",
   PRODUCTS: "/products",
+  NOTIFICATION: "/notification",
   NOT_FOUND: "/*path",
 } as const;
 
@@ -30,4 +31,8 @@ export const NAME_FROM_VALIDATION = {
   COST: "Себестоимость",
   DISCOUNT: "Скидка от импортера",
   DISCOUNT_AMOUNT: "Сумма скидки",
+};
+
+export const NOTIFICATION_OPTIONS = {
+  MAX_LENGTH: 5,
 };

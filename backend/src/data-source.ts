@@ -23,3 +23,4 @@ export const AppDataSource = new DataSource({
 export const ProductRepository = AppDataSource.getRepository(Product);
 export const OptionRepository = AppDataSource.getRepository(Option);
 export const DiscountRepository = AppDataSource.getRepository(Discount);
+export const NotificationRepository = AppDataSource.getRepository(Notification);
