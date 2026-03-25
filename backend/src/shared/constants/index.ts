@@ -22,6 +22,7 @@ export const ROUTE_PATH = {
   TEST: "/test",
   PRODUCTS: "/products",
   NOTIFICATION: "/notification",
+  PRICE_AGREEMENT: "/agreement",
   NOT_FOUND: "/*path",
 } as const;
 
@@ -31,8 +32,13 @@ export const NAME_FROM_VALIDATION = {
   COST: "Себестоимость",
   DISCOUNT: "Скидка от импортера",
   DISCOUNT_AMOUNT: "Сумма скидки",
-};
+  DISCOUNT_OTHER: "Дополнительной скидки",
+} as const;
 
 export const NOTIFICATION_OPTIONS = {
   MAX_LENGTH: 5,
-};
+} as const;
+
+export const AGREEMENT_OPTIONS = {
+  MAX_LENGTH: 30,
+} as const;

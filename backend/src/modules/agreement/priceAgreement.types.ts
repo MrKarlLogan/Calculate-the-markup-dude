@@ -17,5 +17,11 @@ export interface IPriceAgreement {
   id: string;
   data: TAgreementData;
   isAgreed: boolean | null;
+  responseMessage?: string | null;
   created: string;
 }
+
+export type TResponseAgreement = {
+  responseMessage: string | null;
+  isAgreed: boolean;
+};

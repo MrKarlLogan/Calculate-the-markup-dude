@@ -31,7 +31,6 @@ export const findProductById = async (
 ) => {
   try {
     const id = req.params.id.toString();
-
     const product = await ProductRepository.findOne({
       where: { id },
       relations: [DB_RELATIONS.OPTIONS, DB_RELATIONS.DISCOUNTS],
@@ -59,7 +58,6 @@ export const createProduct = async (
 ) => {
   try {
     const data: IProduct = req.body;
-
     const newProduct = ProductRepository.create(data);
     const savedProduct = await ProductRepository.save(newProduct);
 
@@ -81,7 +79,6 @@ export const updateProduct = async (
   try {
     const data: IProduct = req.body;
     const id = req.params.id.toString();
-
     const updatedProduct = await ProductRepository.findOne({
       where: { id },
       relations: [DB_RELATIONS.OPTIONS, DB_RELATIONS.DISCOUNTS],

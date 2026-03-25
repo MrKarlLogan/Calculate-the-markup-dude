@@ -24,3 +24,4 @@ export const ProductRepository = AppDataSource.getRepository(Product);
 export const OptionRepository = AppDataSource.getRepository(Option);
 export const DiscountRepository = AppDataSource.getRepository(Discount);
 export const NotificationRepository = AppDataSource.getRepository(Notification);
+export const AgreementRepository = AppDataSource.getRepository(PriceAgreement);
