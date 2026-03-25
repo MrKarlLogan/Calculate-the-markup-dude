@@ -25,6 +25,7 @@
       "@user/*": ["src/modules/user/*"],
       "@routes/*": ["src/routes/*"],
       "@shared/*": ["src/shared/*"],
+      "@socket/*": ["src/socket/*"],
       "@errors/*": ["src/shared/errors/*"],
       "@middlewares/*": ["src/shared/middlewares/*"],
       "@utils/*": ["src/shared/utils/*"]

@@ -1,4 +1,5 @@
 import { type NextFunction, type Request, type Response } from "express";
+import { notifyAdmins, notifyUser } from "@/socket";
 import { IPriceAgreement, TResponseAgreement } from "./priceAgreement.types";
 import { AgreementRepository } from "@/data-source";
 import { AGREEMENT_OPTIONS } from "@/shared/constants";
@@ -11,6 +12,7 @@ export const findPriceAgreements = async (
   next: NextFunction,
 ) => {
   try {
+    // TODO: Добавить получение данных под разные роли после реализации авторизации
     const agreements = await AgreementRepository.find();
 
     res.status(200).json({
@@ -60,6 +62,10 @@ export const createPriceAgreement = async (
 ) => {
   try {
     const data: IPriceAgreement = req.body;
+
+    // TODO: Временная заглушка пока нет JWT. Нужно поменять на userId пользователя из БД при условии успешной авторизации. Из req.user.id
+    data.userId = "a4e93ee2-275e-46f1-b40a-52400114b550";
+
     const newAgreement = AgreementRepository.create(data);
     const savedAgreement = await AgreementRepository.save(newAgreement);
 
@@ -76,6 +82,9 @@ export const createPriceAgreement = async (
           elementsToDelete.map((element) => element.id),
         );
     }
+
+    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
+    notifyAdmins("agreement:created", savedAgreement);
 
     res.status(201).json({
       success: true,
@@ -113,6 +122,9 @@ export const updatePriceAgreements = async (
 
     await AgreementRepository.save(updateAgreement);
 
+    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
+    notifyUser(updateAgreement.userId, "agreement:updated", updateAgreement);
+
     res.status(200).json({
       success: true,
       data: updateAgreement,
@@ -134,12 +146,20 @@ export const deletePriceAgreements = async (
 ) => {
   try {
     const id = req.params.id.toString();
-    const result = await AgreementRepository.delete(id);
+    const deletedAgreement = await AgreementRepository.findOne({
+      where: { id },
+    });
 
-    if (result.affected === 0)
+    if (!deletedAgreement)
       return next(
         new NotFoundError(`Согласование стоимости с id: ${id} не найдено`),
       );
+
+    await AgreementRepository.remove(deletedAgreement);
+
+    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
+    notifyAdmins("agreement:deleted", deletedAgreement);
+    notifyUser(deletedAgreement.userId, "agreement:deleted", deletedAgreement);
 
     res.status(200).json({
       success: true,

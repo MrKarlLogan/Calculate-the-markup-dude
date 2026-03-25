@@ -16,6 +16,7 @@ type TAgreementData = {
 export interface IPriceAgreement {
   id: string;
   data: TAgreementData;
+  userId: string;
   isAgreed: boolean | null;
   responseMessage?: string | null;
   created: string;

@@ -7,3 +7,8 @@ export interface IUser {
   name: string;
   role: TRoles;
 }
+
+export interface IAuthUser {
+  id: string;
+  role: TRoles;
+}
