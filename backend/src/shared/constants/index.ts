@@ -23,6 +23,7 @@ export const ROUTE_PATH = {
   PRODUCTS: "/products",
   NOTIFICATION: "/notification",
   PRICE_AGREEMENT: "/agreement",
+  USERS: "/auth",
   NOT_FOUND: "/*path",
 } as const;
 
@@ -42,3 +43,8 @@ export const NOTIFICATION_OPTIONS = {
 export const AGREEMENT_OPTIONS = {
   MAX_LENGTH: 30,
 } as const;
+
+export const COOKIES_NAME = {
+  ACCESS_TOKEN: "accessToken",
+  REFRESH_TOKEN: "refreshToken",
+};

@@ -1,4 +1,5 @@
-// TO-DO сделать импорты, когда будет все готово по модулям
-
+export * from "./user.controller";
 export * from "./user.model";
+export * from "./user.routes";
 export * from "./user.types";
+export * from "./user.validation";
