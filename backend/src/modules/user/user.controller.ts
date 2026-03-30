@@ -80,7 +80,7 @@ export const loginUser = async (
 
         role: loginUser.role,
       },
-      message: "Успешный вход в систему",
+      message: "Выполнен вход в систему",
     });
   } catch (error) {
     next(new InternalServerError("Ошибка при входе в систему"));
@@ -167,7 +167,7 @@ export const logoutUser = async (
 
     res.status(200).json({
       success: true,
-      message: "Вы вышли из системы",
+      message: "Выполнен выход из системы",
     });
   } catch (error) {
     next(new InternalServerError("Ошибка при выходе из системы"));

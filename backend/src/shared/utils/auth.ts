@@ -1,15 +1,10 @@
 import jwt from "jsonwebtoken";
 import { Response } from "express";
 import config from "@/config";
+import { IUser } from "@modules/user";
 import { COOKIES_NAME } from "@shared/constants";
 
-type TUserPayload = {
-  id: string;
-  login: string;
-  name: string;
-  role: "admin" | "others";
-};
-
+type TUserPayload = Omit<IUser, "password">;
 type TVerifyTokens = Pick<TUserPayload, "id">;
 
 export const generateTokens = (user: TUserPayload) => {

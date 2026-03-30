@@ -47,4 +47,4 @@ export const AGREEMENT_OPTIONS = {
 export const COOKIES_NAME = {
   ACCESS_TOKEN: "accessToken",
   REFRESH_TOKEN: "refreshToken",
-};
+} as const;
