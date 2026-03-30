@@ -8,7 +8,11 @@ export interface IUser {
   role: TRoles;
 }
 
-export interface IAuthUser {
-  id: string;
-  role: TRoles;
-}
+export type TRegisterBody = Pick<
+  IUser,
+  "login" | "password" | "name" | "role"
+> & {
+  registrationPassword: string;
+};
+
+export type TLoginUser = Pick<IUser, "login" | "password">;

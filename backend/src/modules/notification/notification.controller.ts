@@ -28,7 +28,7 @@ export const createNotification = async (
   next: NextFunction,
 ) => {
   try {
-    const message: INotification = req.body;
+    const message: Omit<INotification, "id"> = req.body;
     const newMessage = NotificationRepository.create(message);
     const savedMessage = await NotificationRepository.save(newMessage);
 
@@ -63,7 +63,7 @@ export const updateNotification = async (
   next: NextFunction,
 ) => {
   try {
-    const data: INotification = req.body;
+    const data: Omit<INotification, "id"> = req.body;
     const id = req.params.id.toString();
     const updateNotification = await NotificationRepository.findOne({
       where: { id },

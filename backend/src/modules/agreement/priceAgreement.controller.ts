@@ -61,7 +61,7 @@ export const createPriceAgreement = async (
   next: NextFunction,
 ) => {
   try {
-    const data: IPriceAgreement = req.body;
+    const data: Omit<IPriceAgreement, "id"> = req.body;
 
     // TODO: Временная заглушка пока нет JWT. Нужно поменять на userId пользователя из БД при условии успешной авторизации. Из req.user.id
     data.userId = "a4e93ee2-275e-46f1-b40a-52400114b550";

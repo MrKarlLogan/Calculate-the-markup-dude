@@ -57,7 +57,7 @@ export const createProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const data: IProduct = req.body;
+    const data: Omit<IProduct, "id"> = req.body;
     const newProduct = ProductRepository.create(data);
     const savedProduct = await ProductRepository.save(newProduct);
 
@@ -77,7 +77,7 @@ export const updateProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const data: IProduct = req.body;
+    const data: Omit<IProduct, "id"> = req.body;
     const id = req.params.id.toString();
     const updatedProduct = await ProductRepository.findOne({
       where: { id },

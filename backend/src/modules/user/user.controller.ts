@@ -12,6 +12,9 @@ import ConflictError from "@shared/errors/conflict-error";
 import InternalServerError from "@shared/errors/internal-server-error";
 import UnauthorizedError from "@shared/errors/unauthorized-error";
 import { COOKIES_NAME } from "@shared/constants";
+import config from "@/config";
+import ForbiddenError from "@shared/errors/forbidden-error";
+import { TLoginUser, TRegisterBody } from "./user.types";
 
 export const registerUser = async (
   req: Request,
@@ -19,7 +22,11 @@ export const registerUser = async (
   next: NextFunction,
 ) => {
   try {
-    const { login, password, name, role } = req.body;
+    const { login, password, name, role, registrationPassword }: TRegisterBody =
+      req.body;
+
+    if (registrationPassword !== config.REGISTRATION_SECRET)
+      return next(new ForbiddenError("Неверный пароль администратора"));
 
     const existingUser = await UserRepository.findOne({ where: { login } });
     if (existingUser)
@@ -59,7 +66,7 @@ export const loginUser = async (
   next: NextFunction,
 ) => {
   try {
-    const { login, password } = req.body;
+    const { login, password }: TLoginUser = req.body;
 
     const loginUser = await UserRepository.findOne({ where: { login } });
     if (!loginUser)
