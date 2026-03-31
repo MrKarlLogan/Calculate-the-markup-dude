@@ -13,5 +13,6 @@ export type NotificationEvent =
 
 export type SocketClient = WebSocket & {
   userId?: string;
+  login?: string;
   isAdmin?: boolean;
 };

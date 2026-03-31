@@ -1,19 +1,34 @@
 import { type NextFunction, type Request, type Response } from "express";
-import { notifyAdmins, notifyUser } from "@/socket";
 import { IPriceAgreement, TResponseAgreement } from "./priceAgreement.types";
 import { AgreementRepository } from "@/data-source";
-import { AGREEMENT_OPTIONS } from "@/shared/constants";
-import InternalServerError from "@/shared/errors/internal-server-error";
-import NotFoundError from "@/shared/errors/not-found-error";
+import { notifyAdmins, notifyUser } from "@socket/socket.notifications";
+import {
+  AGREEMENT_OPTIONS,
+  USER_ROLES,
+  WEBSOCKET_EVENT_NAME,
+} from "@shared/constants";
+import InternalServerError from "@shared/errors/internal-server-error";
+import NotFoundError from "@shared/errors/not-found-error";
+import { TUserPayload } from "@shared/utils/auth";
+import ForbiddenError from "@shared/errors/forbidden-error";
 
 export const findPriceAgreements = async (
-  _req: Request,
+  req: Request & { user?: TUserPayload },
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    // TODO: Добавить получение данных под разные роли после реализации авторизации
-    const agreements = await AgreementRepository.find();
+    if (!req.user)
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
+
+    let agreements;
+
+    if (req.user.role === USER_ROLES.ADMIN)
+      agreements = await AgreementRepository.find();
+    else
+      agreements = await AgreementRepository.find({
+        where: { userId: req.user.id },
+      });
 
     res.status(200).json({
       success: true,
@@ -29,11 +44,14 @@ export const findPriceAgreements = async (
 };
 
 export const findPriceAgreementById = async (
-  req: Request,
+  req: Request & { user?: TUserPayload },
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    if (!req.user)
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
+
     const id = req.params.id.toString();
     const agreement = await AgreementRepository.findOne({ where: { id } });
 
@@ -41,6 +59,9 @@ export const findPriceAgreementById = async (
       return next(
         new NotFoundError(`Согласование стоимости с id: ${id} не найдено`),
       );
+
+    if (req.user.role !== USER_ROLES.ADMIN && agreement.userId !== req.user.id)
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
 
     res.status(200).json({
       success: true,
@@ -56,15 +77,16 @@ export const findPriceAgreementById = async (
 };
 
 export const createPriceAgreement = async (
-  req: Request,
+  req: Request & { user?: TUserPayload },
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const data: Omit<IPriceAgreement, "id"> = req.body;
+    if (!req.user)
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
 
-    // TODO: Временная заглушка пока нет JWT. Нужно поменять на userId пользователя из БД при условии успешной авторизации. Из req.user.id
-    data.userId = "a4e93ee2-275e-46f1-b40a-52400114b550";
+    const data: Omit<IPriceAgreement, "id"> = req.body;
+    data.userId = req.user.id;
 
     const newAgreement = AgreementRepository.create(data);
     const savedAgreement = await AgreementRepository.save(newAgreement);
@@ -84,7 +106,7 @@ export const createPriceAgreement = async (
     }
 
     // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
-    notifyAdmins("agreement:created", savedAgreement);
+    notifyAdmins(WEBSOCKET_EVENT_NAME.CREATED, savedAgreement);
 
     res.status(201).json({
       success: true,
@@ -123,7 +145,11 @@ export const updatePriceAgreements = async (
     await AgreementRepository.save(updateAgreement);
 
     // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
-    notifyUser(updateAgreement.userId, "agreement:updated", updateAgreement);
+    notifyUser(
+      updateAgreement.userId,
+      WEBSOCKET_EVENT_NAME.UPDATED,
+      updateAgreement,
+    );
 
     res.status(200).json({
       success: true,
@@ -140,11 +166,14 @@ export const updatePriceAgreements = async (
 };
 
 export const deletePriceAgreements = async (
-  req: Request,
+  req: Request & { user?: TUserPayload },
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    if (!req.user)
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
+
     const id = req.params.id.toString();
     const deletedAgreement = await AgreementRepository.findOne({
       where: { id },
@@ -155,11 +184,22 @@ export const deletePriceAgreements = async (
         new NotFoundError(`Согласование стоимости с id: ${id} не найдено`),
       );
 
+    if (
+      req.user.role !== USER_ROLES.ADMIN &&
+      deletedAgreement.userId !== req.user.id
+    ) {
+      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
+    }
+
     await AgreementRepository.remove(deletedAgreement);
 
     // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
-    notifyAdmins("agreement:deleted", deletedAgreement);
-    notifyUser(deletedAgreement.userId, "agreement:deleted", deletedAgreement);
+    notifyAdmins(WEBSOCKET_EVENT_NAME.DELETED, deletedAgreement);
+    notifyUser(
+      deletedAgreement.userId,
+      WEBSOCKET_EVENT_NAME.DELETED,
+      deletedAgreement,
+    );
 
     res.status(200).json({
       success: true,

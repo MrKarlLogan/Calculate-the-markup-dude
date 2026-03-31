@@ -1,9 +1,9 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { ProductRepository } from "@/data-source";
 import { IProduct } from "./product.types";
-import { DB_RELATIONS } from "@/shared/constants";
-import InternalServerError from "@/shared/errors/internal-server-error";
-import NotFoundError from "@/shared/errors/not-found-error";
+import { DB_RELATIONS } from "@shared/constants";
+import InternalServerError from "@shared/errors/internal-server-error";
+import NotFoundError from "@shared/errors/not-found-error";
 
 export const findAllProducts = async (
   _req: Request,

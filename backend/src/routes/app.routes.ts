@@ -4,13 +4,20 @@ import { routesProduct } from "@modules/product";
 import { routesNotification } from "@modules/notification";
 import { routesAgreement } from "@modules/agreement";
 import { routesAuth } from "@modules/user";
+import { authMiddleware } from "@shared/middlewares/authMiddleware";
+import { adminMiddleware } from "@shared/middlewares/adminMiddleware";
 
 const routes = Router();
 
-routes.use(ROUTE_PATH.PRODUCTS, routesProduct);
-routes.use(ROUTE_PATH.NOTIFICATION, routesNotification);
-routes.use(ROUTE_PATH.PRICE_AGREEMENT, routesAgreement);
 routes.use(ROUTE_PATH.USERS, routesAuth);
+
+routes.use(ROUTE_PATH.PRODUCTS, authMiddleware, routesProduct);
+routes.use(
+  ROUTE_PATH.NOTIFICATION,
+  authMiddleware,
+  routesNotification,
+);
+routes.use(ROUTE_PATH.PRICE_AGREEMENT, authMiddleware, routesAgreement);
 
 routes.use(ROUTE_PATH.TEST, (_req: Request, res: Response) => {
   res.send({

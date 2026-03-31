@@ -1,9 +1,9 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { NotificationRepository } from "@/data-source";
 import { INotification } from "./notification.types";
-import { NOTIFICATION_OPTIONS } from "@/shared/constants";
-import InternalServerError from "@/shared/errors/internal-server-error";
-import NotFoundError from "@/shared/errors/not-found-error";
+import { NOTIFICATION_OPTIONS } from "@shared/constants";
+import InternalServerError from "@shared/errors/internal-server-error";
+import NotFoundError from "@shared/errors/not-found-error";
 
 export const findNotifications = async (
   _req: Request,

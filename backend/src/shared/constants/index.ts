@@ -48,3 +48,16 @@ export const COOKIES_NAME = {
   ACCESS_TOKEN: "accessToken",
   REFRESH_TOKEN: "refreshToken",
 } as const;
+
+export const WEBSOCKET_EVENT_NAME = {
+  CREATED: "agreement:created",
+  UPDATED: "agreement:updated",
+  DELETED: "agreement:deleted",
+} as const;
+
+export const WEBSOCKET_MESSAGE_TYPE = {
+  JOIN_ADMIN: "join:admin",
+  JOIN_USER: "join:user",
+  PING: "ping",
+  PONG: "pong",
+} as const;

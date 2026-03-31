@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { INotification } from "./notification.types";
-import { DB_TABLES } from "@/shared/constants";
+import { DB_TABLES } from "@shared/constants";
 
 export const Notification = new EntitySchema<INotification>({
   name: DB_TABLES.NOTIFICATION,

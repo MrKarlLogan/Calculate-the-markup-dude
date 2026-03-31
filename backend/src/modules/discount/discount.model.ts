@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { IDiscount } from "./discount.types";
-import { DB_RELATIONS, DB_TABLES } from "@/shared/constants";
+import { DB_RELATIONS, DB_TABLES } from "@shared/constants";
 import { IProduct } from "../product";
 
 export const Discount = new EntitySchema<

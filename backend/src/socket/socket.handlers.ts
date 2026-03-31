@@ -1,27 +1,21 @@
+import { WEBSOCKET_MESSAGE_TYPE } from "@shared/constants";
 import { clientManager } from "./socket.clients";
 import { SocketClient, WebSocketMessage } from "./socket.types";
-
-// TODO: Как будет готова авторизация - добавить проверки для подключений
 
 export const handleMessage = (ws: SocketClient, data: string) => {
   try {
     const message: WebSocketMessage = JSON.parse(data);
 
     switch (message.type) {
-      case "join:admin":
-        clientManager.addAdmin(ws);
-        console.log("РОП подключился");
+      case WEBSOCKET_MESSAGE_TYPE.JOIN_ADMIN:
+        if (ws.isAdmin) clientManager.addAdmin(ws);
         break;
-      case "join:user":
-        if (message.userId) {
+      case WEBSOCKET_MESSAGE_TYPE.JOIN_USER:
+        if (message.userId && ws.userId === message.userId)
           clientManager.addUser(ws, message.userId);
-          console.log(`Пользователь ${message.userId} подключился`);
-        } else {
-          console.warn("Ошибка при подключении пользователя");
-        }
         break;
-      case "ping":
-        ws.send(JSON.stringify({ type: "pong" }));
+      case WEBSOCKET_MESSAGE_TYPE.PING:
+        ws.send(JSON.stringify({ type: WEBSOCKET_MESSAGE_TYPE.PONG }));
         break;
       default:
         console.warn(`Неизвестный тип сообщения: ${message.type}`);
@@ -31,7 +25,4 @@ export const handleMessage = (ws: SocketClient, data: string) => {
   }
 };
 
-export const handleClose = (ws: SocketClient) => {
-  clientManager.remove(ws);
-  console.log("Клиент отключился");
-};
+export const handleClose = (ws: SocketClient) => clientManager.remove(ws);

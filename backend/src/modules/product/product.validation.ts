@@ -1,5 +1,5 @@
 import { celebrate, Joi, Segments } from "celebrate";
-import { NAME_FROM_VALIDATION } from "@/shared/constants";
+import { NAME_FROM_VALIDATION } from "@shared/constants";
 
 export const productValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({

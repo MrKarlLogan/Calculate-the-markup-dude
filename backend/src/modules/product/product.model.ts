@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { IProduct } from "./index";
-import { DB_RELATIONS, DB_TABLES } from "@/shared/constants";
+import { DB_RELATIONS, DB_TABLES } from "@shared/constants";
 
 export const Product = new EntitySchema<IProduct>({
   name: DB_TABLES.PRODUCT,

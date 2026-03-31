@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { IUser } from "./user.types";
-import { DB_TABLES } from "@/shared/constants";
+import { DB_TABLES } from "@shared/constants";
 
 export const User = new EntitySchema<IUser>({
   name: DB_TABLES.USER,

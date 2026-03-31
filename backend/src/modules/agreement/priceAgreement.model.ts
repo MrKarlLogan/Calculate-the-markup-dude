@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import { IPriceAgreement } from "./priceAgreement.types";
-import { DB_TABLES } from "@/shared/constants";
+import { DB_TABLES } from "@shared/constants";
 
 export const PriceAgreement = new EntitySchema<IPriceAgreement>({
   name: DB_TABLES.PRICE_AGREEMENT,

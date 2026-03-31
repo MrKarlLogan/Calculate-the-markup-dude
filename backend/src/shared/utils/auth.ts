@@ -1,18 +1,17 @@
-import jwt from "jsonwebtoken";
 import { Response } from "express";
+import jwt from "jsonwebtoken";
 import config from "@/config";
 import { IUser } from "@modules/user";
 import { COOKIES_NAME } from "@shared/constants";
 
-type TUserPayload = Omit<IUser, "password">;
-type TVerifyTokens = Pick<TUserPayload, "id">;
+export type TUserPayload = Omit<IUser, "name" | "password">;
+type TVerifyRefreshTokens = Pick<TUserPayload, "id">;
 
 export const generateTokens = (user: TUserPayload) => {
   const accessToken = jwt.sign(
     {
       id: user.id,
       login: user.login,
-      name: user.name,
       role: user.role,
     },
     config.JWT_SECRET!,
@@ -26,21 +25,23 @@ export const generateTokens = (user: TUserPayload) => {
   return { accessToken, refreshToken };
 };
 
-export const verifyAccessToken = (token: string): TVerifyTokens | null => {
+export const verifyAccessToken = (token: string): TUserPayload | null => {
   try {
-    const decoded = jwt.verify(token, config.JWT_SECRET!) as TVerifyTokens;
+    const decoded = jwt.verify(token, config.JWT_SECRET!) as TUserPayload;
     return decoded;
   } catch (error) {
     return null;
   }
 };
 
-export const verifyRefreshToken = (token: string): TVerifyTokens | null => {
+export const verifyRefreshToken = (
+  token: string,
+): TVerifyRefreshTokens | null => {
   try {
     const decoded = jwt.verify(
       token,
       config.JWT_REFRESH_SECRET!,
-    ) as TVerifyTokens;
+    ) as TVerifyRefreshTokens;
     return decoded;
   } catch (error) {
     return null;
