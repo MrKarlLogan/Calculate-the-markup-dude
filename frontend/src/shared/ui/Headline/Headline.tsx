@@ -1,4 +1,4 @@
-import { IHeadline } from "./Headline.type";
+import { THeadline } from "./Headline.type";
 
 export const Headline = ({
   children,
@@ -7,7 +7,7 @@ export const Headline = ({
   size = 16,
   weight = "regular",
   position = "center",
-}: IHeadline) => {
+}: THeadline) => {
   const styles = {
     fontSize: `${size}px`,
     fontWeight: weight === "regular" ? "400" : "700",

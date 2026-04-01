@@ -1,4 +1,4 @@
-import { IParagraph } from "./Paragraph.type";
+import { TParagraph } from "./Paragraph.type";
 
 export const Paragraph = ({
   children,
@@ -6,7 +6,7 @@ export const Paragraph = ({
   size = 16,
   weight = "regular",
   position = "center",
-}: IParagraph) => {
+}: TParagraph) => {
   const styles = {
     fontSize: `${size}px`,
     fontWeight: weight === "regular" ? "400" : "700",

@@ -1,18 +1,11 @@
 import type { CSSProperties } from "react";
 import styles from "./Loader.module.scss";
+import { TLoader } from "./Loader.type";
 
-type TLoader = {
-  text?: string;
-};
-
-export const Loader = (props: TLoader) => {
-  const { text = "Загрузка" } = props;
-
-  return (
-    <div
-      style={{ "--loader-text": `"${text}"` } as CSSProperties}
-      className={styles.loader}
-      aria-label="Индикатор загрузки"
-    ></div>
-  );
-};
+export const Loader = ({ text = "Загрузка..." }: TLoader) => (
+  <div
+    style={{ "--loader-text": `"${text}"` } as CSSProperties}
+    className={styles.loader}
+    aria-label="Индикатор загрузки"
+  ></div>
+);

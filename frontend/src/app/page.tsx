@@ -1,3 +1,10 @@
-const Calculator = () => <span>Тут будет калькулятор</span>;
+import { ProtectedRoute } from "@widgets/ProtectedRoute";
+import { ConstructorPage } from "@pages/ConstructorPage";
 
-export default Calculator;
+const HomePage = () => (
+  <ProtectedRoute>
+    <ConstructorPage />
+  </ProtectedRoute>
+);
+
+export default HomePage;

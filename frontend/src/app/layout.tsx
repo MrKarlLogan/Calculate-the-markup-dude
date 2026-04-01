@@ -3,8 +3,9 @@ import { ReactNode } from "react";
 import "./styles/index.scss";
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
+  title: "Calculate the markup, dude",
+  description:
+    "Внутренний инструмент для расчёта маржинальной стоимости товаров с учётом акций. Согласование сделок, управление позициями, уведомления в реальном времени.",
 };
 
 const RootLayout = ({

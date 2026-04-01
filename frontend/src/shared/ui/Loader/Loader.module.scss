@@ -1,26 +1,26 @@
 .loader {
-  inline-size: 100px;
+  inline-size: 150px;
   aspect-ratio: 1;
   border-radius: 50%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: var(--shadow);
+  box-shadow: $shadow;
 
   &::after {
     content: var(--loader-text);
-    color: var(--text-color);
-    font-family: "Iosevka Charon Mono", monospace;
-    inline-size: calc(100px - 20px);
+    color: $text-color;
+    inline-size: calc(150px - 20px);
     aspect-ratio: 1;
     position: absolute;
-    background-color: var(--bg-color);
+    background-color: $bg-color;
     border-radius: 50%;
-    box-shadow: var(--inner-shadow);
+    box-shadow: $inner-shadow;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 20px;
   }
 
   &::before {
@@ -32,7 +32,7 @@
     border-radius: 50%;
     background: conic-gradient(
       transparent 0deg 140deg,
-      var(--accent-color) 160deg 200deg,
+      $accent-color 160deg 200deg,
       transparent 220deg 360deg
     );
     transform: rotateZ(180deg);

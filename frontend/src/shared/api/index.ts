@@ -1,17 +1,24 @@
 import { config } from "@shared/config";
-import { TLoginResponse, TRegisterResponse } from "./types";
+import {
+  TCheckAuthResponse,
+  TLoginResponse,
+  TRefreshResponse,
+  TRegisterResponse,
+} from "./types";
+import { URL_PATH } from "../config/constants";
 
 const Api = {
   login: async (data: {
     login: string;
     password: string;
   }): Promise<TLoginResponse> => {
-    const response = await fetch(`${config.API_URL}/auth/login`, {
+    const response = await fetch(`${config.API_URL}${URL_PATH.LOGIN}`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       credentials: "include",
       body: JSON.stringify(data),
     });
+
     return response.json();
   },
 
@@ -22,12 +29,30 @@ const Api = {
     role: string;
     registrationPassword: string;
   }): Promise<TRegisterResponse> => {
-    const response = await fetch(`${config.API_URL}/auth/register`, {
+    const response = await fetch(`${config.API_URL}${URL_PATH.REGISTER}`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       credentials: "include",
       body: JSON.stringify(data),
     });
+
+    return response.json();
+  },
+
+  checkAuth: async (): Promise<TCheckAuthResponse> => {
+    const response = await fetch(`${config.API_URL}${URL_PATH.GET_ME}`, {
+      credentials: "include",
+    });
+
+    return response.json();
+  },
+
+  refreshToken: async (): Promise<TRefreshResponse> => {
+    const response = await fetch(`${config.API_URL}${URL_PATH.REFRESH_TOKEN}`, {
+      method: "POST",
+      credentials: "include",
+    });
+
     return response.json();
   },
 };
