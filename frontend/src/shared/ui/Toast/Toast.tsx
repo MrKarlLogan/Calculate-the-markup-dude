@@ -21,8 +21,10 @@ export const Toast = ({ text, onClose }: TToast) => {
 
   return (
     <div className={`${styles.toast} ${!isVisible ? styles.hide : ""}`}>
-      <Headline as="h3">Уведомление</Headline>
-      <Paragraph>{text}</Paragraph>
+      <Headline as="h3" position="start" size={18} weight="bold">
+        Уведомление
+      </Headline>
+      <Paragraph position="start">{text}</Paragraph>
     </div>
   );
 };

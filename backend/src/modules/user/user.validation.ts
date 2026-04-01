@@ -15,13 +15,16 @@ export const registerValidation = celebrate({
       "string.max": "Пароль не должен превышать 20 символов",
     }),
     name: Joi.string().required().min(2).max(20).messages({
-      "any.required": "Поле 'Имя' обязателено",
+      "any.required": "Поле 'Имя' обязательно",
       "string.empty": "Поле 'Имя' обязательно",
       "string.min": "Имя должно быть не короче 2 символов",
       "string.max": "Имя не должно превышать 20 символов",
     }),
     role: Joi.string().valid("admin", "others").default("others").messages({
       "any.only": "Роль может быть только 'Администратор' или 'Пользователь'",
+    }),
+    registrationPassword: Joi.string().valid().messages({
+      "any.required": "Поле 'Пароль администратора' обязателен",
     }),
   }),
 });

@@ -1,22 +1,23 @@
 "use client";
 
-import { Input } from "@shared/ui/Input";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import styles from "./LoginForm.module.scss";
+import { Input } from "@shared/ui/Input";
 import { Button } from "@shared/ui/Button";
 import { useRouter } from "next/navigation";
-import { config } from "@shared/config";
-import { URL_PATH } from "@shared/config/constants";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Toast } from "@/shared/ui/Toast";
-import useToast from "@/shared/lib/hooks/useToast";
+import { CLIENT_PATH } from "@shared/config/constants";
+import { Toast } from "@shared/ui/Toast";
+import useToast from "@shared/lib/hooks/useToast";
+import Api from "@shared/api";
 
-export const LoginForm = () => {
+export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
   const router = useRouter();
   const { toasts, showToast, removeToast } = useToast();
   const [isEmpty, setIsEmpty] = useState({
     login: true,
     password: true,
   });
+  const disabledButton = isEmpty.login || isEmpty.password;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -27,20 +28,23 @@ export const LoginForm = () => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const login = formData.get("login");
-    const password = formData.get("password");
+    const login = formData.get("login")?.toString();
+    const password = formData.get("password")?.toString();
 
-    const response = await fetch(`${config.API_URL}${URL_PATH.LOGIN}`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ login, password }),
-    });
+    if (!login || !password)
+      return showToast("Все поля обязательны для заполнения");
 
-    const result = await response.json();
+    try {
+      const result = await Api.login({ login, password });
 
-    if (result.success) router.push("/");
-    else showToast(result.message || "Произошла ошибка при входе");
+      if (result.success) router.push(CLIENT_PATH.HOME);
+      else {
+        const errorMessage = result.validation?.body?.message || result.message;
+        showToast(errorMessage || "Произошла ошибка при входе");
+      }
+    } catch {
+      showToast("Ошибка при получении данных от сервера");
+    }
   };
 
   return (
@@ -51,7 +55,6 @@ export const LoginForm = () => {
           text="Логин:"
           placeholder="Введите логин"
           onChange={handleChange}
-          autoComplete="off"
         />
         <Input
           name="password"
@@ -59,15 +62,10 @@ export const LoginForm = () => {
           type="password"
           placeholder="Введите пароль"
           onChange={handleChange}
-          autoComplete="off"
         />
         <div className={styles.buttons}>
-          <Button
-            text="Войти"
-            type="submit"
-            disabled={isEmpty.login || isEmpty.password}
-          />
-          <Button text="Регистрация" onClick={() => {}} type="button" />
+          <Button text="Войти" type="submit" disabled={disabledButton} />
+          <Button text="Регистрация" onClick={selectForm} type="button" />
         </div>
       </form>
       {toasts.map((toast) => (

@@ -1,0 +1,13 @@
+.fieldset {
+  inline-size: 100%;
+  padding: 0.7rem;
+  @include flex(row, start, center, 10px);
+  border-radius: $radius;
+  border: 2px solid $bg-color-light-dark;
+
+  .legend {
+    font-weight: 700;
+    padding-inline: 0.3rem;
+    border-inline: 2px solid $bg-color-light-dark;
+  }
+}

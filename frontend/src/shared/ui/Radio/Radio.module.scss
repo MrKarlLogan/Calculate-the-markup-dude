@@ -1,4 +1,4 @@
-.checkbox {
+.radio {
   user-select: none;
   appearance: none;
   padding: 0.5rem 1rem;
@@ -19,7 +19,7 @@
     box-shadow: $inner-shadow;
   }
 
-  .input_checkbox {
+  .input_radio {
     position: absolute;
     opacity: 0;
     inline-size: 0;
