@@ -20,7 +20,7 @@ export const Greeting = ({ name }: TGreeting) => {
   }
 
   return (
-    <Headline as="h3" weight="bold">
+    <Headline size={18} position="start" as="h3" weight="bold">
       {currentGreeting}, {name}
     </Headline>
   );

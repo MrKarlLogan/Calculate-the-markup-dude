@@ -1,11 +1,13 @@
 "use client";
 
-import { Greeting } from "@shared/ui/Greeting";
+import { Section } from "@/shared/ui/Section";
+import { Header } from "@/widgets/Header";
 import { MainLayout } from "@shared/ui/MainLayout";
+import styles from "./ConstructorPage.module.scss";
 
 export const ConstructorPage = () => (
   <MainLayout>
-    <Greeting name="Тест" />
-    <p>Домашняя страница</p>
+    <Header />
+    <Section className={styles.content}>Контент</Section>
   </MainLayout>
 );

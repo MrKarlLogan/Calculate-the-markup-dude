@@ -2,6 +2,7 @@ import { config } from "@shared/config";
 import {
   TCheckAuthResponse,
   TLoginResponse,
+  TLogoutResponse,
   TRefreshResponse,
   TRegisterResponse,
 } from "./types";
@@ -49,6 +50,15 @@ const Api = {
 
   refreshToken: async (): Promise<TRefreshResponse> => {
     const response = await fetch(`${config.API_URL}${URL_PATH.REFRESH_TOKEN}`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    return response.json();
+  },
+
+  logout: async (): Promise<TLogoutResponse> => {
+    const response = await fetch(`${config.API_URL}${URL_PATH.LOGOUT}`, {
       method: "POST",
       credentials: "include",
     });

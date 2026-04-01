@@ -1,0 +1,11 @@
+.header {
+  inline-size: 100%;
+  @include flex(row, space-between, center, 1rem);
+  padding: 1rem;
+  border-block-end: 2px solid $bg-color-light-dark;
+
+  .nav {
+    @include flex;
+    gap: 1rem;
+  }
+}
