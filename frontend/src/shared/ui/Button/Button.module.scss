@@ -1,0 +1,30 @@
+.button {
+  user-select: none;
+  appearance: none;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  background-color: $bg-color;
+  color: $text-color;
+  cursor: pointer;
+  transition: 0.1s;
+
+  &:not(:disabled):active {
+    color: $accent-color;
+    box-shadow: $inner-shadow;
+  }
+
+  &:focus-visible {
+    outline: none;
+    color: $accent-color;
+  }
+
+  &:disabled {
+    box-shadow: none;
+    background-color: $bg-color-light-dark;
+    color: $bg-color;
+    cursor: default;
+  }
+}

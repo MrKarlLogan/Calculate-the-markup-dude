@@ -1,8 +1,15 @@
-@import "./reset";
-@import "./normalize";
+@use "./reset" as *;
+@use "./normalize" as *;
+@use "./fonts" as *;
 
 body {
   inline-size: 100%;
   block-size: 100dvh;
   @include flex;
+  font: {
+    family: "Jura", sans-serif;
+    size: 16px;
+    weight: 400;
+  }
+  color: $text-color;
 }

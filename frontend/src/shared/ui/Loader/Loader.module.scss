@@ -1,0 +1,51 @@
+.loader {
+  inline-size: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+
+  &::after {
+    content: var(--loader-text);
+    color: var(--text-color);
+    font-family: "Iosevka Charon Mono", monospace;
+    inline-size: calc(100px - 20px);
+    aspect-ratio: 1;
+    position: absolute;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    box-shadow: var(--inner-shadow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &::before {
+    content: "";
+    inline-size: 100%;
+    aspect-ratio: 1;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      transparent 0deg 140deg,
+      var(--accent-color) 160deg 200deg,
+      transparent 220deg 360deg
+    );
+    transform: rotateZ(180deg);
+    animation: rotate 2s infinite linear;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotateZ(180deg);
+    }
+
+    100% {
+      transform: rotateZ(540deg);
+    }
+  }
+}

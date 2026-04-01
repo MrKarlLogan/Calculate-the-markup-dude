@@ -1,0 +1,18 @@
+.container {
+  @include flex;
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: "";
+    inline-size: 3px;
+    block-size: 70%;
+    box-shadow: $shadow;
+    border-radius: $radius;
+  }
+
+  .welcome,
+  .authform {
+    gap: 1rem;
+  }
+}

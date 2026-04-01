@@ -1,0 +1,14 @@
+.form {
+  inline-size: 70%;
+  @include flex(column, center, center, 10px);
+
+  @media (max-width: 800px) {
+    inline-size: 90%;
+  }
+
+  .buttons {
+    margin-block-start: 1rem;
+    inline-size: 100%;
+    @include flex(row, center, center, 10px);
+  }
+}

@@ -1,0 +1,40 @@
+.toast {
+  position: fixed;
+  inline-size: 30%;
+  bottom: 20px;
+  right: 20px;
+  @include flex(column, center, start, 0.5rem);
+  padding: 1rem;
+  border-radius: $radius;
+  background-color: $bg-color-dark;
+  color: $white;
+  z-index: 1;
+  animation: slideIn 0.2s ease;
+  user-select: none;
+}
+
+.hide {
+  animation: slideOut 0.2s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

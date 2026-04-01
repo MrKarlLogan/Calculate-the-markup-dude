@@ -1,0 +1,30 @@
+.checkbox {
+  user-select: none;
+  appearance: none;
+  padding: 1rem;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.1s;
+
+  &:has(input:focus-visible) {
+    color: var(--accent-color);
+  }
+
+  &:has(input:checked) {
+    color: var(--accent-color);
+    box-shadow: var(--inner-shadow);
+    font-weight: 700;
+  }
+
+  .input_checkbox {
+    position: absolute;
+    opacity: 0;
+    inline-size: 0;
+    block-size: 0;
+    pointer-events: none;
+  }
+}

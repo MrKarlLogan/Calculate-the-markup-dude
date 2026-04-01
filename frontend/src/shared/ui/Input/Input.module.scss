@@ -1,0 +1,64 @@
+.wrapper {
+  position: relative;
+  inline-size: 100%;
+  @include flex(column, center, start, 5px);
+
+  .text {
+    font-weight: 700;
+  }
+
+  .input {
+    appearance: none;
+    inline-size: 100%;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    background-color: $bg-color;
+    color: $accent-color;
+    resize: none;
+    transition: 0.3s;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $inner-shadow;
+    }
+
+    &::placeholder {
+      color: $text-color;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+    }
+
+    &::-ms-reveal,
+    &::-ms-clear {
+      display: none;
+    }
+
+    &::-webkit-contacts-auto-fill-button,
+    &::-webkit-credentials-auto-fill-button {
+      visibility: hidden;
+    }
+  }
+
+  .input_password {
+    padding-right: 2rem;
+  }
+
+  .password {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 70%;
+    transform: translateY(-50%);
+    right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}

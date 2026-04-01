@@ -1,3 +1,3 @@
-export default function HomePage() {
-  return <p>В разработке</p>;
-}
+const Calculator = () => <span>Тут будет калькулятор</span>;
+
+export default Calculator;
