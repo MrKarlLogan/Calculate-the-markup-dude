@@ -1,6 +1,21 @@
 .form {
   inline-size: 50%;
   @include flex(column, center, center, 10px);
+  animation: opacity $animation-time ease-in-out;
+
+  @keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .title {
+    border-block-end: 2px solid $bg-color-light-dark;
+    padding-bottom: 10px;
+  }
 
   @media (max-width: 1200px) {
     inline-size: 90%;

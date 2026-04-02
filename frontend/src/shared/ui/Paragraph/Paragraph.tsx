@@ -8,6 +8,7 @@ export const Paragraph = ({
   position = "center",
 }: TParagraph) => {
   const styles = {
+    inlineSize: "100%",
     fontSize: `${size}px`,
     fontWeight: weight === "regular" ? "400" : "700",
     textAlign: position,

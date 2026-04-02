@@ -9,6 +9,7 @@ export const Headline = ({
   position = "center",
 }: THeadline) => {
   const styles = {
+    inlineSize: "100%",
     fontSize: `${size}px`,
     fontWeight: weight === "regular" ? "400" : "700",
     textAlign: position,

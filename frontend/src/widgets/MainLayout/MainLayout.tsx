@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
 import styles from "./MainLayout.module.scss";
+import { Footer } from "@widgets/Footer";
 
 export const MainLayout = ({
   children,
-  className,
 }: {
   children: ReactNode;
   className?: string;
-}) => <main className={`${styles.main} ${className}`}>{children}</main>;
+}) => (
+  <div className={styles.container}>
+    {children}
+    <Footer />
+  </div>
+);

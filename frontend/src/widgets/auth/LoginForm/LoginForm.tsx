@@ -9,6 +9,7 @@ import { CLIENT_PATH } from "@shared/config/constants";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
 import Api from "@shared/api";
+import { Headline } from "@/shared/ui/Headline";
 
 export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
   const router = useRouter();
@@ -50,6 +51,14 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <Headline
+          size={20}
+          weight="bold"
+          position="start"
+          className={styles.title}
+        >
+          Вход
+        </Headline>
         <Input
           name="login"
           text="Логин:"

@@ -1,0 +1,16 @@
+.footer {
+  inline-size: 100%;
+  @include flex(row, center, center, 1rem);
+  background-color: $bg-color;
+  padding: 0.5rem;
+
+  .link {
+    font-weight: 700;
+    color: $text-color;
+    transition: $animation-time;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}

@@ -1,13 +1,14 @@
 import styles from "./RegisterForm.module.scss";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Paragraph } from "@/shared/ui/Paragraph";
+import { SyntheticEvent, useState } from "react";
+import { Paragraph } from "@shared/ui/Paragraph";
 import { Button } from "@shared/ui/Button";
 import { Input } from "@shared/ui/Input";
-import { GroupeContainer } from "@/shared/ui/GroupeContainer";
+import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { Radio } from "@shared/ui/Radio";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
 import Api from "@shared/api";
+import { Headline } from "@shared/ui/Headline";
 
 export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
   const [isEmpty, setIsEmpty] = useState({
@@ -26,15 +27,15 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
     isEmpty.registrationPassword ||
     isEmpty.role;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const handleInput = (event: SyntheticEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
     setIsEmpty((prev) => ({ ...prev, [name]: value.trim() === "" }));
   };
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const login = formData.get("login")?.toString();
     const password = formData.get("password")?.toString();
     const name = formData.get("name")?.toString();
@@ -55,8 +56,21 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         registrationPassword,
       });
 
-      if (result.success) selectForm();
-      else {
+      if (result.success) {
+        form.reset();
+
+        setIsEmpty({
+          login: true,
+          password: true,
+          name: true,
+          role: true,
+          registrationPassword: true,
+        });
+
+        showToast(
+          `Создан новый ${result.data.role === "admin" ? "администратор" : "пользователь"}: ${result.data.name}`,
+        );
+      } else {
         const errorMessage = result.validation?.body?.message || result.message;
         showToast(errorMessage || "Произошла ошибка при регистрации");
       }
@@ -68,12 +82,20 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <Headline
+          size={20}
+          weight="bold"
+          position="start"
+          className={styles.title}
+        >
+          Регистрация
+        </Headline>
         <Input
           name="login"
           text="Логин"
           placeholder="Придумайте логин"
           autoComplete="off"
-          onChange={handleChange}
+          onInput={handleInput}
         />
         <Input
           name="password"
@@ -81,27 +103,27 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           placeholder="Придумайте пароль"
           type="password"
           autoComplete="off"
-          onChange={handleChange}
+          onInput={handleInput}
         />
         <Input
           name="name"
           text="Ваше ФИО"
           placeholder="Введите ваше имя и фамилию"
           autoComplete="off"
-          onChange={handleChange}
+          onInput={handleInput}
         />
         <GroupeContainer text="Ваша роль">
           <Radio
             value="admin"
             text="Администратор"
             name="role"
-            onChange={handleChange}
+            onChange={handleInput}
           />
           <Radio
             value="others"
             text="Пользователь"
             name="role"
-            onChange={handleChange}
+            onChange={handleInput}
           />
         </GroupeContainer>
         <Input
@@ -110,7 +132,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           placeholder="Введите пароль администратора"
           type="password"
           autoComplete="off"
-          onChange={handleChange}
+          onInput={handleInput}
         />
         <Paragraph position="start">
           * Пароль администратора необходим для создания новых пользователей

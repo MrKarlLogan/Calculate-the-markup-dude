@@ -43,14 +43,12 @@ export const registerUser = async (
 
     const savedUser = await UserRepository.save(newUser);
 
-    const { accessToken, refreshToken } = generateTokens(savedUser);
-    setAuthCookies(res, accessToken, refreshToken);
-
     res.status(201).json({
       success: true,
       data: {
         id: savedUser.id,
         login: savedUser.login,
+        name: savedUser.name,
         role: savedUser.role,
       },
       message: "Пользователь успешно зарегистрирован",

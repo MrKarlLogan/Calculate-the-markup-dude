@@ -17,7 +17,7 @@
     background-color: $bg-color;
     color: $accent-color;
     resize: none;
-    transition: 0.3s;
+    transition: $animation-time;
 
     &:focus-visible {
       outline: none;
