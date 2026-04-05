@@ -19,6 +19,10 @@
     resize: none;
     transition: $animation-time;
 
+    &::placeholder {
+      font-size: 12px;
+    }
+
     &:focus-visible {
       outline: none;
       box-shadow: $inner-shadow;

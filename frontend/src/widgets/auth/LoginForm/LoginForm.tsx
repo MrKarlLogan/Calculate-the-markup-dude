@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import Api from "@shared/api";
+import AuthApi from "@/shared/api/AuthApi";
 import { Headline } from "@/shared/ui/Headline";
 
 export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
@@ -36,7 +36,7 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
       return showToast("Все поля обязательны для заполнения");
 
     try {
-      const result = await Api.login({ login, password });
+      const result = await AuthApi.login({ login, password });
 
       if (result.success) router.push(CLIENT_PATH.HOME);
       else {

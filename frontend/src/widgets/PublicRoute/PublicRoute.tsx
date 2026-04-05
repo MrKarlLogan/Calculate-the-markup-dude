@@ -1,6 +1,6 @@
 "use client";
 
-import Api from "@shared/api";
+import Api from "@/shared/api/AuthApi";
 import { LoadingPage } from "@pages/LoadingPage/LoadingPage";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";

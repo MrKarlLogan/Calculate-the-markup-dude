@@ -5,6 +5,7 @@ export const URL_PATH = {
   LOGOUT: "/auth/logout",
   GET_ME: "/auth/me",
   REFRESH_TOKEN: "/auth/refresh",
+  PRODUCTS: "/products",
 } as const;
 
 export const CLIENT_PATH = {

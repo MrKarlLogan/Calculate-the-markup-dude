@@ -3,7 +3,7 @@
 import { Button } from "@shared/ui/Button";
 import { Greeting } from "@shared/ui/Greeting";
 import styles from "./Header.module.scss";
-import Api from "@shared/api";
+import Api from "@/shared/api/AuthApi";
 import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { useAppSelector } from "@shared/lib/hooks/redux";

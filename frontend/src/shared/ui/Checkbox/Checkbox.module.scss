@@ -1,4 +1,6 @@
 .checkbox {
+  inline-size: 100%;
+  @include flex;
   user-select: none;
   appearance: none;
   padding: 0.5rem 1rem;

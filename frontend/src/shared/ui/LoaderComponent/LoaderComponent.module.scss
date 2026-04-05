@@ -1,17 +1,19 @@
 .loader_component {
+  inline-size: 100%;
+  block-size: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 
   .circle_one,
   .circle_two,
   .circle_three {
-    inline-size: 10px;
+    inline-size: 20px;
     aspect-ratio: 1;
-    background-color: var(--bg-color);
+    background-color: $bg-color;
     border-radius: 50%;
-    box-shadow: var(--shadow);
+    box-shadow: $shadow;
   }
 
   .circle_one {
@@ -33,7 +35,7 @@
     }
     25% {
       transform: translateY(-10px);
-      background-color: var(--accent-color);
+      background-color: $accent-color;
     }
   }
 
@@ -44,7 +46,7 @@
     }
     50% {
       transform: translateY(-10px);
-      background-color: var(--accent-color);
+      background-color: $accent-color;
     }
   }
 
@@ -55,7 +57,7 @@
     }
     75% {
       transform: translateY(-10px);
-      background-color: var(--accent-color);
+      background-color: $accent-color;
     }
   }
 }

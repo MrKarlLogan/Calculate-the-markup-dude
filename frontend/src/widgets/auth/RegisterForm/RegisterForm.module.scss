@@ -1,5 +1,5 @@
 .form {
-  inline-size: 50%;
+  inline-size: 60%;
   @include flex(column, center, center, 10px);
   animation: opacity $animation-time ease-in-out;
 
@@ -17,8 +17,12 @@
     padding-bottom: 10px;
   }
 
-  @media (max-width: 1200px) {
-    inline-size: 90%;
+  @media (max-width: 1400px) {
+    inline-size: 80%;
+  }
+
+  .radioGroupe {
+    @include flex(row, start, center, 10px);
   }
 
   .buttons {

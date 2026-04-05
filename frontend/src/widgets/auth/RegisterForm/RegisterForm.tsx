@@ -7,7 +7,7 @@ import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { Radio } from "@shared/ui/Radio";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import Api from "@shared/api";
+import AuthApi from "@/shared/api/AuthApi";
 import { Headline } from "@shared/ui/Headline";
 
 export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
@@ -48,7 +48,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
       return showToast("Все поля обязательны для заполнения");
 
     try {
-      const result = await Api.register({
+      const result = await AuthApi.register({
         login,
         password,
         name,
@@ -120,7 +120,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           autoComplete="off"
           onInput={handleInput}
         />
-        <GroupeContainer text="Ваша роль">
+        <GroupeContainer text="Ваша роль" className={styles.radioGroupe}>
           <Radio
             value="admin"
             text="Администратор"

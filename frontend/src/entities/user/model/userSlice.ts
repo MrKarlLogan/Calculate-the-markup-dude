@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAuthData } from "@/shared/api/types";
+import { IAuthData } from "@/entities/user/types/types";
 
 const userSlice = createSlice({
   name: "user",

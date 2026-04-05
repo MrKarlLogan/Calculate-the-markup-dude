@@ -5,10 +5,10 @@ import {
   TLogoutResponse,
   TRefreshResponse,
   TRegisterResponse,
-} from "./types";
+} from "@entities/user/types/types";
 import { URL_PATH } from "../config/constants";
 
-const Api = {
+const AuthApi = {
   login: async (data: {
     login: string;
     password: string;
@@ -67,4 +67,4 @@ const Api = {
   },
 };
 
-export default Api;
+export default AuthApi;
