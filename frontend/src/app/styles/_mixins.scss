@@ -5,3 +5,18 @@
   align-items: $align;
   gap: $gap;
 }
+
+@mixin grid(
+  $columns: 1fr,
+  $rows: auto,
+  $gap: 0,
+  $justify-items: stretch,
+  $align-items: stretch
+) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  gap: $gap;
+  justify-items: $justify-items;
+  align-items: $align-items;
+}

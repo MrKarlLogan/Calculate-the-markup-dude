@@ -1,7 +1,7 @@
 .toast {
   position: fixed;
   inline-size: 30%;
-  bottom: 20px;
+  bottom: calc(20px * 2);
   right: 20px;
   @include flex(column, center, start, 0.5rem);
   padding: 1rem;

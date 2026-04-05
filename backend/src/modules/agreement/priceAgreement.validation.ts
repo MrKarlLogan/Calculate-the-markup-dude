@@ -36,6 +36,7 @@ export const agreementValidation = celebrate({
                 .required()
                 .min(3)
                 .max(30)
+                .trim()
                 .messages({
                   "string.empty": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} обязательно`,
                   "string.min": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} должно быть не короче 3 символов`,
@@ -61,7 +62,7 @@ export const agreementValidation = celebrate({
             }),
           )
           .default([]),
-        message: Joi.string().max(300).allow("").default("").messages({
+        message: Joi.string().max(300).allow("").default("").trim().messages({
           "string.max": "Текст сообщения не должен превышать 300 символов",
         }),
         total: Joi.number().integer().required(),
@@ -73,9 +74,14 @@ export const agreementValidation = celebrate({
 
 export const responseValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    responseMessage: Joi.string().allow("").max(300).optional().messages({
-      "string.max": "Текст сообщения не должен превышать 300 символов",
-    }),
+    responseMessage: Joi.string()
+      .allow("")
+      .max(300)
+      .optional()
+      .trim()
+      .messages({
+        "string.max": "Текст сообщения не должен превышать 300 символов",
+      }),
     isAgreed: Joi.boolean().required().messages({
       "any.required": "Поле 'статус' обязательно",
       "boolean.base": "Поле 'статус' должно быть true или false",

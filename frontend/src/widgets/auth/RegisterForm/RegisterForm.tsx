@@ -97,6 +97,10 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           autoComplete="off"
           onInput={handleInput}
         />
+        <Paragraph position="start" size={12}>
+          <strong>Логин:</strong> только латинские буквы, цифры, точки, дефисы,
+          нижнее подчёркивание. Без пробелов
+        </Paragraph>
         <Input
           name="password"
           text="Пароль"
@@ -105,6 +109,10 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           autoComplete="off"
           onInput={handleInput}
         />
+        <Paragraph position="start" size={12}>
+          <strong>Пароль:</strong> только латинские буквы, без пробелов.
+          Обязательно: одна заглавная буква, одна цифра, один спецсимвол
+        </Paragraph>
         <Input
           name="name"
           text="Ваше ФИО"
@@ -128,14 +136,15 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         </GroupeContainer>
         <Input
           name="registrationPassword"
-          text="Пароль администратора*"
+          text="Пароль администратора"
           placeholder="Введите пароль администратора"
           type="password"
           autoComplete="off"
           onInput={handleInput}
         />
-        <Paragraph position="start">
-          * Пароль администратора необходим для создания новых пользователей
+        <Paragraph position="start" size={12}>
+          <strong>Пароль администратора:</strong> служебный ключ доступа для
+          создания учётных записей
         </Paragraph>
         <div className={styles.buttons}>
           <Button

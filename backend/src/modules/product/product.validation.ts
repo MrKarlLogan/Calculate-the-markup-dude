@@ -3,7 +3,7 @@ import { NAME_FROM_VALIDATION } from "@shared/constants";
 
 export const productValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    name: Joi.string().required().min(3).max(20).messages({
+    name: Joi.string().trim().required().min(3).max(20).messages({
       "string.empty": "Наименование товара обязательно",
       "string.min": "Наименование товара должно быть не короче 3 символов",
       "string.max": "Наименование товара не должно превышать 20 символов",
@@ -13,6 +13,7 @@ export const productValidation = celebrate({
       .items(
         Joi.object().keys({
           name: Joi.string()
+            .trim()
             .required()
             .min(2)
             .max(20)
@@ -49,6 +50,7 @@ export const productValidation = celebrate({
       .items(
         Joi.object().keys({
           name: Joi.string()
+            .trim()
             .required()
             .min(3)
             .max(50)
