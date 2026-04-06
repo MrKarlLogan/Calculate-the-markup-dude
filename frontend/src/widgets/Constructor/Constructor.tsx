@@ -55,7 +55,7 @@ export const Constructor = () => {
   return (
     <Section>
       <GroupeContainer text="Конструктор" className={styles.container}>
-        <GroupeContainer text="Модель" className={styles.productsGroupe}>
+        <GroupeContainer text="Модель" className={styles.products}>
           {products.map((product) => (
             <Radio
               key={product.id}
@@ -66,7 +66,7 @@ export const Constructor = () => {
             />
           ))}
         </GroupeContainer>
-        <GroupeContainer text="Комплектация" className={styles.productsGroupe}>
+        <GroupeContainer text="Комплектация" className={styles.products}>
           {modelName &&
             options.map((option) => (
               <Radio
@@ -78,7 +78,7 @@ export const Constructor = () => {
               />
             ))}
         </GroupeContainer>
-        <GroupeContainer text="Поддержки" className={styles.productsGroupe}>
+        <GroupeContainer text="Поддержки" className={styles.products}>
           {optionName &&
             discounts.map((discount) => (
               <Checkbox

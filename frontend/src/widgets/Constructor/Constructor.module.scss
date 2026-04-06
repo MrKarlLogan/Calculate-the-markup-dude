@@ -1,0 +1,7 @@
+.container {
+  block-size: 100%;
+  @include flex(column, start, center, 10px);
+
+  .products {
+  }
+}

@@ -8,13 +8,14 @@ import { Paragraph } from "@shared/ui/Paragraph";
 import { LoginForm } from "@widgets/Auth/LoginForm";
 import { useState } from "react";
 import { RegisterForm } from "@widgets/Auth/RegisterForm";
+import { Footer } from "@widgets/Footer";
 
 export const AuthPage = () => {
   const [selectForm, setSelectForm] = useState<"login" | "register">("login");
 
   return (
     <MainLayout>
-      <main className={styles.container}>
+      <div className={styles.container}>
         <Section className={styles.welcome}>
           <Headline size={30} weight="bold">
             Добро пожаловать
@@ -31,7 +32,8 @@ export const AuthPage = () => {
             <RegisterForm selectForm={() => setSelectForm("login")} />
           )}
         </Section>
-      </main>
+      </div>
+      <Footer />
     </MainLayout>
   );
 };
