@@ -1,4 +1,6 @@
 .button {
+  inline-size: 100%;
+  block-size: 100%;
   user-select: none;
   appearance: none;
   font-weight: 700;
@@ -8,8 +10,8 @@
   box-shadow: $shadow;
   background-color: $bg-color;
   color: $text-color;
+  transition: $animation-time;
   cursor: pointer;
-  transition: 0.1s;
 
   &:not(:disabled):active {
     color: $accent-color;

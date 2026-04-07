@@ -13,24 +13,29 @@
     );
   }
 
-  .conditions {
-    @include flex(column, center, end, 10px);
-  }
-
-  .calculate {
+  .mainCalculate {
     inline-size: 100%;
-    min-block-size: 20%;
-    @include flex(row, center, center, 30px);
+    @include flex;
 
-    .numbers {
-      flex: 2;
-      @include flex(column, center, center, 10px);
-    }
-
-    .text {
-      flex: 3;
+    .conditions {
+      flex: 1;
       block-size: 100%;
       @include flex(column, center, end, 10px);
+    }
+
+    .calculate {
+      flex: 1;
+      block-size: 100%;
+      @include flex(column, center, center, 30px);
+    }
+  }
+
+  .message {
+    flex: 1;
+    @include grid(4fr 1fr, auto, 10px);
+
+    .adminButtons {
+      @include flex(column, center, center, 10px);
     }
   }
 }

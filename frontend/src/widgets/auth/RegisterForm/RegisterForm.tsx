@@ -115,12 +115,15 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         </Paragraph>
         <Input
           name="name"
-          text="Ваше ФИО"
-          placeholder="Введите ваше имя и фамилию"
+          text="ФИО пользователя"
+          placeholder="Введите фамилию и имя пользователя"
           autoComplete="off"
           onInput={handleInput}
         />
-        <GroupeContainer text="Ваша роль" className={styles.radioGroupe}>
+        <GroupeContainer
+          text="Роль пользователя"
+          className={styles.radioGroupe}
+        >
           <Radio
             value="admin"
             text="Администратор"
@@ -152,10 +155,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
             type="submit"
             disabled={disabledButton}
           />
-          <Button
-            text="Уже есть учётная запись"
-            onClick={selectForm}
-          />
+          <Button text="Уже есть учётная запись" onClick={selectForm} />
         </div>
       </form>
       {toasts.map((toast) => (

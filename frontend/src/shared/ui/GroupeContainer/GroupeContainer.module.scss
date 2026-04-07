@@ -4,10 +4,15 @@
   border-radius: $radius;
   border: 2px solid $bg-color-light-dark;
   user-select: none;
+  transition: $animation-time;
 
   .legend {
     font-weight: 700;
     padding-inline: 0.3rem;
     border-inline: 2px solid $bg-color-light-dark;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }

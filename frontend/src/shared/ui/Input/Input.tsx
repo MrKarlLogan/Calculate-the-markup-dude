@@ -27,12 +27,13 @@ export const Input = ({
     type === "password" ? (isShowPassword ? "text" : "password") : type;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let value = event.currentTarget.value;
+    const value = event.currentTarget.value;
     const hasValue = !!value;
 
-    if (type === "number" && value.length > maxLength) {
-      value = value.slice(0, maxLength);
-      event.currentTarget.value = value;
+    if (type === "number") {
+      const rawValue = value.replace(/\D/g, "");
+      event.currentTarget.value =
+        rawValue.length > maxLength ? rawValue.slice(0, maxLength) : rawValue;
     }
 
     setShowIconPassword(hasValue);

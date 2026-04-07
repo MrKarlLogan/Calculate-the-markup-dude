@@ -18,6 +18,7 @@ import { DataRow } from "@shared/ui/DataRow";
 import styles from "./Constructor.module.scss";
 import { TextArea } from "@/shared/ui/TextArea";
 import { TCalculator } from "./Constructor.type";
+import { getRole } from "@/entities/user/model/userSlice";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -35,6 +36,8 @@ export const Constructor = () => {
   const dispath = useAppDispatch();
   const products = useAppSelector(getProducts);
   const loading = useAppSelector(getStatusLoading);
+  const role = useAppSelector(getRole);
+  const isAdmin = role === "admin";
 
   const [calculator, setCalculator] = useState<TCalculator>(
     initialStateCalculator,
@@ -75,11 +78,10 @@ export const Constructor = () => {
   const markup = actualPrice - finalPrice;
 
   const handleModelChange = (id: string) =>
-    setCalculator((prev) => ({
-      ...prev,
+    setCalculator({
+      ...initialStateCalculator,
       modelId: id,
-      optionId: null,
-    }));
+    });
 
   const handleOptionChange = (id: string) =>
     setCalculator((prev) => ({ ...prev, optionId: id }));
@@ -138,70 +140,80 @@ export const Constructor = () => {
               />
             ))}
         </GroupeContainer>
-        <GroupeContainer
-          text="Дополнительные условия"
-          className={styles.conditions}
-        >
-          <Input
-            text="Скидка за кредит / лизинг"
-            placeholder="Введите сумму возврата по кредиту / лизингу"
-            type="number"
-            onBlur={(event) =>
-              setCalculator((prev) => ({
-                ...prev,
-                creditDiscount: Number(event.target.value),
-              }))
-            }
-          />
-          <Input
-            text="Прочие скидки"
-            placeholder="Введите сумму прочих скидок"
-            type="number"
-            onBlur={(event) =>
-              setCalculator((prev) => ({
-                ...prev,
-                otherDiscount: Number(event.target.value),
-              }))
-            }
-          />
-          <Input
-            text="Стоимость дополнительного оборудования"
-            placeholder="Введите стоимость дополнительного оборудования"
-            type="number"
-            onBlur={(event) =>
-              setCalculator((prev) => ({
-                ...prev,
-                additionalEquipment: Number(event.target.value),
-              }))
-            }
-          />
-          <Input
-            text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
-            placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
-            type="number"
-            onBlur={(event) =>
-              setCalculator((prev) => ({
-                ...prev,
-                plannedProfit: Number(event.target.value),
-              }))
-            }
-            disabled={!!calculator.customPrice}
-          />
-          <Input
-            text="Ваше предложение по стоимости"
-            placeholder="Введите стоимость, которую хотите предложить"
-            type="number"
-            maxLength={8}
-            onBlur={(event) =>
-              setCalculator((prev) => ({
-                ...prev,
-                customPrice: Number(event.target.value),
-              }))
-            }
-          />
-        </GroupeContainer>
-        <GroupeContainer text="Расчёт стоимости" className={styles.calculate}>
-          <div className={styles.numbers}>
+        <div className={styles.mainCalculate}>
+          <GroupeContainer
+            text="Дополнительные условия"
+            className={styles.conditions}
+            disabled={!calculator.optionId}
+          >
+            <Input
+              text="Скидка за кредит / лизинг"
+              placeholder="Введите сумму возврата по кредиту / лизингу"
+              type="number"
+              value={calculator.creditDiscount || ""}
+              onChange={(event) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  creditDiscount: Number(event.target.value),
+                }))
+              }
+            />
+            <Input
+              text="Прочие скидки"
+              placeholder="Введите сумму прочих скидок"
+              type="number"
+              value={calculator.otherDiscount || ""}
+              onChange={(event) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  otherDiscount: Number(event.target.value),
+                }))
+              }
+            />
+            <Input
+              text="Стоимость дополнительного оборудования"
+              placeholder="Введите стоимость дополнительного оборудования"
+              type="number"
+              value={calculator.additionalEquipment || ""}
+              onChange={(event) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  additionalEquipment: Number(event.target.value),
+                }))
+              }
+            />
+            <Input
+              text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
+              placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
+              type="number"
+              value={calculator.plannedProfit || ""}
+              onChange={(event) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  plannedProfit: Number(event.target.value),
+                }))
+              }
+              disabled={!!calculator.customPrice}
+            />
+            <Input
+              text="Ваше предложение по стоимости"
+              placeholder="Введите стоимость, которую хотите предложить"
+              type="number"
+              value={calculator.customPrice || ""}
+              maxLength={8}
+              onChange={(event) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  customPrice: Number(event.target.value),
+                }))
+              }
+            />
+          </GroupeContainer>
+          <GroupeContainer
+            text="Расчёт стоимости"
+            className={styles.calculate}
+            disabled={!calculator.optionId}
+          >
             <DataRow text="Прайсовая стоимость" value={basePrice} />
             <DataRow text="Себестоимость" value={cost} />
             <DataRow text="Сумма примененных скидок" value={totalDiscount} />
@@ -216,21 +228,36 @@ export const Constructor = () => {
               size={18}
               weight="bold"
             />
-          </div>
-          <div className={styles.text}>
-            <TextArea
-              onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  message: event.target.value,
-                }))
-              }
-            />
+          </GroupeContainer>
+        </div>
+        <GroupeContainer
+          text="Сообщение"
+          className={styles.message}
+          disabled={isAdmin || !calculator.optionId}
+        >
+          <TextArea
+            value={calculator.message || ""}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+              setCalculator((prev) => ({
+                ...prev,
+                message: event.target.value,
+              }))
+            }
+          />
+          {isAdmin ? (
+            <div className={styles.adminButtons}>
+              <Button
+                text="Согласовать"
+                onClick={() => console.log(calculator)}
+              />
+              <Button text="Отказать" onClick={() => console.log(calculator)} />
+            </div>
+          ) : (
             <Button
-              text="Согласовать"
+              text="Отправить на согласование"
               onClick={() => console.log(calculator)}
             />
-          </div>
+          )}
         </GroupeContainer>
       </GroupeContainer>
     </Section>

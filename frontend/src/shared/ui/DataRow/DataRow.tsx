@@ -6,19 +6,17 @@ export const DataRow = ({
   text,
   value,
   unit = "руб.",
-  size = 14,
-
+  size = 16,
   weight = "regular",
 }: TDataRow) => {
   return (
     <div
       className={styles.container}
-      style={{ "--size": `${size}px` } as CSSProperties}
+      style={{ "--size": `${size}px`, "--weight": weight } as CSSProperties}
     >
       <span className={styles.text}>{`${text}: `}</span>
       <span
         className={`${styles.num} ${value < 0 ? styles.error : ""}`}
-        style={{ "--weight": weight } as CSSProperties}
       >{`${value.toLocaleString("ru-RU")} ${unit}`}</span>
     </div>
   );

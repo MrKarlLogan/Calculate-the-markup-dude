@@ -9,6 +9,7 @@
   background-color: $bg-color;
   color: $accent-color;
   resize: none;
+  transition: $animation-time;
 
   &:focus-visible {
     outline: none;
@@ -27,5 +28,12 @@
     background-color: $bg-color-dark;
     border-radius: $radius;
     cursor: pointer;
+  }
+
+  &:disabled {
+    box-shadow: none;
+    background-color: $bg-color-light-dark;
+    color: $text-color;
+    cursor: default;
   }
 }
