@@ -2,14 +2,15 @@
 
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import styles from "./LoginForm.module.scss";
-import { Input } from "@shared/ui/Input";
+import { TextInput } from "@shared/ui/TextInput";
 import { Button } from "@shared/ui/Button";
 import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import AuthApi from "@/shared/api/AuthApi";
-import { Headline } from "@/shared/ui/Headline";
+import AuthApi from "@shared/api/AuthApi";
+import { Headline } from "@shared/ui/Headline";
+import { PasswordInput } from "@shared/ui/PasswordInput";
 
 export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
   const router = useRouter();
@@ -59,16 +60,15 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
         >
           Вход
         </Headline>
-        <Input
+        <TextInput
           name="login"
           text="Логин:"
           placeholder="Введите логин"
           onChange={handleChange}
         />
-        <Input
+        <PasswordInput
           name="password"
           text="Пароль:"
-          type="password"
           placeholder="Введите пароль"
           onChange={handleChange}
         />

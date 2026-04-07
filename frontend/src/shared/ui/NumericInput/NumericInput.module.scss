@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  inline-size: 100%;
+  @include flex(column, center, start, 5px);
+  pointer-events: none;
+
+  .text {
+    font-weight: 700;
+  }
+
+  .input {
+    appearance: none;
+    inline-size: 100%;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    background-color: $bg-color;
+    color: $accent-color;
+    resize: none;
+    transition: $animation-time;
+    pointer-events: auto;
+
+    &::placeholder {
+      font-size: 12px;
+      color: $text-color;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: $inner-shadow;
+    }
+
+    &:disabled {
+      box-shadow: none;
+      background-color: $bg-color-light-dark;
+      color: $text-color;
+      cursor: default;
+    }
+  }
+}

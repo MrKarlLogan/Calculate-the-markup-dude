@@ -13,12 +13,12 @@ import { LoaderComponent } from "@shared/ui/LoaderComponent";
 import { Radio } from "@shared/ui/Radio";
 import { Checkbox } from "@shared/ui/Checkbox";
 import { Button } from "@shared/ui/Button";
-import { Input } from "@shared/ui/Input";
 import { DataRow } from "@shared/ui/DataRow";
 import styles from "./Constructor.module.scss";
-import { TextArea } from "@/shared/ui/TextArea";
+import { TextArea } from "@shared/ui/TextArea";
 import { TCalculator } from "./Constructor.type";
-import { getRole } from "@/entities/user/model/userSlice";
+import { getRole } from "@entities/user/model/userSlice";
+import { NumericInput } from "@/shared/ui/NumericInput";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -146,10 +146,9 @@ export const Constructor = () => {
             className={styles.conditions}
             disabled={!calculator.optionId}
           >
-            <Input
+            <NumericInput
               text="Скидка за кредит / лизинг"
               placeholder="Введите сумму возврата по кредиту / лизингу"
-              type="number"
               value={calculator.creditDiscount || ""}
               onChange={(event) =>
                 setCalculator((prev) => ({
@@ -158,10 +157,9 @@ export const Constructor = () => {
                 }))
               }
             />
-            <Input
+            <NumericInput
               text="Прочие скидки"
               placeholder="Введите сумму прочих скидок"
-              type="number"
               value={calculator.otherDiscount || ""}
               onChange={(event) =>
                 setCalculator((prev) => ({
@@ -170,10 +168,9 @@ export const Constructor = () => {
                 }))
               }
             />
-            <Input
+            <NumericInput
               text="Стоимость дополнительного оборудования"
               placeholder="Введите стоимость дополнительного оборудования"
-              type="number"
               value={calculator.additionalEquipment || ""}
               onChange={(event) =>
                 setCalculator((prev) => ({
@@ -182,10 +179,9 @@ export const Constructor = () => {
                 }))
               }
             />
-            <Input
+            <NumericInput
               text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
               placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
-              type="number"
               value={calculator.plannedProfit || ""}
               onChange={(event) =>
                 setCalculator((prev) => ({
@@ -195,10 +191,9 @@ export const Constructor = () => {
               }
               disabled={!!calculator.customPrice}
             />
-            <Input
+            <NumericInput
               text="Ваше предложение по стоимости"
               placeholder="Введите стоимость, которую хотите предложить"
-              type="number"
               value={calculator.customPrice || ""}
               maxLength={8}
               onChange={(event) =>

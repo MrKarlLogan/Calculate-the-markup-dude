@@ -6,49 +6,35 @@ import {
   type FocusEvent,
   type MouseEvent,
 } from "react";
-import styles from "./Input.module.scss";
-import { HidePassword, ShowPassword } from "./svg/PasswordSvg";
-import { TInput } from "./Input.type";
+import styles from "./PasswordInput.module.scss";
+import { HidePassword, ShowPassword } from "../PasswordInput/svg/PasswordSvg";
+import { TPasswordInput } from "./PasswordInput.type";
 
-export const Input = ({
+export const PasswordInput = ({
   text,
-  type = "text",
-  placeholder = "",
+  placeholder = "Введите значение",
   onChange,
   onFocus,
   onBlur,
-  maxLength = 7,
   ...otherProps
-}: TInput) => {
+}: TPasswordInput) => {
   const [showIconPassword, setShowIconPassword] = useState(false);
   const [isShowPassword, setIsShow] = useState(false);
 
-  const inputType =
-    type === "password" ? (isShowPassword ? "text" : "password") : type;
+  const isVisiblePassword = isShowPassword ? "text" : "password";
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    const hasValue = !!value;
-
-    if (type === "number") {
-      const rawValue = value.replace(/\D/g, "");
-      event.currentTarget.value =
-        rawValue.length > maxLength ? rawValue.slice(0, maxLength) : rawValue;
-    }
-
-    setShowIconPassword(hasValue);
+    setShowIconPassword(!!event.currentTarget.value);
     onChange?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    const value = !!event.currentTarget.value;
-    if (value) setShowIconPassword(true);
+    if (!!event.currentTarget.value) setShowIconPassword(true);
     onFocus?.(event);
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const value = !!event.currentTarget.value;
-    if (value) setShowIconPassword(false);
+    if (!!event.currentTarget.value) setShowIconPassword(false);
     onBlur?.(event);
   };
 
@@ -63,14 +49,14 @@ export const Input = ({
       <input
         {...otherProps}
         spellCheck={false}
-        type={inputType}
+        type={isVisiblePassword}
         placeholder={placeholder}
-        className={`${styles.input} ${type === "password" ? styles.input_password : ""}`}
+        className={styles.input}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      {type === "password" && showIconPassword && (
+      {showIconPassword && (
         <button
           type="button"
           className={styles.password}

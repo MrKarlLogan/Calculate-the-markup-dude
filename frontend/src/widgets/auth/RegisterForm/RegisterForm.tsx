@@ -2,13 +2,14 @@ import styles from "./RegisterForm.module.scss";
 import { SyntheticEvent, useState } from "react";
 import { Paragraph } from "@shared/ui/Paragraph";
 import { Button } from "@shared/ui/Button";
-import { Input } from "@shared/ui/Input";
+import { TextInput } from "@shared/ui/TextInput";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { Radio } from "@shared/ui/Radio";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import AuthApi from "@/shared/api/AuthApi";
+import AuthApi from "@shared/api/AuthApi";
 import { Headline } from "@shared/ui/Headline";
+import { PasswordInput } from "@shared/ui/PasswordInput";
 
 export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
   const [isEmpty, setIsEmpty] = useState({
@@ -90,7 +91,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         >
           Регистрация
         </Headline>
-        <Input
+        <TextInput
           name="login"
           text="Логин"
           placeholder="Придумайте логин"
@@ -101,7 +102,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           <strong>Логин:</strong> только латинские буквы, цифры, точки, дефисы,
           нижнее подчёркивание. Без пробелов
         </Paragraph>
-        <Input
+        <PasswordInput
           name="password"
           text="Пароль"
           placeholder="Придумайте пароль"
@@ -113,7 +114,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           <strong>Пароль:</strong> только латинские буквы, без пробелов.
           Обязательно: одна заглавная буква, одна цифра, один спецсимвол
         </Paragraph>
-        <Input
+        <TextInput
           name="name"
           text="ФИО пользователя"
           placeholder="Введите фамилию и имя пользователя"
@@ -137,7 +138,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
             onChange={handleInput}
           />
         </GroupeContainer>
-        <Input
+        <PasswordInput
           name="registrationPassword"
           text="Пароль администратора"
           placeholder="Введите пароль администратора"
