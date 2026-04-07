@@ -3,5 +3,34 @@
   @include flex(column, start, center, 10px);
 
   .products {
+    flex: 1;
+    @include grid(
+      repeat(auto-fill, minmax(150px, auto)),
+      auto,
+      10px,
+      center,
+      stretch
+    );
+  }
+
+  .conditions {
+    @include flex(column, center, end, 10px);
+  }
+
+  .calculate {
+    inline-size: 100%;
+    min-block-size: 20%;
+    @include flex(row, center, center, 30px);
+
+    .numbers {
+      flex: 2;
+      @include flex(column, center, center, 10px);
+    }
+
+    .text {
+      flex: 3;
+      block-size: 100%;
+      @include flex(column, center, end, 10px);
+    }
   }
 }

@@ -74,7 +74,7 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
         />
         <div className={styles.buttons}>
           <Button text="Войти" type="submit" disabled={disabledButton} />
-          <Button text="Регистрация" onClick={selectForm} type="button" />
+          <Button text="Регистрация" onClick={selectForm} />
         </div>
       </form>
       {toasts.map((toast) => (

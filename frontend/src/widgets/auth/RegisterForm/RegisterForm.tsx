@@ -155,7 +155,6 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           <Button
             text="Уже есть учётная запись"
             onClick={selectForm}
-            type="button"
           />
         </div>
       </form>

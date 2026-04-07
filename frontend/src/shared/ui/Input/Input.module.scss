@@ -2,6 +2,7 @@
   position: relative;
   inline-size: 100%;
   @include flex(column, center, start, 5px);
+  pointer-events: none;
 
   .text {
     font-weight: 700;
@@ -18,6 +19,7 @@
     color: $accent-color;
     resize: none;
     transition: $animation-time;
+    pointer-events: auto;
 
     &::placeholder {
       font-size: 12px;
@@ -46,6 +48,13 @@
     &::-webkit-credentials-auto-fill-button {
       visibility: hidden;
     }
+
+    &:disabled {
+      box-shadow: none;
+      background-color: $bg-color-light-dark;
+      color: $text-color;
+      cursor: default;
+    }
   }
 
   .input_password {
@@ -63,6 +72,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: auto;
     cursor: pointer;
   }
 }

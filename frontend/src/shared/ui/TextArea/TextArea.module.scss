@@ -1,27 +1,22 @@
 .textarea {
+  inline-size: 100%;
+  block-size: 100%;
   appearance: none;
-  font: {
-    family: "Iosevka Charon Mono", monospace;
-    weight: 700;
-  }
   padding: 0.5rem 0.8rem;
   border: none;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background-color: var(--bg-color);
-  color: var(--accent-color);
+  border-radius: $radius;
+  box-shadow: $shadow;
+  background-color: $bg-color;
+  color: $accent-color;
   resize: none;
 
   &:focus-visible {
     outline: none;
-    box-shadow: var(--inner-shadow);
+    box-shadow: $inner-shadow;
   }
 
   &::placeholder {
-    font: {
-      family: "Iosevka Charon Mono", monospace;
-    }
-    color: var(--text-color);
+    color: $text-color;
   }
 
   &::-webkit-scrollbar {
@@ -29,8 +24,8 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--bg-color-dark);
-    border-radius: var(--radius);
+    background-color: $bg-color-dark;
+    border-radius: $radius;
     cursor: pointer;
   }
 }

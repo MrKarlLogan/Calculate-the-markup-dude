@@ -3,6 +3,7 @@
   padding: 0.7rem;
   border-radius: $radius;
   border: 2px solid $bg-color-light-dark;
+  user-select: none;
 
   .legend {
     font-weight: 700;

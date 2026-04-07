@@ -17,6 +17,7 @@ export const Input = ({
   onChange,
   onFocus,
   onBlur,
+  maxLength = 7,
   ...otherProps
 }: TInput) => {
   const [showIconPassword, setShowIconPassword] = useState(false);
@@ -26,8 +27,15 @@ export const Input = ({
     type === "password" ? (isShowPassword ? "text" : "password") : type;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = !!event.currentTarget.value;
-    setShowIconPassword(value);
+    let value = event.currentTarget.value;
+    const hasValue = !!value;
+
+    if (type === "number" && value.length > maxLength) {
+      value = value.slice(0, maxLength);
+      event.currentTarget.value = value;
+    }
+
+    setShowIconPassword(hasValue);
     onChange?.(event);
   };
 
@@ -38,7 +46,8 @@ export const Input = ({
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    setShowIconPassword(false);
+    const value = !!event.currentTarget.value;
+    if (value) setShowIconPassword(false);
     onBlur?.(event);
   };
 

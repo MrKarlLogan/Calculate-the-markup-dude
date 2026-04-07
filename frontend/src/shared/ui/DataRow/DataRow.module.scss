@@ -1,0 +1,13 @@
+.container {
+  inline-size: 100%;
+  @include flex(row, space-between, center, 10px);
+  font-size: var(--size);
+
+  .num {
+    font-weight: var(--weight);
+  }
+
+  .error {
+    color: $error;
+  }
+}
