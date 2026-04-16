@@ -6,7 +6,7 @@ import { Paragraph } from "../Paragraph";
 import styles from "./Toast.module.scss";
 import { TToast } from "./Toast.type";
 
-export const Toast = ({ text, onClose }: TToast) => {
+export const Toast = ({ title = "Уведомление", text, onClose }: TToast) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const Toast = ({ text, onClose }: TToast) => {
   return (
     <div className={`${styles.toast} ${!isVisible ? styles.hide : ""}`}>
       <Headline as="h3" position="start" size={18} weight="bold">
-        Уведомление
+        {title}
       </Headline>
       <Paragraph position="start">{text}</Paragraph>
     </div>

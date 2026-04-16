@@ -8,6 +8,16 @@ import {
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 
+axios_instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.data && "success" in error.response.data) {
+      return Promise.resolve({ ...error.response, data: error.response.data });
+    }
+    return Promise.reject(error);
+  },
+);
+
 const authApi = {
   login: async (data: {
     login: string;
