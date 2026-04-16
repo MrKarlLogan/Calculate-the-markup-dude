@@ -1,6 +1,6 @@
 "use client";
 
-import Api from "@/shared/api/AuthApi";
+import authApi from "@/shared/api/authApi";
 import { LoadingPage } from "@pages/LoadingPage/LoadingPage";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -14,7 +14,7 @@ export const PublicRoute = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const getMeResult = await Api.checkAuth();
+        const getMeResult = await authApi.checkAuth();
 
         if (getMeResult.success) {
           setIsAuth(true);
@@ -22,10 +22,10 @@ export const PublicRoute = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        const refreshResult = await Api.refreshToken();
+        const refreshResult = await authApi.refreshToken();
 
         if (refreshResult.success) {
-          const newMeResult = await Api.checkAuth();
+          const newMeResult = await authApi.checkAuth();
           if (newMeResult.success) {
             setIsAuth(true);
             router.push(CLIENT_PATH.HOME);

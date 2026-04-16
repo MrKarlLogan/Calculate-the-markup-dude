@@ -1,6 +1,6 @@
 "use client";
 
-import Api from "@/shared/api/AuthApi";
+import authApi from "@/shared/api/authApi";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { LoadingPage } from "@pages/LoadingPage/LoadingPage";
@@ -16,7 +16,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const getMeResult = await Api.checkAuth();
+        const getMeResult = await authApi.checkAuth();
 
         if (getMeResult.success) {
           dispatch(setUser(getMeResult.data));
@@ -25,10 +25,10 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        const refreshResult = await Api.refreshToken();
+        const refreshResult = await authApi.refreshToken();
 
         if (refreshResult.success) {
-          const newMeResult = await Api.checkAuth();
+          const newMeResult = await authApi.checkAuth();
           if (newMeResult.success) {
             dispatch(setUser(newMeResult.data));
             setIsAuth(true);

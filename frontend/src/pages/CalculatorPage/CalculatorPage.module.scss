@@ -1,4 +1,4 @@
-.content {
+.content_calculator {
   inline-size: 100%;
   min-block-size: 0;
   flex: 1;
@@ -25,4 +25,11 @@
     background-color: $accent-color;
     cursor: pointer;
   }
+}
+
+.content_constructor {
+  inline-size: 100%;
+  min-block-size: 0;
+  flex: 1;
+  overflow-y: auto;
 }

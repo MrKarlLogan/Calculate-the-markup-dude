@@ -7,7 +7,7 @@ import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { Radio } from "@shared/ui/Radio";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import AuthApi from "@shared/api/AuthApi";
+import authApi from "@/shared/api/authApi";
 import { Headline } from "@shared/ui/Headline";
 import { PasswordInput } from "@shared/ui/PasswordInput";
 
@@ -49,7 +49,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
       return showToast("Все поля обязательны для заполнения");
 
     try {
-      const result = await AuthApi.register({
+      const result = await authApi.register({
         login,
         password,
         name,

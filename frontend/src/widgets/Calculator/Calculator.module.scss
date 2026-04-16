@@ -1,0 +1,41 @@
+.container {
+  block-size: 100%;
+  @include flex(column, start, center, 10px);
+
+  .products {
+    flex: 1;
+    @include grid(
+      repeat(auto-fill, minmax(150px, auto)),
+      auto,
+      10px,
+      center,
+      stretch
+    );
+  }
+
+  .mainCalculate {
+    inline-size: 100%;
+    @include flex;
+
+    .conditions {
+      flex: 1;
+      block-size: 100%;
+      @include flex(column, center, end, 10px);
+    }
+
+    .calculate {
+      flex: 1;
+      block-size: 100%;
+      @include flex(column, center, center, 30px);
+    }
+  }
+
+  .message {
+    flex: 1;
+    @include grid(4fr 1fr, auto, 10px);
+
+    .adminButtons {
+      @include flex(column, center, center, 10px);
+    }
+  }
+}

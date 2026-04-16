@@ -1,4 +1,3 @@
-import { config } from "@shared/config";
 import {
   TCheckAuthResponse,
   TLoginResponse,
@@ -7,20 +6,18 @@ import {
   TRegisterResponse,
 } from "@entities/user/types/types";
 import { URL_PATH } from "../config/constants";
+import { axios_instance } from "./axios-instance";
 
-const AuthApi = {
+const authApi = {
   login: async (data: {
     login: string;
     password: string;
   }): Promise<TLoginResponse> => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.LOGIN}`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
-
-    return response.json();
+    const response = await axios_instance.post<TLoginResponse>(
+      URL_PATH.LOGIN,
+      data,
+    );
+    return response.data;
   },
 
   register: async (data: {
@@ -30,41 +27,34 @@ const AuthApi = {
     role: string;
     registrationPassword: string;
   }): Promise<TRegisterResponse> => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.REGISTER}`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
-
-    return response.json();
+    const response = await axios_instance.post<TRegisterResponse>(
+      URL_PATH.REGISTER,
+      data,
+    );
+    return response.data;
   },
 
   checkAuth: async (): Promise<TCheckAuthResponse> => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.GET_ME}`, {
-      credentials: "include",
-    });
-
-    return response.json();
+    const response = await axios_instance.get<TCheckAuthResponse>(
+      URL_PATH.GET_ME,
+    );
+    return response.data;
   },
 
   refreshToken: async (): Promise<TRefreshResponse> => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.REFRESH_TOKEN}`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    return response.json();
+    const response = await axios_instance.post<TRefreshResponse>(
+      URL_PATH.REFRESH_TOKEN,
+    );
+    return response.data;
   },
 
   logout: async (): Promise<TLogoutResponse> => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.LOGOUT}`, {
-      method: "POST",
-      credentials: "include",
-    });
+    const response = await axios_instance.post<TLogoutResponse>(
+      URL_PATH.LOGOUT,
+    );
 
-    return response.json();
+    return response.data;
   },
 };
 
-export default AuthApi;
+export default authApi;

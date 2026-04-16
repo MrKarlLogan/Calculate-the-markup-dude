@@ -1,14 +1,14 @@
-import { config } from "@shared/config";
+import { IProductsResponse } from "@/entities/product/types/types";
 import { URL_PATH } from "../config/constants";
+import { axios_instance } from "./axios-instance";
 
-const ProductsApi = {
+const productsApi = {
   getAllProducts: async () => {
-    const response = await fetch(`${config.API_URL}${URL_PATH.PRODUCTS}`, {
-      credentials: "include",
-    });
-
-    return response.json();
+    const response = await axios_instance.get<IProductsResponse>(
+      URL_PATH.PRODUCTS,
+    );
+    return response.data;
   },
 };
 
-export default ProductsApi;
+export default productsApi;
