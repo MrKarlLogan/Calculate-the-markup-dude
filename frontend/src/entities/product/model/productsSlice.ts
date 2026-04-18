@@ -43,7 +43,6 @@ const productsSlice = createSlice({
   },
   selectors: {
     getProducts: (state) => state.products,
-
     getProductById: (state, id: string) =>
       state.products.find((product) => product.id === id),
     getStatusLoading: (state) => state.loading,

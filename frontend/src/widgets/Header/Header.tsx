@@ -6,14 +6,9 @@ import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { useAppSelector } from "@shared/lib/hooks/redux";
 import { getRole, getUser } from "@entities/user/model/userSlice";
+import { THeader } from "./Header.type";
 
-export const Header = ({
-  toggle,
-  onToggle,
-}: {
-  toggle?: boolean;
-  onToggle?: () => void;
-}) => {
+export const Header = ({ toggle, onToggle }: THeader) => {
   const router = useRouter();
   const user = useAppSelector(getUser);
   const role = useAppSelector(getRole);

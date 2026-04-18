@@ -3,7 +3,7 @@
   @include flex(column, start, center, 10px);
 
   .products {
-    flex: 1;
+    min-block-size: max-content;
     @include grid(
       repeat(auto-fill, minmax(150px, auto)),
       auto,
@@ -14,6 +14,6 @@
   }
 
   .editor {
-    flex: 7;
+    block-size: 100%;
   }
 }

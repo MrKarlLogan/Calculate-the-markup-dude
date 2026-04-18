@@ -5,6 +5,7 @@
   @include flex;
   position: relative;
   overflow-y: auto;
+  scrollbar-gutter: stable;
 
   &::after {
     position: absolute;

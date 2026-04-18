@@ -11,6 +11,7 @@ export const InputsOptions = ({
   created,
   option,
   onChange,
+  onDelete,
 }: TInputsOptions) => {
   const handleCreateOption = (
     name: string,
@@ -34,6 +35,12 @@ export const InputsOptions = ({
             text="Создать"
             className={styles.container_created__button_create}
             onClick={created?.onCreate}
+            disabled={
+              !created?.value.name ||
+              !created?.value.cost ||
+              !created?.value.price ||
+              created?.value.cost >= created?.value.price
+            }
           />
         </div>
         <div className={styles.container_created__inputs}>
@@ -70,6 +77,7 @@ export const InputsOptions = ({
         <Button
           text="Удалить"
           className={styles.container_edit__button_delete}
+          onClick={onDelete}
         />
       </div>
       <div className={styles.container_edit__inputs}>
@@ -78,13 +86,11 @@ export const InputsOptions = ({
           value={option?.name || ""}
           onChange={(event) => onChange?.("name", event.target.value)}
         />
-
         <NumericInput
           text="Себестоимость"
           value={option?.cost || ""}
           onChange={(event) => onChange?.("cost", Number(event.target.value))}
         />
-
         <NumericInput
           text="Прайсовая цена"
           value={option?.price || ""}

@@ -4,6 +4,16 @@
   padding: 1rem;
   border-radius: $radius;
   @include flex(column, center, stretch, 10px);
+  animation: opacity $animation-time ease-in-out;
+
+  @keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   &__title {
     @include flex(row, center, center, 10px);
@@ -14,7 +24,8 @@
     @include flex(row, center, center, 10px);
   }
 
-  &__button_edit, &__button_delete {
+  &__button_edit,
+  &__button_delete {
     max-inline-size: max-content;
   }
 }

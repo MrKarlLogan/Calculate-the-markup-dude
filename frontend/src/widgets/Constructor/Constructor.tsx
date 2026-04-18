@@ -51,7 +51,6 @@ export const Constructor = () => {
     setCreateNewProduct(false);
   };
 
-
   const options = selectedProduct?.options || [];
   const discounts = selectedProduct?.discounts || [];
 
@@ -84,6 +83,7 @@ export const Constructor = () => {
             className={styles.editor}
           >
             <ProductEditor
+              key={selectModel.modelId}
               productId={selectModel.modelId || ""}
               hasChange={setHasChange}
               createdProduct={{

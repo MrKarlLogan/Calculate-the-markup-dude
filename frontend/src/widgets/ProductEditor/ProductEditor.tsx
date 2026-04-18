@@ -8,9 +8,10 @@ import {
   getProductById,
   updateProductOptions,
 } from "@/entities/product/model/productsSlice";
-import { InputsOptions } from "../InputsEdit";
+import { InputsOptions } from "../InputsOptions";
 import { useEffect, useMemo, useState } from "react";
 import { TOption } from "@/entities/product/types/types";
+import { InputsDiscounts } from "../InputsDiscounts";
 
 export const ProductEditor = ({
   productId,
@@ -26,7 +27,9 @@ export const ProductEditor = ({
   };
 
   const product = useAppSelector((state) => getProductById(state, productId));
+
   const [optionsState, setOptionsState] = useState<TOption[] | null>(null);
+
   const options = optionsState ?? product?.options ?? [];
   const [createdOptionValue, setCreatedOptionValue] = useState({
     name: "",
@@ -37,7 +40,6 @@ export const ProductEditor = ({
   const handleAddOption = () => {
     setOptionsState((prev) => {
       const current = prev ?? product?.options ?? [];
-
       return [
         ...current,
         {
@@ -56,11 +58,19 @@ export const ProductEditor = ({
 
   const hasChanges = useMemo(() => {
     if (optionsState === null) return false;
+    if (!product) return optionsState.length > 0;
+    if (optionsState.length !== product.options?.length) return true;
 
-    if (optionsState.length !== product?.options?.length) return true;
+    const sortedLocal = [...optionsState].sort((a, b) =>
+      a.id.localeCompare(b.id),
+    );
 
-    return optionsState.some((localOption, index) => {
-      const originalOption = product?.options?.[index];
+    const sortedOriginal = [...(product.options || [])].sort((a, b) =>
+      a.id.localeCompare(b.id),
+    );
+
+    return sortedLocal.some((localOption, index) => {
+      const originalOption = sortedOriginal[index];
       if (!originalOption) return true;
 
       return (
@@ -69,7 +79,24 @@ export const ProductEditor = ({
         localOption.price !== originalOption.price
       );
     });
-  }, [optionsState, product?.options]);
+  }, [optionsState, product]);
+
+  const isValidOptions = useMemo(() => {
+    const current = optionsState ?? product?.options ?? [];
+    if (current.length === 0) return true;
+
+    return current.every(
+      (option) =>
+        option.name?.trim() &&
+        option.cost > 0 &&
+        option.price > 0 &&
+        option.cost < option.price,
+    );
+  }, [optionsState, product]);
+
+  useEffect(() => {
+    hasChange(hasChanges);
+  }, [hasChanges, hasChange]);
 
   const handleSave = () => {
     const current = optionsState ?? product?.options ?? [];
@@ -84,38 +111,31 @@ export const ProductEditor = ({
     setOptionsState(null);
   };
 
-  useEffect(() => {
-    hasChange?.(hasChanges);
-  }, [hasChange, hasChanges]);
-
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
-        <Button
-          text="Создать новую модель"
-          className={styles.buttons_all}
-          onClick={handleCreateNewProduct}
-          disabled={createdProduct.state || hasChanges}
-        />
-        <Button
-          text="Редактировать выбранную модель"
-          className={styles.buttons_all}
-          disabled={!product || hasChanges}
-        />
-        <Button
-          text="Удалить выбранную модель"
-          className={styles.buttons_all}
-          disabled={!product || hasChanges}
-        />
+        <div className={styles.buttons_create}>
+          <Button
+            text="Создать новую модель"
+            className={styles.buttons_all}
+            onClick={handleCreateNewProduct}
+            disabled={createdProduct.state || hasChanges}
+          />
+          <Button
+            text="Удалить выбранную модель"
+            className={styles.buttons_all}
+            disabled={!product || hasChanges}
+          />
+        </div>
         <div className={styles.buttons_save}>
           <Button
             text="Сохранить изменения"
             className={styles.buttons_all}
             onClick={handleSave}
-            disabled={!hasChanges}
+            disabled={!hasChanges || !optionsState || !isValidOptions}
           />
           <Button
-            text="Отменить"
+            text="Отменить все изменения"
             className={styles.buttons_all}
             onClick={() => setOptionsState(null)}
             disabled={!hasChanges}
@@ -131,6 +151,7 @@ export const ProductEditor = ({
         <GroupeContainer
           title="Все комплектации"
           className={styles.inputs__content}
+          disabled={!product}
         >
           <>
             <InputsOptions
@@ -148,12 +169,16 @@ export const ProductEditor = ({
                 onChange={(field, value) => {
                   setOptionsState((prev) => {
                     const current = prev ?? product?.options ?? [];
-
                     return current.map((opt) =>
                       opt.id === option.id ? { ...opt, [field]: value } : opt,
                     );
                   });
-                  hasChange(hasChanges);
+                }}
+                onDelete={() => {
+                  setOptionsState((prev) => {
+                    const current = prev ?? product?.options ?? [];
+                    return current.filter((opt) => opt.id !== option.id);
+                  });
                 }}
               />
             ))}
@@ -162,11 +187,12 @@ export const ProductEditor = ({
         <GroupeContainer
           title="Все поддержки"
           className={styles.inputs__content}
+          disabled={!product}
         >
           <>
-            <p>Добавить</p>
+            <InputsDiscounts isCreated />
             {product?.discounts.map((discount) => (
-              <p key={discount.id} />
+              <InputsDiscounts key={discount.id} />
             ))}
           </>
         </GroupeContainer>

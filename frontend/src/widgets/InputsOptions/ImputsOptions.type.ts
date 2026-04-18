@@ -12,4 +12,5 @@ export type TInputsOptions = {
   };
   option?: TOption;
   onChange?: (field: string, value: string | number) => void;
+  onDelete?: () => void
 };
