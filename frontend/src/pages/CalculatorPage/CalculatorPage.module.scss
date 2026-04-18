@@ -1,8 +1,7 @@
-.content_calculator {
+.content {
   inline-size: 100%;
   min-block-size: 0;
   flex: 1;
-  @include grid(2fr 1fr, auto, 10px);
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -25,11 +24,26 @@
     background-color: $accent-color;
     cursor: pointer;
   }
-}
 
-.content_constructor {
-  inline-size: 100%;
-  min-block-size: 0;
-  flex: 1;
-  overflow-y: auto;
+  &__calculator, &__constructor {
+    inline-size: 100%;
+    block-size: 100%;
+    @include grid(2fr 1fr, auto);
+    padding: 0;
+  }
+
+  &__other {
+    inline-size: 100%;
+    block-size: 100%;
+    @include flex(column);
+    padding: 0;
+
+    &_notification {
+      flex: 1;
+    }
+
+    &_agreement {
+      flex: 3;
+    }
+  }
 }

@@ -45,7 +45,7 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
         showToast(errorMessage || "Произошла ошибка при входе");
       }
     } catch {
-      showToast(res);
+      showToast("Ошибка при получении данных от сервера");
     }
   };
 

@@ -73,7 +73,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         );
       } else {
         const errorMessage = result.validation?.body?.message || result.message;
-        showToast(errorMessage || "Произошла ошибка при регистрации");
+        showToast(errorMessage || "Произошла ошибка при входе");
       }
     } catch {
       showToast("Ошибка при получении данных от сервера");
@@ -122,7 +122,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           onInput={handleInput}
         />
         <GroupeContainer
-          text="Роль пользователя"
+          title="Роль пользователя"
           className={styles.radioGroupe}
         >
           <Radio

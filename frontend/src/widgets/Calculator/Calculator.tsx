@@ -1,10 +1,7 @@
-"use client";
-
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Section } from "@shared/ui/Section";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
-import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
-import { fetchProducts } from "@entities/product/api";
+import { useAppSelector } from "@shared/lib/hooks/redux";
 import {
   getProducts,
   getStatusLoading,
@@ -33,7 +30,6 @@ const initialStateCalculator: TCalculator = {
 };
 
 export const Calculator = () => {
-  const dispath = useAppDispatch();
   const products = useAppSelector(getProducts);
   const loading = useAppSelector(getStatusLoading);
   const role = useAppSelector(getRole);
@@ -42,10 +38,6 @@ export const Calculator = () => {
   const [calculator, setCalculator] = useState<TCalculator>(
     initialStateCalculator,
   );
-
-  useEffect(() => {
-    dispath(fetchProducts());
-  }, [dispath]);
 
   if (loading) return <LoaderComponent />;
 
@@ -99,8 +91,8 @@ export const Calculator = () => {
 
   return (
     <Section>
-      <GroupeContainer text="Конструктор" className={styles.container}>
-        <GroupeContainer text="Модель" className={styles.products}>
+      <GroupeContainer title="Калькулятор" className={styles.container}>
+        <GroupeContainer title="Модель" className={styles.products}>
           {products.map((product) => (
             <Radio
               key={product.id}
@@ -113,7 +105,7 @@ export const Calculator = () => {
             />
           ))}
         </GroupeContainer>
-        <GroupeContainer text="Комплектация" className={styles.products}>
+        <GroupeContainer title="Комплектация" className={styles.products}>
           {calculator.modelId &&
             options.map((option) => (
               <Radio
@@ -127,7 +119,7 @@ export const Calculator = () => {
               />
             ))}
         </GroupeContainer>
-        <GroupeContainer text="Поддержки" className={styles.products}>
+        <GroupeContainer title="Поддержки" className={styles.products}>
           {calculator.optionId &&
             discounts.map((discount) => (
               <Checkbox
@@ -142,7 +134,7 @@ export const Calculator = () => {
         </GroupeContainer>
         <div className={styles.mainCalculate}>
           <GroupeContainer
-            text="Дополнительные условия"
+            title="Дополнительные условия"
             className={styles.conditions}
             disabled={!calculator.optionId}
           >
@@ -205,7 +197,7 @@ export const Calculator = () => {
             />
           </GroupeContainer>
           <GroupeContainer
-            text="Расчёт стоимости"
+            title="Расчёт стоимости"
             className={styles.calculate}
             disabled={!calculator.optionId}
           >
@@ -226,7 +218,7 @@ export const Calculator = () => {
           </GroupeContainer>
         </div>
         <GroupeContainer
-          text="Сообщение"
+          title="Сообщение"
           className={styles.message}
           disabled={isAdmin || !calculator.optionId}
         >

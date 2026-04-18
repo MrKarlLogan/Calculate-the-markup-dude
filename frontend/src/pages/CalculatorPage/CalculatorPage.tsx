@@ -1,34 +1,40 @@
-"use client";
-
 import { Header } from "@widgets/Header";
 import { MainLayout } from "@widgets/MainLayout";
-import { Calculator } from "@/widgets/Calculator/Calculator";
+import { Calculator } from "@widgets/Calculator/Calculator";
 import { Agreement } from "@widgets/Agreement";
 import { Footer } from "@widgets/Footer";
 import styles from "./CalculatorPage.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Constructor } from "@widgets/Constructor";
+import { Section } from "@shared/ui/Section";
+import { Notification } from "@widgets/Notification";
+import { useAppDispatch } from "@shared/lib/hooks/redux";
+import { fetchProducts } from "@entities/product/api";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
+  const dispath = useAppDispatch();
+
+  useEffect(() => {
+    dispath(fetchProducts());
+  }, [dispath]);
 
   return (
     <MainLayout>
       <Header onToggle={() => setToggleComponent((prev) => !prev)} />
-      <main
-        className={
-          !toggleComponent
-            ? styles.content_calculator
-            : styles.content_constructor
-        }
-      >
+      <main className={styles.content}>
         {!toggleComponent ? (
-          <>
+          <Section className={styles.content__calculator}>
             <Calculator />
-            <Agreement />
-          </>
+            <Section className={styles.content__other}>
+              <Notification className={styles.content__other_notification} />
+              <Agreement className={styles.content__other_agreement} />
+            </Section>
+          </Section>
         ) : (
-          <Constructor />
+          <Section className={styles.content__constructor}>
+            <Constructor />
+          </Section>
         )}
       </main>
       <Footer />

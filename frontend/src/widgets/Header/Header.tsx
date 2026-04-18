@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@shared/ui/Button";
 import { Greeting } from "@shared/ui/Greeting";
 import styles from "./Header.module.scss";
