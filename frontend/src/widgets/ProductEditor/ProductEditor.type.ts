@@ -1,8 +1,9 @@
-import { TConstructor } from "../Constructor/Constructor.type";
 import { Dispatch, SetStateAction } from "react";
+import { TConstructor } from "../Constructor/Constructor.type";
 
 export type TProductEditor = {
-  product: TConstructor;
+  productId: string;
+  hasChange: Dispatch<SetStateAction<boolean>>;
   createdProduct: {
     state: boolean;
     dispatch: Dispatch<SetStateAction<boolean>>;

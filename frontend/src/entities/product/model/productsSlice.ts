@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, IProductsState } from "../types/types";
+import { IProduct, IProductsState, TOption } from "../types/types";
 import { fetchProducts } from "../api";
 
 const initialState: IProductsState = {
@@ -11,7 +11,18 @@ const initialState: IProductsState = {
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    updateProductOptions: (
+      state,
+      action: PayloadAction<{ productId: string; options: TOption[] }>,
+    ) => {
+      const product = state.products.find(
+        (product) => product.id === action.payload.productId,
+      );
+
+      if (product) product.options = action.payload.options;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -32,12 +43,15 @@ const productsSlice = createSlice({
   },
   selectors: {
     getProducts: (state) => state.products,
+
+    getProductById: (state, id: string) =>
+      state.products.find((product) => product.id === id),
     getStatusLoading: (state) => state.loading,
     getError: (state) => state.error,
   },
 });
 
-export const {} = productsSlice.actions;
-export const { getProducts, getStatusLoading, getError } =
+export const { updateProductOptions } = productsSlice.actions;
+export const { getProducts, getProductById, getStatusLoading, getError } =
   productsSlice.selectors;
 export default productsSlice.reducer;

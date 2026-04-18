@@ -23,7 +23,10 @@ export const CalculatorPage = () => {
 
   return (
     <MainLayout>
-      <Header onToggle={() => setToggleComponent((prev) => !prev)} />
+      <Header
+        toggle={toggleComponent}
+        onToggle={() => setToggleComponent((prev) => !prev)}
+      />
       <main className={styles.content}>
         {!toggleComponent ? (
           <Section

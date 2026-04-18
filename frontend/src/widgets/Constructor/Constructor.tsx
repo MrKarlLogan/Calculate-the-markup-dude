@@ -26,6 +26,7 @@ export const Constructor = () => {
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
     useConfirmModal();
 
+  const [hasChange, setHasChange] = useState(false);
   const [createNewProduct, setCreateNewProduct] = useState(false);
   const [selectModel, setSelectModel] = useState(initialStateConstructor);
 
@@ -36,7 +37,7 @@ export const Constructor = () => {
   const handleModelChange = async (id: string) => {
     if (createNewProduct) {
       const result = await showConfirm(
-        "Это действие приведет к удалению всех записанных изменений. Вы хотите выйти из создания новой модели?",
+        "Это действие приведет к удалению всех записанных изменений. Выйти из создания новой модели?",
       );
 
       if (!result) return;
@@ -50,7 +51,6 @@ export const Constructor = () => {
     setCreateNewProduct(false);
   };
 
-  console.log(selectModel);
 
   const options = selectedProduct?.options || [];
   const discounts = selectedProduct?.discounts || [];
@@ -61,7 +61,11 @@ export const Constructor = () => {
     <>
       <Section>
         <GroupeContainer title="Конструктор" className={styles.container}>
-          <GroupeContainer title="Выбор модели" className={styles.products}>
+          <GroupeContainer
+            title="Выбор модели"
+            className={styles.products}
+            disabled={hasChange}
+          >
             {products.map((product) => (
               <Radio
                 key={product.id}
@@ -80,7 +84,8 @@ export const Constructor = () => {
             className={styles.editor}
           >
             <ProductEditor
-              product={selectModel}
+              productId={selectModel.modelId || ""}
+              hasChange={setHasChange}
               createdProduct={{
                 state: createNewProduct,
                 dispatch: setCreateNewProduct,

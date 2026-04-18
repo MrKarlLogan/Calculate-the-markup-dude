@@ -12,8 +12,18 @@
     }
   }
 
+  .buttons_save {
+    @include flex(column, center, center, 0.5rem);
+  }
+
   .inputs {
+    flex: 1;
     inline-size: 100%;
     @include flex(column, start, center, 1rem);
+
+    &__content {
+      flex: 1;
+      @include flex(column, start, center, 10px);
+    }
   }
 }
