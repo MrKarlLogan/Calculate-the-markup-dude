@@ -1,0 +1,19 @@
+.container {
+  flex: 1;
+  @include flex(column, start, center, 10px);
+
+  .products {
+    flex: 1;
+    @include grid(
+      repeat(auto-fill, minmax(150px, auto)),
+      auto,
+      10px,
+      center,
+      stretch
+    );
+  }
+
+  .editor {
+    flex: 7;
+  }
+}

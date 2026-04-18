@@ -1,7 +1,9 @@
-"use client";
-
 import { useState, useCallback } from "react";
-import { TUseToast } from "./useToast.type";
+
+type TUseToast = {
+  text: string;
+  id: number;
+};
 
 const useToast = () => {
   const [toasts, setToasts] = useState<TUseToast[]>([]);

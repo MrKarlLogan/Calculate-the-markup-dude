@@ -35,11 +35,7 @@ export const Calculator = () => {
   const role = useAppSelector(getRole);
   const isAdmin = role === "admin";
 
-  const [calculator, setCalculator] = useState<TCalculator>(
-    initialStateCalculator,
-  );
-
-  if (loading) return <LoaderComponent />;
+  const [calculator, setCalculator] = useState(initialStateCalculator);
 
   const selectedProduct = products.find(
     (product) => product.id === calculator.modelId,
@@ -89,10 +85,12 @@ export const Calculator = () => {
   const options = selectedProduct?.options || [];
   const discounts = selectedProduct?.discounts || [];
 
+  if (loading) return <LoaderComponent />;
+
   return (
     <Section>
       <GroupeContainer title="Калькулятор" className={styles.container}>
-        <GroupeContainer title="Модель" className={styles.products}>
+        <GroupeContainer title="Выбор модели" className={styles.products}>
           {products.map((product) => (
             <Radio
               key={product.id}
@@ -105,7 +103,7 @@ export const Calculator = () => {
             />
           ))}
         </GroupeContainer>
-        <GroupeContainer title="Комплектация" className={styles.products}>
+        <GroupeContainer title="Выбор комплектация" className={styles.products}>
           {calculator.modelId &&
             options.map((option) => (
               <Radio
@@ -119,7 +117,7 @@ export const Calculator = () => {
               />
             ))}
         </GroupeContainer>
-        <GroupeContainer title="Поддержки" className={styles.products}>
+        <GroupeContainer title="Доступные поддержки" className={styles.products}>
           {calculator.optionId &&
             discounts.map((discount) => (
               <Checkbox

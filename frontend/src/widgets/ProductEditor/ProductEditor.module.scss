@@ -1,0 +1,19 @@
+.container {
+  inline-size: 100%;
+  block-size: 100%;
+  @include flex(column, start, center, 1rem);
+
+  .buttons {
+    inline-size: 100%;
+    @include flex(row, center, stretch, 1rem);
+
+    &_all {
+      flex: 1;
+    }
+  }
+
+  .inputs {
+    inline-size: 100%;
+    @include flex(column, start, center, 1rem);
+  }
+}

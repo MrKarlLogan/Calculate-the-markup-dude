@@ -1,5 +1,5 @@
 .container {
-  block-size: 100%;
+  flex: 1;
   @include flex(column, start, center, 10px);
 
   .products {

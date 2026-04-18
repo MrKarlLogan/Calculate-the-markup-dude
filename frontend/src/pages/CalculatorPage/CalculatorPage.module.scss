@@ -25,11 +25,22 @@
     cursor: pointer;
   }
 
-  &__calculator, &__constructor {
+  &__calculator,
+  &__constructor {
     inline-size: 100%;
     block-size: 100%;
     @include grid(2fr 1fr, auto);
     padding: 0;
+    animation: opacity $animation-time ease-in-out;
+
+    @keyframes opacity {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 
   &__other {
@@ -44,6 +55,11 @@
 
     &_agreement {
       flex: 3;
+    }
+
+    &_notification_editor,
+    &_user_editor {
+      flex: 1;
     }
   }
 }

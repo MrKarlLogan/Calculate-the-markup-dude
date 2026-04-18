@@ -1,8 +1,7 @@
 .button {
+  appearance: none;
   inline-size: 100%;
   block-size: 100%;
-  user-select: none;
-  appearance: none;
   font-weight: 700;
   padding: 0.5rem 1rem;
   border: none;
@@ -11,6 +10,7 @@
   background-color: $bg-color;
   color: $text-color;
   transition: $animation-time;
+  user-select: none;
   cursor: pointer;
 
   &:not(:disabled):active {

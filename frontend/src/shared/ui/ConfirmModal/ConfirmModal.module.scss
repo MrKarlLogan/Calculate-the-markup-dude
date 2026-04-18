@@ -1,0 +1,59 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  animation: fadeIn 0.2s ease;
+
+  .content {
+    inline-size: 30%;
+    @include flex(column, center, center, 1rem);
+    padding: 1rem;
+    border-radius: $radius;
+    background-color: $bg-color;
+    color: $text-color;
+    user-select: none;
+  }
+
+  .buttons {
+    inline-size: 100%;
+    @include flex(row, center, center, 10px);
+
+    .button {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      background-color: $bg-color;
+      color: $text-color;
+      border-radius: $radius;
+      cursor: pointer;
+    }
+  }
+}
+
+.hide {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -10,6 +10,8 @@ import { Section } from "@shared/ui/Section";
 import { Notification } from "@widgets/Notification";
 import { useAppDispatch } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
+import { NotificationEditor } from "@/widgets/NotificationEditor";
+import { UsersEditor } from "@/widgets/UsersEditor";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
@@ -24,7 +26,10 @@ export const CalculatorPage = () => {
       <Header onToggle={() => setToggleComponent((prev) => !prev)} />
       <main className={styles.content}>
         {!toggleComponent ? (
-          <Section className={styles.content__calculator}>
+          <Section
+            className={styles.content__calculator}
+            key={toggleComponent ? "constructor" : "calculator"}
+          >
             <Calculator />
             <Section className={styles.content__other}>
               <Notification className={styles.content__other_notification} />
@@ -34,6 +39,12 @@ export const CalculatorPage = () => {
         ) : (
           <Section className={styles.content__constructor}>
             <Constructor />
+            <Section className={styles.content__other}>
+              <NotificationEditor
+                className={styles.content__other_notification_editor}
+              />
+              <UsersEditor className={styles.content__other_user_editor} />
+            </Section>
           </Section>
         )}
       </main>
