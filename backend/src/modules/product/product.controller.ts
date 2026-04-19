@@ -4,6 +4,7 @@ import { IProduct } from "./product.types";
 import { DB_RELATIONS } from "@shared/constants";
 import InternalServerError from "@shared/errors/internal-server-error";
 import NotFoundError from "@shared/errors/not-found-error";
+import { optional } from "joi";
 
 export const findAllProducts = async (
   _req: Request,
@@ -15,9 +16,18 @@ export const findAllProducts = async (
       relations: [DB_RELATIONS.OPTIONS, DB_RELATIONS.DISCOUNTS],
     });
 
+    const response = products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      options: product.options.map(({ productId, ...option }) => option),
+      discounts: product.discounts.map(
+        ({ productId, ...discount }) => discount,
+      ),
+    }));
+
     res.status(200).json({
       success: true,
-      data: products,
+      data: response,
     });
   } catch (error) {
     next(new InternalServerError("Ошибка при получении списка товаров"));
@@ -38,9 +48,18 @@ export const findProductById = async (
 
     if (!product) return next(new NotFoundError(`Товар с id: ${id} не найден`));
 
+    const response = {
+      id: product.id,
+      name: product.name,
+      options: product.options.map(({ productId, ...option }) => option),
+      discounts: product.discounts.map(
+        ({ productId, ...discount }) => discount,
+      ),
+    };
+
     res.status(200).json({
       success: true,
-      data: product,
+      data: response,
     });
   } catch (error) {
     next(
@@ -61,9 +80,18 @@ export const createProduct = async (
     const newProduct = ProductRepository.create(data);
     const savedProduct = await ProductRepository.save(newProduct);
 
+    const response = {
+      id: savedProduct.id,
+      name: savedProduct.name,
+      options: savedProduct.options.map(({ productId, ...option }) => option),
+      discounts: savedProduct.discounts.map(
+        ({ productId, ...discount }) => discount,
+      ),
+    };
+
     res.status(201).json({
       success: true,
-      data: savedProduct,
+      data: response,
       message: "Продукт успешно создан",
     });
   } catch (error) {
@@ -99,9 +127,18 @@ export const updateProduct = async (
 
     await ProductRepository.save(updatedProduct);
 
+    const response = {
+      id: updatedProduct.id,
+      name: updatedProduct.name,
+      options: updatedProduct.options.map(({ productId, ...option }) => option),
+      discounts: updatedProduct.discounts.map(
+        ({ productId, ...discount }) => discount,
+      ),
+    };
+
     res.status(200).json({
       success: true,
-      data: updatedProduct,
+      data: response,
       message: `Товар с id ${id} успешно обновлен`,
     });
   } catch (error) {

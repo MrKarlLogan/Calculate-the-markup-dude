@@ -15,6 +15,7 @@ import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import { ConfirmModal } from "@shared/ui/ConfirmModal";
 import { Toast } from "@/shared/ui/Toast";
 import useToast from "@/shared/lib/hooks/useToast";
+import { Paragraph } from "@/shared/ui/Paragraph";
 
 const initialStateConstructor: TConstructor = {
   modelId: null,
@@ -59,21 +60,25 @@ export const Constructor = () => {
         <GroupeContainer title="Конструктор" className={styles.container}>
           <GroupeContainer
             title="Выбор модели"
-            className={styles.products}
+            className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
             disabled={hasChange}
           >
-            {products.map((product) => (
-              <Radio
-                key={product.id}
-                text={product.name}
-                value={product.id}
-                name="model"
-                checked={selectModel.modelId === product.id}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleModelChange(event.target.value)
-                }
-              />
-            ))}
+            {products.length !== 0 ? (
+              products.map((product) => (
+                <Radio
+                  key={product.id}
+                  text={product.name}
+                  value={product.id}
+                  name="model"
+                  checked={selectModel.modelId === product.id}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleModelChange(event.target.value)
+                  }
+                />
+              ))
+            ) : (
+              <Paragraph>Модели для выбора отсуствуют</Paragraph>
+            )}
           </GroupeContainer>
           <GroupeContainer
             title="Создание и редактирование"

@@ -5,6 +5,7 @@ export type TOption = {
   name: string;
   price: number;
   cost: number;
+  productId: string;
 };
 
 export interface IProduct {

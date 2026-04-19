@@ -23,8 +23,49 @@ export type TProductsResponse = {
   data: TProduct[];
 };
 
+export type TCreateProductResponse = {
+  success: boolean;
+  data?: TProduct;
+  message?: string;
+  validation?: TValidationError["validation"];
+};
+
+export type TUpdateProductResponse = {
+  success: boolean;
+  data: TProduct;
+  message: string;
+  validation?: TValidationError["validation"];
+};
+
+export type TDeleteProductResponse = {
+  success: boolean;
+  message: string;
+};
+
 export type TProductsState = {
   products: TProduct[];
   loading: boolean;
   error: string | null;
+};
+
+export type TOptionRequest = Omit<TOption, "id">;
+export type TDiscountRequest = Omit<TDiscount, "id">;
+
+export type TProductRequest = {
+  name: string;
+  options: TOptionRequest[];
+  discounts: TDiscountRequest[];
+};
+
+export type TValidationError = {
+  statusCode: number;
+  error: string;
+  message: string;
+  validation: {
+    body: {
+      source: string;
+      keys: string[];
+      message: string;
+    };
+  };
 };

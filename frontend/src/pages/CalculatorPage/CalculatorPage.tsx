@@ -8,14 +8,17 @@ import { useEffect, useState } from "react";
 import { Constructor } from "@widgets/Constructor";
 import { Section } from "@shared/ui/Section";
 import { Notification } from "@widgets/Notification";
-import { useAppDispatch } from "@shared/lib/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
 import { NotificationEditor } from "@/widgets/NotificationEditor";
 import { UsersEditor } from "@/widgets/UsersEditor";
+import { getProducts } from "@/entities/product/model/productsSlice";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
   const dispath = useAppDispatch();
+  const products = useAppSelector(getProducts);
+  console.log(products);
 
   useEffect(() => {
     dispath(fetchProducts());

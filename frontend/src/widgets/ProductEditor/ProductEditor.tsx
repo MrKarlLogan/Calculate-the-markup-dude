@@ -4,20 +4,22 @@ import { Button } from "@shared/ui/Button";
 import { TProductEditor } from "./ProductEditor.type";
 import { TextInput } from "@shared/ui/TextInput";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
-import {
-  createNewMode,
-  getProductById,
-  removeModel,
-  updateProductDiscounts,
-  updateProductName,
-  updateProductOptions,
-} from "@/entities/product/model/productsSlice";
+import { getProductById } from "@/entities/product/model/productsSlice";
 import { InputsOptions } from "../InputsOptions";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { TDiscount, TOption } from "@/entities/product/types/types";
+import {
+  TDiscount,
+  TOption,
+  TValidationError,
+} from "@/entities/product/types/types";
 import { InputsDiscounts } from "../InputsDiscounts";
 import { ConfirmModal } from "@/shared/ui/ConfirmModal";
 import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
+import {
+  createProductThunk,
+  removeProductThunk,
+  updateProductThunk,
+} from "@/entities/product/api";
 
 const initialNewModel = {
   name: "",
@@ -94,9 +96,13 @@ export const ProductEditor = ({
     );
 
     if (result) {
-      dispatch(removeModel(product.id));
-      changeProduct.dispatch(changeProduct.initialState);
-      showToast?.(`Модель ${product.name} успешно удалена`);
+      try {
+        await dispatch(removeProductThunk(product.id));
+        changeProduct.dispatch(changeProduct.initialState);
+        showToast?.(`Модель ${product.name} успешно удалена`);
+      } catch {
+        showToast?.(`Произошла ошибка при удалении модели ${product.name}`);
+      }
     }
   };
 
@@ -134,11 +140,6 @@ export const ProductEditor = ({
   const handleSaveNewProduct = async () => {
     if (!newModel.name.trim()) return;
 
-    const createNewModel = {
-      ...newModel,
-      id: crypto.randomUUID(),
-    };
-
     const result = await showConfirm(
       `После подтверждения будет создана новая модель ${newModel.name}`,
       "Создать",
@@ -146,16 +147,36 @@ export const ProductEditor = ({
     );
 
     if (result) {
-      createdProduct.dispatch(false);
-      changeProduct.dispatch(changeProduct.initialState);
-      dispatch(createNewMode(createNewModel));
+      try {
+        const createNewModel = {
+          name: newModel.name,
+          options: newModel.options.map(({ id: _id, ...option }) => option),
+          discounts: newModel.discounts.map(
+            ({ id: _id, ...discount }) => discount,
+          ),
+        };
 
-      setNewModel(initialNewModel);
-      setModelState(null);
-      setOptionsState(null);
-      setDiscountsState(null);
+        await dispatch(createProductThunk(createNewModel)).unwrap();
 
-      showToast?.(`Модель ${newModel.name} успешно создана`);
+        createdProduct.dispatch(false);
+        changeProduct.dispatch(changeProduct.initialState);
+
+        setNewModel(initialNewModel);
+        setModelState(null);
+        setOptionsState(null);
+        setDiscountsState(null);
+
+        showToast?.(`Модель ${newModel.name} успешно создана`);
+      } catch (error: unknown) {
+        const err = error as TValidationError;
+        const validationMessage = err?.validation?.body?.message;
+        const errorMsg =
+          `Ошибка при создании модели ${newModel.name}: ${validationMessage}` ||
+          `Ошибка при создании модели ${newModel.name}: ${err?.message}` ||
+          `Ошибка при создании модели ${newModel.name}`;
+
+        showToast?.(errorMsg);
+      }
     }
   };
 
@@ -348,7 +369,7 @@ export const ProductEditor = ({
     createdProduct.state,
   ]);
 
-  const isValidOptions = useMemo(() => {
+  const isValidData = useMemo(() => {
     const currentOptions = createdProduct.state
       ? newModel.options
       : (optionsState ?? product?.options ?? []);
@@ -358,7 +379,7 @@ export const ProductEditor = ({
     const currentModel = createdProduct.state ? newModel.name : model;
 
     const optionValid =
-      currentOptions.length === 0 ||
+      currentOptions.length > 0 &&
       currentOptions.every(
         (option) =>
           option.name?.trim() &&
@@ -367,11 +388,9 @@ export const ProductEditor = ({
           option.cost < option.price,
       );
 
-    const discountValid =
-      currentDiscounts.length === 0 ||
-      currentDiscounts.every(
-        (discount) => discount.name?.trim() && discount.discountAmount > 0,
-      );
+    const discountValid = currentDiscounts.every(
+      (discount) => discount.name?.trim() && discount.discountAmount > 0,
+    );
 
     const modelValid = currentModel.trim().length > 0;
 
@@ -399,43 +418,42 @@ export const ProductEditor = ({
     );
 
     if (result) {
-      const currentModel = modelState ?? product?.name ?? "";
-      const currentOptions = optionsState ?? product?.options ?? [];
-      const currentDiscounts = discountsState ?? product?.discounts ?? [];
+      try {
+        const currentModel = modelState ?? product?.name ?? "";
+        const currentOptions = optionsState ?? product?.options ?? [];
+        const currentDiscounts = discountsState ?? product?.discounts ?? [];
 
-      if (hasModelChanges) {
-        dispatch(
-          updateProductName({
-            productId,
-            name: currentModel,
+        const updateData = {
+          name: currentModel,
+          options: currentOptions.map(({ id: _id, ...option }) => option),
+          discounts: currentDiscounts.map(
+            ({ id: _id, ...discount }) => discount,
+          ),
+        };
+
+        await dispatch(
+          updateProductThunk({
+            data: updateData,
+            id: productId,
           }),
+        ).unwrap();
+
+        setOptionsState(null);
+        setDiscountsState(null);
+
+        showToast?.(
+          `Изменения внесенные в модель ${product?.name} были успешно сохранены`,
         );
+      } catch (error: unknown) {
+        const err = error as TValidationError;
+        const validationMessage = err?.validation?.body?.message;
+        const errorMsg =
+          `Ошибка при обновлении модели ${newModel.name}: ${validationMessage}` ||
+          `Ошибка при обновлении модели ${newModel.name}: ${err?.message}` ||
+          `Ошибка при обновлении модели ${newModel.name}`;
+
+        showToast?.(errorMsg);
       }
-
-      if (optionsState !== null) {
-        dispatch(
-          updateProductOptions({
-            productId,
-            options: currentOptions,
-          }),
-        );
-      }
-
-      if (discountsState !== null) {
-        dispatch(
-          updateProductDiscounts({
-            productId,
-            discounts: currentDiscounts,
-          }),
-        );
-      }
-
-      setOptionsState(null);
-      setDiscountsState(null);
-
-      showToast?.(
-        `Изменения внесенные в модель ${product?.name} были успешно сохранены`,
-      );
     }
   };
 
@@ -463,7 +481,7 @@ export const ProductEditor = ({
                 text="Создать модель"
                 className={styles.buttons_all}
                 onClick={handleSaveNewProduct}
-                disabled={!newModel.name.trim() || !isValidOptions}
+                disabled={!newModel.name.trim() || !isValidData}
               />
               <Button
                 text="Отменить"
@@ -477,7 +495,7 @@ export const ProductEditor = ({
                 text="Сохранить изменения"
                 className={styles.buttons_all}
                 onClick={handleSave}
-                disabled={!hasChanges || !isValidOptions}
+                disabled={!hasChanges || !isValidData}
               />
               <Button
                 text="Отменить все изменения"

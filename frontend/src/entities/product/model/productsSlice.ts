@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TDiscount, TProduct, TProductsState, TOption } from "../types/types";
-import { fetchProducts } from "../api";
+import {
+  createProductThunk,
+  fetchProducts,
+  removeProductThunk,
+  updateProductThunk,
+} from "../api";
 
 const initialState: TProductsState = {
   products: [],
@@ -66,6 +71,32 @@ const productsSlice = createSlice({
       )
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(createProductThunk.fulfilled, (state, action) => {
+        state.products.push(action.payload);
+      })
+      .addCase(createProductThunk.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+      .addCase(updateProductThunk.fulfilled, (state, action) => {
+        const index = state.products.findIndex(
+          (product) => product.id === action.payload.id,
+        );
+        if (index !== -1) state.products[index] = action.payload;
+      })
+      .addCase(updateProductThunk.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+      .addCase(
+        removeProductThunk.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.products = state.products.filter(
+            (product) => product.id !== action.payload,
+          );
+        },
+      )
+      .addCase(removeProductThunk.rejected, (state, action) => {
         state.error = action.payload as string;
       });
   },

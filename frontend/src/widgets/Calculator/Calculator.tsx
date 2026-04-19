@@ -16,6 +16,7 @@ import { TextArea } from "@shared/ui/TextArea";
 import { TCalculator } from "./Calculator.type";
 import { getRole } from "@entities/user/model/userSlice";
 import { NumericInput } from "@shared/ui/NumericInput";
+import { Paragraph } from "@/shared/ui/Paragraph";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -90,21 +91,32 @@ export const Calculator = () => {
   return (
     <Section>
       <GroupeContainer title="Калькулятор" className={styles.container}>
-        <GroupeContainer title="Выбор модели" className={styles.products}>
-          {products.map((product) => (
-            <Radio
-              key={product.id}
-              text={product.name}
-              value={product.id}
-              name="model"
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                handleModelChange(event.target.value)
-              }
-            />
-          ))}
+        <GroupeContainer
+          title="Выбор модели"
+          className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
+        >
+          {products.length !== 0 ? (
+            products.map((product) => (
+              <Radio
+                key={product.id}
+                text={product.name}
+                value={product.id}
+                name="model"
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleModelChange(event.target.value)
+                }
+              />
+            ))
+          ) : (
+            <Paragraph>Модели для выбора отсутствуют</Paragraph>
+          )}
         </GroupeContainer>
-        <GroupeContainer title="Выбор комплектация" className={styles.products}>
-          {calculator.modelId &&
+        <GroupeContainer
+          title="Выбор комплектация"
+          className={`${options.length !== 0 ? styles.products : styles.products_empty}`}
+        >
+          {options.length !== 0 ? (
+            calculator.modelId &&
             options.map((option) => (
               <Radio
                 key={option.id}
@@ -115,10 +127,20 @@ export const Calculator = () => {
                   handleOptionChange(event.target.value)
                 }
               />
-            ))}
+            ))
+          ) : (
+            <Paragraph>
+              Для отображения всех доступных комплектаций необходимо выбрать
+              модель
+            </Paragraph>
+          )}
         </GroupeContainer>
-        <GroupeContainer title="Доступные поддержки" className={styles.products}>
-          {calculator.optionId &&
+        <GroupeContainer
+          title="Доступные поддержки"
+          className={`${discounts.length !== 0 ? styles.products : styles.products_empty}`}
+        >
+          {discounts.length !== 0 ? (
+            calculator.optionId &&
             discounts.map((discount) => (
               <Checkbox
                 key={discount.id}
@@ -128,7 +150,14 @@ export const Calculator = () => {
                   handleDiscountsChange(discount.id, event.target.checked)
                 }
               />
-            ))}
+            ))
+          ) : (
+            <Paragraph>
+              {!selectedProduct && discounts.length === 0
+                ? "Для отображения всех доступных поддержек необходимо выбрать комплектацию"
+                : "У данной модели нет поддержек"}
+            </Paragraph>
+          )}
         </GroupeContainer>
         <div className={styles.mainCalculate}>
           <GroupeContainer

@@ -13,6 +13,11 @@
     );
   }
 
+  .products_empty {
+    min-block-size: max-content;
+    @include grid(1fr, auto, 10px, center, center);
+  }
+
   .editor {
     block-size: 100%;
   }
