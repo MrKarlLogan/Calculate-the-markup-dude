@@ -1,11 +1,16 @@
-.header {
+.header__wrapper {
   inline-size: 100%;
-  @include flex(row, space-between, center, 1rem);
-  padding: 1rem;
   border-block-end: 2px solid $bg-color-light-dark;
 
-  .nav {
-    @include flex;
-    gap: 1rem;
+  .header {
+    max-inline-size: $max-size;
+    margin: 0 auto;
+    @include flex(row, space-between, center, 1rem);
+    padding: 1rem;
+
+    .nav {
+      @include flex;
+      gap: 1rem;
+    }
   }
 }

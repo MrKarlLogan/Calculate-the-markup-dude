@@ -1,4 +1,5 @@
 .container {
+  max-inline-size: $max-size;
   inline-size: 100%;
   min-block-size: 0;
   flex: 1;

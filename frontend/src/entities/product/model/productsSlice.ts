@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, IProductsState, TOption } from "../types/types";
+import { TDiscount, TProduct, TProductsState, TOption } from "../types/types";
 import { fetchProducts } from "../api";
 
-const initialState: IProductsState = {
+const initialState: TProductsState = {
   products: [],
   loading: false,
   error: null,
@@ -22,6 +22,16 @@ const productsSlice = createSlice({
 
       if (product) product.options = action.payload.options;
     },
+    updateProductDiscounts: (
+      state,
+      action: PayloadAction<{ productId: string; discounts: TDiscount[] }>,
+    ) => {
+      const product = state.products.find(
+        (product) => product.id === action.payload.productId,
+      );
+
+      if (product) product.discounts = action.payload.discounts;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -31,7 +41,7 @@ const productsSlice = createSlice({
       })
       .addCase(
         fetchProducts.fulfilled,
-        (state, action: PayloadAction<IProduct[]>) => {
+        (state, action: PayloadAction<TProduct[]>) => {
           state.loading = false;
           state.products = action.payload;
         },
@@ -50,7 +60,8 @@ const productsSlice = createSlice({
   },
 });
 
-export const { updateProductOptions } = productsSlice.actions;
+export const { updateProductOptions, updateProductDiscounts } =
+  productsSlice.actions;
 export const { getProducts, getProductById, getStatusLoading, getError } =
   productsSlice.selectors;
 export default productsSlice.reducer;

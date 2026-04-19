@@ -28,7 +28,7 @@ export const InputsOptions = ({
     return (
       <div className={styles.container_created}>
         <div className={styles.container_created__title}>
-          <Paragraph position="start" size={20} weight="bold">
+          <Paragraph position="start" size={18} weight="bold">
             Создание комплектации
           </Paragraph>
           <Button
@@ -71,7 +71,7 @@ export const InputsOptions = ({
   return (
     <div className={styles.container_edit}>
       <div className={styles.container_edit__title}>
-        <Paragraph position="start" size={20} weight="bold">
+        <Paragraph position="start" size={18} weight="bold">
           Редактирование комплектации
         </Paragraph>
         <Button

@@ -1,30 +1,30 @@
-export interface IDiscount {
+export type TDiscount = {
   id: string;
   name: string;
   discountAmount: number;
-}
+};
 
-export interface TOption {
+export type TOption = {
   id: string;
   name: string;
   price: number;
   cost: number;
-}
+};
 
-export interface IProduct {
+export type TProduct = {
   id: string;
   name: string;
   options: TOption[];
-  discounts: IDiscount[];
-}
+  discounts: TDiscount[];
+};
 
-export interface IProductsResponse {
+export type TProductsResponse = {
   success: boolean;
-  data: IProduct[];
-}
+  data: TProduct[];
+};
 
-export interface IProductsState {
-  products: IProduct[];
+export type TProductsState = {
+  products: TProduct[];
   loading: boolean;
   error: string | null;
-}
+};

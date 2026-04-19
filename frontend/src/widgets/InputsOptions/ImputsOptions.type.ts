@@ -1,4 +1,4 @@
-import { TOption } from "@/entities/product/types/types";
+import { TOption } from "@entities/product/types/types";
 import { Dispatch, SetStateAction } from "react";
 
 export type TOptionEdit = Omit<TOption, "id">;

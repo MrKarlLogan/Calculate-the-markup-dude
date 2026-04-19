@@ -7,9 +7,11 @@ import { CLIENT_PATH } from "@shared/config/constants";
 import { useAppSelector } from "@shared/lib/hooks/redux";
 import { getRole, getUser } from "@entities/user/model/userSlice";
 import { THeader } from "./Header.type";
+import { getStatusLoading } from "@/entities/product/model/productsSlice";
 
 export const Header = ({ toggle, onToggle }: THeader) => {
   const router = useRouter();
+  const loading = useAppSelector(getStatusLoading);
   const user = useAppSelector(getUser);
   const role = useAppSelector(getRole);
 
@@ -19,17 +21,20 @@ export const Header = ({ toggle, onToggle }: THeader) => {
   };
 
   return (
-    <header className={styles.header}>
-      <Greeting name={user ?? "пользователь"} />
-      <nav className={styles.nav}>
-        {role === "admin" && (
-          <Button
-            text={toggle ? "Калькулятор" : "Конструктор"}
-            onClick={onToggle}
-          />
-        )}
-        <Button text="Выход" onClick={handleLogout} />
-      </nav>
+    <header className={styles.header__wrapper}>
+      <div className={styles.header}>
+        <Greeting name={user ?? "пользователь"} />
+        <nav className={styles.nav}>
+          {role === "admin" && (
+            <Button
+              text={toggle ? "Калькулятор" : "Конструктор"}
+              onClick={onToggle}
+              disabled={loading}
+            />
+          )}
+          <Button text="Выход" onClick={handleLogout} />
+        </nav>
+      </div>
     </header>
   );
 };

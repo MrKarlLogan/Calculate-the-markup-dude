@@ -1,8 +1,9 @@
 .toast {
   position: fixed;
   inline-size: 30%;
+  max-inline-size: 400px;
   bottom: calc(20px * 2);
-  right: 20px;
+  right: calc((100% - min(100%, $max-size)) / 2 + 20px);
   @include flex(column, center, start, 0.5rem);
   padding: 1rem;
   border-radius: $radius;

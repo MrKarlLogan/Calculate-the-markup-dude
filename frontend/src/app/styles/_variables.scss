@@ -1,10 +1,10 @@
-$accent-color: #82b2f0;
+$accent-color: #5296ef;
 
-$white: #f5f8fc;
+$white: #f0f4fa;
 $bg-color: #e4ebf5;
-$bg-color-light-dark: #c8d0e7;
-$bg-color-dark: #bec8e4;
-$text-color: #8b9bc4;
+$bg-color-light-dark: #c8cfe4;
+$bg-color-dark: #b1bcdc;
+$text-color: #8191b9;
 $error: FireBrick;
 
 $radius: 8px;
@@ -19,3 +19,5 @@ $inner-shadow:
   inset -3.2px -3.2px 8px $white;
 
 $animation-time: 0.3s;
+
+$max-size: 1600px;

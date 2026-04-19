@@ -17,6 +17,8 @@
 
   &__title {
     @include flex(row, center, center, 10px);
+    padding-block-end: 1rem;
+    border-block-end: 2px solid $bg-color-dark;
   }
 
   &__inputs {
@@ -39,6 +41,8 @@
 
   &__title {
     @include flex(row, center, center, 10px);
+    padding-block-end: 1rem;
+    border-block-end: 2px solid $bg-color-dark;
   }
 
   &__button_create {
