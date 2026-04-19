@@ -46,13 +46,13 @@ export const InputsDiscounts = ({
           <TextInput
             text="Название поддержки"
             placeholder="Введите название поддержки"
-            value={created?.value.name}
+            value={created?.value.name || ""}
             onChange={(event) => handleCreateDiscount("name", event)}
           />
           <NumericInput
             text="Сумма поддержки"
             placeholder="Введите сумму поддержки"
-            value={created?.value.discountAmount}
+            value={created?.value.discountAmount || ""}
             onChange={(event) =>
               handleCreateDiscount("discountAmount", event, true)
             }

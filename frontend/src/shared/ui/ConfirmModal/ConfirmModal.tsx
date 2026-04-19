@@ -29,7 +29,7 @@ export const ConfirmModal = ({
   return (
     <div className={`${styles.modal} ${!isVisible ? styles.hide : ""}`}>
       <div className={styles.content}>
-        <Paragraph>{text}</Paragraph>
+        <Paragraph size={18}>{text}</Paragraph>
         <div className={styles.buttons}>
           <Button text={positiveAnswer} type="button" onClick={handleConfirm} />
           <Button text={negativeAnswer} type="button" onClick={handleCancel} />

@@ -3,6 +3,7 @@ import { TConstructor } from "../Constructor/Constructor.type";
 
 export type TProductEditor = {
   productId: string;
+  showToast?: (text: string) => void;
   hasChange: Dispatch<SetStateAction<boolean>>;
   createdProduct: {
     state: boolean;

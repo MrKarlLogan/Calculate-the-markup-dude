@@ -13,6 +13,8 @@ import { TConstructor } from "./Constructor.type";
 import { ProductEditor } from "../ProductEditor";
 import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import { ConfirmModal } from "@shared/ui/ConfirmModal";
+import { Toast } from "@/shared/ui/Toast";
+import useToast from "@/shared/lib/hooks/useToast";
 
 const initialStateConstructor: TConstructor = {
   modelId: null,
@@ -25,22 +27,20 @@ export const Constructor = () => {
   const loading = useAppSelector(getStatusLoading);
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
     useConfirmModal();
+  const { toasts, showToast, removeToast } = useToast();
 
   const [hasChange, setHasChange] = useState(false);
   const [createNewProduct, setCreateNewProduct] = useState(false);
   const [selectModel, setSelectModel] = useState(initialStateConstructor);
 
-  const selectedProduct = products.find(
-    (product) => product.id === selectModel.modelId,
-  );
-
   const handleModelChange = async (id: string) => {
     if (createNewProduct) {
       const result = await showConfirm(
-        "Это действие приведет к удалению всех записанных изменений. Выйти из создания новой модели?",
+        "Это действие приведет к удалению всех ранее записанных изменений. Выйти из режима редактирования?",
       );
 
       if (!result) return;
+      showToast("Все действия были отменены");
     }
 
     setSelectModel({
@@ -50,9 +50,6 @@ export const Constructor = () => {
     });
     setCreateNewProduct(false);
   };
-
-  const options = selectedProduct?.options || [];
-  const discounts = selectedProduct?.discounts || [];
 
   if (loading) return <LoaderComponent />;
 
@@ -84,6 +81,7 @@ export const Constructor = () => {
           >
             <ProductEditor
               key={selectModel.modelId}
+              showToast={showToast}
               productId={selectModel.modelId || ""}
               hasChange={setHasChange}
               createdProduct={{
@@ -108,6 +106,13 @@ export const Constructor = () => {
           onClose={handleClose}
         />
       )}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          text={toast.text}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
     </>
   );
 };
