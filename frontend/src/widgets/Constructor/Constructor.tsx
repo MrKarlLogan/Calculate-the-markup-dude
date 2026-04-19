@@ -1,10 +1,11 @@
 import { Section } from "@/shared/ui/Section";
 import styles from "./Constructor.module.scss";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
-import { useAppSelector } from "@shared/lib/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import {
   getProducts,
   getStatusLoading,
+  setEditing,
 } from "@entities/product/model/productsSlice";
 import { Radio } from "@shared/ui/Radio";
 import { ChangeEvent, useState } from "react";
@@ -24,6 +25,7 @@ const initialStateConstructor: TConstructor = {
 };
 
 export const Constructor = () => {
+  const dispatch = useAppDispatch();
   const products = useAppSelector(getProducts);
   const loading = useAppSelector(getStatusLoading);
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
@@ -41,6 +43,7 @@ export const Constructor = () => {
       );
 
       if (!result) return;
+      dispatch(setEditing(false));
       showToast("Все действия были отменены");
     }
 

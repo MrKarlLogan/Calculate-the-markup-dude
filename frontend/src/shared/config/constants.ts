@@ -6,6 +6,7 @@ export const URL_PATH = {
   GET_ME: "/auth/me",
   REFRESH_TOKEN: "/auth/refresh",
   PRODUCTS: "/products",
+  NOTIFICATION: "/notification",
 } as const;
 
 export const CLIENT_PATH = {

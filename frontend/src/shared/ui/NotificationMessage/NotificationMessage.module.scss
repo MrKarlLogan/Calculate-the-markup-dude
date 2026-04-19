@@ -1,0 +1,18 @@
+.container {
+  background-color: $bg-color;
+  padding: 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  @include flex(column, center, center, 10px);
+
+  .title {
+    inline-size: 100%;
+    @include flex(row, space-between, center, 10px);
+    border-block-end: 2px solid $bg-color-dark;
+    padding-block-end: 0.5rem;
+
+    .deleteButton {
+      inline-size: max-content;
+    }
+  }
+}

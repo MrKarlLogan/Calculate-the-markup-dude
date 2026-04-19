@@ -10,6 +10,7 @@ import {
 const initialState: TProductsState = {
   products: [],
   loading: false,
+  editing: false,
   error: null,
 };
 
@@ -55,6 +56,9 @@ const productsSlice = createSlice({
         (product) => product.id !== action.payload,
       );
     },
+    setEditing: (state, action: PayloadAction<boolean>) => {
+      state.editing = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -74,7 +78,7 @@ const productsSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(createProductThunk.fulfilled, (state, action) => {
-        state.products.push(action.payload);
+        if (action.payload) state.products.push(action.payload);
       })
       .addCase(createProductThunk.rejected, (state, action) => {
         state.error = action.payload as string;
@@ -106,6 +110,7 @@ const productsSlice = createSlice({
       state.products.find((product) => product.id === id),
     getStatusLoading: (state) => state.loading,
     getError: (state) => state.error,
+    getEditing: (state) => state.editing,
   },
 });
 
@@ -115,7 +120,13 @@ export const {
   updateProductOptions,
   updateProductDiscounts,
   removeModel,
+  setEditing,
 } = productsSlice.actions;
-export const { getProducts, getProductById, getStatusLoading, getError } =
-  productsSlice.selectors;
+export const {
+  getProducts,
+  getProductById,
+  getStatusLoading,
+  getError,
+  getEditing,
+} = productsSlice.selectors;
 export default productsSlice.reducer;

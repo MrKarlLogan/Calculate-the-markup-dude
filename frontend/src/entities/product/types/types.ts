@@ -45,6 +45,7 @@ export type TDeleteProductResponse = {
 export type TProductsState = {
   products: TProduct[];
   loading: boolean;
+  editing: boolean;
   error: string | null;
 };
 

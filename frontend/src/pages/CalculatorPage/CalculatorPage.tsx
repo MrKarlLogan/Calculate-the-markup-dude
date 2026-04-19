@@ -8,17 +8,13 @@ import { useEffect, useState } from "react";
 import { Constructor } from "@widgets/Constructor";
 import { Section } from "@shared/ui/Section";
 import { Notification } from "@widgets/Notification";
-import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
+import { useAppDispatch } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
-import { NotificationEditor } from "@/widgets/NotificationEditor";
 import { UsersEditor } from "@/widgets/UsersEditor";
-import { getProducts } from "@/entities/product/model/productsSlice";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
   const dispath = useAppDispatch();
-  const products = useAppSelector(getProducts);
-  console.log(products);
 
   useEffect(() => {
     dispath(fetchProducts());
@@ -46,8 +42,9 @@ export const CalculatorPage = () => {
           <Section className={styles.content__constructor}>
             <Constructor />
             <Section className={styles.content__other}>
-              <NotificationEditor
+              <Notification
                 className={styles.content__other_notification_editor}
+                isEdit
               />
               <UsersEditor className={styles.content__other_user_editor} />
             </Section>

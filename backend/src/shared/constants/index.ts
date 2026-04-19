@@ -37,7 +37,7 @@ export const NAME_FROM_VALIDATION = {
 } as const;
 
 export const NOTIFICATION_OPTIONS = {
-  MAX_LENGTH: 5,
+  MAX_LENGTH: 15,
 } as const;
 
 export const AGREEMENT_OPTIONS = {

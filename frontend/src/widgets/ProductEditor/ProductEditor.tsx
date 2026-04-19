@@ -4,7 +4,10 @@ import { Button } from "@shared/ui/Button";
 import { TProductEditor } from "./ProductEditor.type";
 import { TextInput } from "@shared/ui/TextInput";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
-import { getProductById } from "@/entities/product/model/productsSlice";
+import {
+  getProductById,
+  setEditing,
+} from "@/entities/product/model/productsSlice";
 import { InputsOptions } from "../InputsOptions";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import {
@@ -118,6 +121,7 @@ export const ProductEditor = ({
       setDiscountsState(null);
       createdProduct.dispatch(false);
       changeProduct.dispatch(changeProduct.initialState);
+      dispatch(setEditing(false));
 
       showToast?.("Все действия были отменены");
     }
@@ -132,6 +136,7 @@ export const ProductEditor = ({
       setModelState(null);
       setOptionsState(null);
       setDiscountsState(null);
+      dispatch(setEditing(false));
 
       showToast?.("Все действия были отменены");
     }
@@ -165,6 +170,7 @@ export const ProductEditor = ({
         setModelState(null);
         setOptionsState(null);
         setDiscountsState(null);
+        dispatch(setEditing(false));
 
         showToast?.(`Модель ${newModel.name} успешно создана`);
       } catch (error: unknown) {
@@ -174,7 +180,7 @@ export const ProductEditor = ({
           `Ошибка при создании модели ${newModel.name}: ${validationMessage}` ||
           `Ошибка при создании модели ${newModel.name}: ${err?.message}` ||
           `Ошибка при создании модели ${newModel.name}`;
-
+        dispatch(setEditing(false));
         showToast?.(errorMsg);
       }
     }
@@ -407,8 +413,9 @@ export const ProductEditor = ({
   useEffect(() => {
     if (!createdProduct.state) {
       hasChange(hasChanges);
-    }
-  }, [hasChanges, hasChange, createdProduct.state]);
+      dispatch(setEditing(hasChanges));
+    } else dispatch(setEditing(isValidData));
+  }, [hasChanges, hasChange, createdProduct.state, isValidData, dispatch]);
 
   const handleSave = async () => {
     const result = await showConfirm(
