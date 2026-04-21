@@ -38,7 +38,7 @@ export const Notification = ({
       <Section className={className}>
         <GroupeContainer
           title={!isEdit ? "Информация" : "Информационный редактор"}
-          className={styles.content}
+          className={styles.container}
         >
           <LoaderComponent />
         </GroupeContainer>
