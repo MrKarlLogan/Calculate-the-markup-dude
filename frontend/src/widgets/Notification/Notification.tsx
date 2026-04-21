@@ -33,14 +33,24 @@ export const Notification = ({
     dispatch(fetchNotifications());
   }, [dispatch]);
 
-  if (loading) return <LoaderComponent />;
+  if (loading)
+    return (
+      <Section className={className}>
+        <GroupeContainer
+          title={!isEdit ? "Информация" : "Информационный редактор"}
+          className={styles.content}
+        >
+          <LoaderComponent />
+        </GroupeContainer>
+      </Section>
+    );
 
   return (
     <>
       <Section className={className}>
         <GroupeContainer
           title={!isEdit ? "Информация" : "Информационный редактор"}
-          className={styles.content}
+          className={styles.container}
         >
           {isEdit && (
             <NotificationMessage

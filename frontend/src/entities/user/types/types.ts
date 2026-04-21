@@ -35,9 +35,15 @@ export interface IAuthData {
   role: "admin" | "others";
 }
 
+export interface IResponseDeleteUser {
+  success: boolean;
+  message: string;
+}
+
 export type TRegisterResponse = ISuccessResponse<IAuthData> | IErrorResponse;
 export type TLoginResponse = ISuccessResponse<IAuthData> | IErrorResponse;
 export type TCheckAuthResponse = ISuccessResponse<IAuthData> | IErrorResponse;
 export type TRefreshResponse = ISuccessResponse<null> | IErrorResponse;
 export type TLogoutResponse = ISuccessResponse<null> | IErrorResponse;
 export type TApiResponse<T> = ISuccessResponse<T> | IErrorResponse;
+export type TDeleteUserResponse = ISuccessResponse<null> | IErrorResponse;

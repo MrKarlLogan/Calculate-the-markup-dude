@@ -9,3 +9,12 @@ export const Agreement = ({ className }: { className?: string }) => (
     </GroupeContainer>
   </Section>
 );
+
+// if (loading)
+//   return (
+//     <Section>
+//       <GroupeContainer title="НЕ ЗАБЫТЬ ДОБАВИТЬ" className={styles.container}>
+//         <LoaderComponent />
+//       </GroupeContainer>
+//     </Section>
+//   );

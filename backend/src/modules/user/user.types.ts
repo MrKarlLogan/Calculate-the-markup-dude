@@ -1,4 +1,4 @@
-type TRoles = "admin" | "others";
+export type TRoles = "admin" | "others";
 
 export interface IUser {
   id: string;

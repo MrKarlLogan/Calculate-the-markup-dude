@@ -86,7 +86,14 @@ export const Calculator = () => {
   const options = selectedProduct?.options || [];
   const discounts = selectedProduct?.discounts || [];
 
-  if (loading) return <LoaderComponent />;
+  if (loading)
+    return (
+      <Section>
+        <GroupeContainer title="Калькулятор" className={styles.container}>
+          <LoaderComponent />
+        </GroupeContainer>
+      </Section>
+    );
 
   return (
     <Section>

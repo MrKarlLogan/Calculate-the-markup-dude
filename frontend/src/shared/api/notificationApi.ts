@@ -8,16 +8,6 @@ import {
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 
-axios_instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.data && typeof error.response.data === "object") {
-      return Promise.resolve({ ...error.response, data: error.response.data });
-    }
-    return Promise.reject(error);
-  },
-);
-
 const notificationApi = {
   getAllMessage: async () => {
     const response = await axios_instance.get<TNotificationResponse>(

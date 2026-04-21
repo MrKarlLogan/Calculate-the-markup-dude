@@ -55,7 +55,14 @@ export const Constructor = () => {
     setCreateNewProduct(false);
   };
 
-  if (loading) return <LoaderComponent />;
+  if (loading)
+    return (
+      <Section>
+        <GroupeContainer title="Конструктор" className={styles.container}>
+          <LoaderComponent />
+        </GroupeContainer>
+      </Section>
+    );
 
   return (
     <>

@@ -4,6 +4,7 @@ export const URL_PATH = {
   REGISTER: "/auth/register",
   LOGOUT: "/auth/logout",
   GET_ME: "/auth/me",
+  USERS: "/auth/users",
   REFRESH_TOKEN: "/auth/refresh",
   PRODUCTS: "/products",
   NOTIFICATION: "/notification",

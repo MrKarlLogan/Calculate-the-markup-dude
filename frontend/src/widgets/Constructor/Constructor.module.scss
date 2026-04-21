@@ -18,6 +18,10 @@
     @include grid(1fr, auto, 10px, center, center);
   }
 
+  .loading {
+    block-size: 100%;
+  }
+
   .editor {
     block-size: 100%;
   }

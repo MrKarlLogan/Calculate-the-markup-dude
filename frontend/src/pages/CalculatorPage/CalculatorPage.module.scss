@@ -49,20 +49,18 @@
   &__other {
     inline-size: 100%;
     block-size: 100%;
-    @include flex(column, center, center);
+    @include flex(column, start, start);
     padding: 0;
 
-    &_notification {
-      block-size: 50%;
-    }
-
+    &_notification,
     &_agreement {
-      flex: 1;
+      block-size: 470px;
     }
 
     &_notification_editor,
     &_user_editor {
-      block-size: 50%;
+      @include flex(column, start, center);
+      block-size: 470px;
     }
   }
 }

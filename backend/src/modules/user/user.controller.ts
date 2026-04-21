@@ -5,6 +5,7 @@ import {
   clearAuthCookies,
   generateTokens,
   setAuthCookies,
+  TUserPayload,
   verifyAccessToken,
   verifyRefreshToken,
 } from "@shared/utils/auth";
@@ -14,7 +15,96 @@ import UnauthorizedError from "@shared/errors/unauthorized-error";
 import { COOKIES_NAME } from "@shared/constants";
 import config from "@/config";
 import ForbiddenError from "@shared/errors/forbidden-error";
-import { TLoginUser, TRegisterBody } from "./user.types";
+import { TLoginUser, TRegisterBody, TRoles } from "./user.types";
+import NotFoundError from "@/shared/errors/not-found-error";
+
+export const getAllUsers = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const users = await UserRepository.find();
+
+    const response = users.map(({password, ...otherData}) => otherData);
+
+    res.status(200).json({
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    next(new InternalServerError("Ошибка при получении списка пользователей"));
+  }
+};
+
+export const toggleRoleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { role }: { role: TRoles } = req.body;
+    const id = req.params.id.toString();
+
+    const updatedUser = await UserRepository.findOne({
+      where: { id },
+    });
+
+    if (!updatedUser)
+      return next(new NotFoundError(`Пользователь с id: ${id} не найден`));
+
+    updatedUser.role = role;
+
+    await UserRepository.save(updatedUser);
+
+    const response = {
+      id: updatedUser.id,
+      login: updatedUser.login,
+      role: updatedUser.role,
+    };
+
+    res.status(200).json({
+      success: true,
+      data: response,
+      message: `Роль пользователя с id ${id} успешно обновлена`,
+    });
+  } catch (error) {
+    next(
+      new InternalServerError(
+        `Ошибка при изменении роли пользователя с id: ${req.params.id}`,
+      ),
+    );
+  }
+};
+
+export const deleteUser = async (
+  req: Request & { user?: TUserPayload },
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req.params.id.toString();
+
+    if (req.user?.id === id)
+      return next(new ForbiddenError("Нельзя удалить самого себя"));
+
+    const result = await UserRepository.delete(id);
+
+    if (result.affected === 0)
+      return next(new NotFoundError(`Пользователь с id: ${id} не найден`));
+
+    res.status(200).json({
+      success: true,
+      message: `Пользователь с id: ${id} успешно удален`,
+    });
+  } catch (error) {
+    next(
+      new InternalServerError(
+        `Ошибка при удалении пользователя с id: ${req.params.id}`,
+      ),
+    );
+  }
+};
 
 export const registerUser = async (
   req: Request,
