@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Headline } from "../Headline";
 import { Paragraph } from "../Paragraph";
 import styles from "./Toast.module.scss";
@@ -17,7 +18,7 @@ export const Toast = ({ title = "Уведомление", text, onClose }: TToas
     };
   }, [onClose]);
 
-  return (
+  const toastContent = (
     <div className={`${styles.toast} ${!isVisible ? styles.hide : ""}`}>
       <Headline as="h3" position="start" size={18} weight="bold">
         {title}
@@ -25,4 +26,9 @@ export const Toast = ({ title = "Уведомление", text, onClose }: TToas
       <Paragraph position="start">{text}</Paragraph>
     </div>
   );
+
+  if (typeof window === "undefined" || typeof document === "undefined")
+    return null;
+
+  return createPortal(toastContent, document.body);
 };

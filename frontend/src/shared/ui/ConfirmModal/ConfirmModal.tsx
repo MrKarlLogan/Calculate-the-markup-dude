@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./ConfirmModal.module.scss";
 import { Paragraph } from "../Paragraph";
 import { Button } from "../Button";
@@ -26,7 +27,7 @@ export const ConfirmModal = ({
     setTimeout(onClose, 200);
   };
 
-  return (
+  const confirmModalContent = (
     <div className={`${styles.modal} ${!isVisible ? styles.hide : ""}`}>
       <div className={styles.content}>
         <Paragraph size={18}>{text}</Paragraph>
@@ -37,4 +38,9 @@ export const ConfirmModal = ({
       </div>
     </div>
   );
+
+  if (typeof window === "undefined" || typeof document === "undefined")
+    return null;
+
+  return createPortal(confirmModalContent, document.body);
 };

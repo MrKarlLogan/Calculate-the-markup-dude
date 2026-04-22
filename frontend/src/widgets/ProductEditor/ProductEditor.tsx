@@ -465,115 +465,117 @@ export const ProductEditor = ({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.buttons}>
-        <div className={styles.buttons_create}>
-          <Button
-            text="Создать новую модель"
-            className={styles.buttons_all}
-            onClick={handleCreateNewProduct}
-            disabled={createdProduct.state || hasChanges}
-          />
-          <Button
-            text="Удалить выбранную модель"
-            className={styles.buttons_all}
-            disabled={!product || hasChanges}
-            onClick={handleRemoveModel}
-          />
-        </div>
-        <div className={styles.buttons_save}>
-          {createdProduct.state ? (
-            <>
-              <Button
-                text="Создать модель"
-                className={styles.buttons_all}
-                onClick={handleSaveNewProduct}
-                disabled={!newModel.name.trim() || !isValidData}
-              />
-              <Button
-                text="Отменить"
-                className={styles.buttons_all}
-                onClick={handleEditCancel}
-              />
-            </>
-          ) : (
-            <>
-              <Button
-                text="Сохранить изменения"
-                className={styles.buttons_all}
-                onClick={handleSave}
-                disabled={!hasChanges || !isValidData}
-              />
-              <Button
-                text="Отменить все изменения"
-                className={styles.buttons_all}
-                onClick={handleAllCancel}
-                disabled={!hasChanges}
-              />
-            </>
-          )}
-        </div>
-      </div>
-      <div className={styles.inputs}>
-        <TextInput
-          text="Название модели"
-          placeholder="Введите название модели"
-          value={model}
-          onChange={handleModelChange}
-          disabled={!product && !createdProduct.state}
-        />
-        <GroupeContainer
-          title="Все комплектации"
-          className={styles.inputs__content}
-          disabled={!product && !createdProduct.state}
-        >
-          <>
-            <InputsOptions
-              isCreated
-              created={{
-                value: createdOptionValue,
-                onChange: setCreatedOptionValue,
-                onCreate: handleAddOption,
-              }}
+    <>
+      <div className={styles.container}>
+        <div className={styles.buttons}>
+          <div className={styles.buttons_create}>
+            <Button
+              text="Создать новую модель"
+              className={styles.buttons_all}
+              onClick={handleCreateNewProduct}
+              disabled={createdProduct.state || hasChanges}
             />
-            {options.map((option) => (
+            <Button
+              text="Удалить выбранную модель"
+              className={styles.buttons_all}
+              disabled={!product || hasChanges}
+              onClick={handleRemoveModel}
+            />
+          </div>
+          <div className={styles.buttons_save}>
+            {createdProduct.state ? (
+              <>
+                <Button
+                  text="Создать модель"
+                  className={styles.buttons_all}
+                  onClick={handleSaveNewProduct}
+                  disabled={!newModel.name.trim() || !isValidData}
+                />
+                <Button
+                  text="Отменить"
+                  className={styles.buttons_all}
+                  onClick={handleEditCancel}
+                />
+              </>
+            ) : (
+              <>
+                <Button
+                  text="Сохранить изменения"
+                  className={styles.buttons_all}
+                  onClick={handleSave}
+                  disabled={!hasChanges || !isValidData}
+                />
+                <Button
+                  text="Отменить все изменения"
+                  className={styles.buttons_all}
+                  onClick={handleAllCancel}
+                  disabled={!hasChanges}
+                />
+              </>
+            )}
+          </div>
+        </div>
+        <div className={styles.inputs}>
+          <TextInput
+            text="Название модели"
+            placeholder="Введите название модели"
+            value={model}
+            onChange={handleModelChange}
+            disabled={!product && !createdProduct.state}
+          />
+          <GroupeContainer
+            title="Все комплектации"
+            className={styles.inputs__content}
+            disabled={!product && !createdProduct.state}
+          >
+            <>
               <InputsOptions
-                key={option.id}
-                option={option}
-                onChange={(field, value) =>
-                  handleOptionChange(option.id, field, value)
-                }
-                onDelete={() => handleDeleteOption(option.id)}
+                isCreated
+                created={{
+                  value: createdOptionValue,
+                  onChange: setCreatedOptionValue,
+                  onCreate: handleAddOption,
+                }}
               />
-            ))}
-          </>
-        </GroupeContainer>
-        <GroupeContainer
-          title="Все поддержки"
-          className={styles.inputs__content}
-          disabled={!product && !createdProduct.state}
-        >
-          <>
-            <InputsDiscounts
-              isCreated
-              created={{
-                value: createdDiscountValue,
-                onChange: setCreatedDiscountValue,
-                onCreate: handleAddDiscount,
-              }}
-            />
-            {discounts.map((discount) => (
+              {options.map((option) => (
+                <InputsOptions
+                  key={option.id}
+                  option={option}
+                  onChange={(field, value) =>
+                    handleOptionChange(option.id, field, value)
+                  }
+                  onDelete={() => handleDeleteOption(option.id)}
+                />
+              ))}
+            </>
+          </GroupeContainer>
+          <GroupeContainer
+            title="Все поддержки"
+            className={styles.inputs__content}
+            disabled={!product && !createdProduct.state}
+          >
+            <>
               <InputsDiscounts
-                key={discount.id}
-                discounts={discount}
-                onChange={(field, value) =>
-                  handleDiscountChange(discount.id, field, value)
-                }
-                onDelete={() => handleDeleteDiscount(discount.id)}
+                isCreated
+                created={{
+                  value: createdDiscountValue,
+                  onChange: setCreatedDiscountValue,
+                  onCreate: handleAddDiscount,
+                }}
               />
-            ))}
-          </>
-        </GroupeContainer>
+              {discounts.map((discount) => (
+                <InputsDiscounts
+                  key={discount.id}
+                  discounts={discount}
+                  onChange={(field, value) =>
+                    handleDiscountChange(discount.id, field, value)
+                  }
+                  onDelete={() => handleDeleteDiscount(discount.id)}
+                />
+              ))}
+            </>
+          </GroupeContainer>
+        </div>
       </div>
       {modal && (
         <ConfirmModal
@@ -585,6 +587,6 @@ export const ProductEditor = ({
           onClose={handleClose}
         />
       )}
-    </div>
+    </>
   );
 };

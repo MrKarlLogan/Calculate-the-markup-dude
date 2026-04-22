@@ -1,3 +1,36 @@
 .card_users {
   inline-size: 100%;
+  @include flex(column, center, stretch, 10px);
+  background-color: $bg-color;
+  padding: 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow;
+
+  .span {
+    font-weight: 600;
+  }
+
+  .me {
+    padding-block-end: 0.5rem;
+    border-block-end: 2px solid $bg-color-light-dark;
+  }
+
+  .description:has(.me) {
+    border-block-end: none;
+  }
+
+  .description {
+    inline-size: 100%;
+    @include flex(column, end, end, 10px);
+    padding-block-end: 0.5rem;
+    border-block-end: 2px solid $bg-color-light-dark;
+  }
+
+  .buttons {
+    @include flex(column, center, center, 10px);
+
+    .button {
+      font-size: 14px;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 .container {
   max-block-size: 100%;
   block-size: 100%;
-  @include flex(column, start, stretch, 10px);
+  @include flex(column, start, center, 10px);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;

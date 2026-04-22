@@ -28,20 +28,22 @@ export const Footer = () => {
   };
 
   return (
-    <footer className={styles.footer}>
-      <Paragraph position="end">
-        {`© ${new Date().getFullYear()} Calculate the markup, dude. Разработчик: `}
-        <Link
-          href={AUTHOR_GITHUB}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.link}
-          onMouseEnter={handleEasterEggEnter}
-          onMouseLeave={handleEasterEggLeave}
-        >
-          Берендеев Игорь
-        </Link>
-      </Paragraph>
+    <>
+      <footer className={styles.footer}>
+        <Paragraph position="end">
+          {`© ${new Date().getFullYear()} Calculate the markup, dude. Разработчик: `}
+          <Link
+            href={AUTHOR_GITHUB}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
+            onMouseEnter={handleEasterEggEnter}
+            onMouseLeave={handleEasterEggLeave}
+          >
+            Берендеев Игорь
+          </Link>
+        </Paragraph>
+      </footer>
       {toasts.map((toast) => (
         <Toast
           title="Игорь Б."
@@ -50,6 +52,6 @@ export const Footer = () => {
           onClose={() => removeToast(toast.id)}
         />
       ))}
-    </footer>
+    </>
   );
 };

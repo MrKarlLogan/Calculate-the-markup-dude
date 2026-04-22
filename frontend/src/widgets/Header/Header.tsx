@@ -5,7 +5,7 @@ import authApi from "@/shared/api/authApi";
 import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { useAppSelector } from "@shared/lib/hooks/redux";
-import { getRole, getUser } from "@entities/user/model/userSlice";
+import { getRole, getUserName } from "@entities/user/model/userSlice";
 import { THeader } from "./Header.type";
 import {
   getEditing,
@@ -15,7 +15,7 @@ import {
 export const Header = ({ toggle, onToggle }: THeader) => {
   const router = useRouter();
   const loading = useAppSelector(getStatusLoading);
-  const user = useAppSelector(getUser);
+  const user = useAppSelector(getUserName);
   const role = useAppSelector(getRole);
   const editing = useAppSelector(getEditing);
 
