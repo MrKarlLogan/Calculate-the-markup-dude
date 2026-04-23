@@ -1,3 +1,5 @@
+"use client";
+
 import { Header } from "@widgets/Header";
 import { MainLayout } from "@widgets/MainLayout";
 import { Calculator } from "@widgets/Calculator/Calculator";
@@ -29,8 +31,8 @@ export const CalculatorPage = () => {
       <main className={styles.content}>
         {!toggleComponent ? (
           <Section
-            className={styles.content__calculator}
             key={toggleComponent ? "constructor" : "calculator"}
+            className={styles.content__calculator}
           >
             <Calculator />
             <Section className={styles.content__other}>

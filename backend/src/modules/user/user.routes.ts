@@ -7,7 +7,7 @@ import {
   logoutUser,
   refreshToken,
   registerUser,
-  toggleRoleUser,
+  updateRoleUser,
 } from "./user.controller";
 import { loginValidation, registerValidation } from "./user.validation";
 import { authMiddleware } from "@/shared/middlewares/authMiddleware";
@@ -22,5 +22,5 @@ routesAuth.post("/refresh", refreshToken);
 routesAuth.post("/logout", logoutUser);
 
 routesAuth.get("/users/all", authMiddleware, adminMiddleware, getAllUsers);
-routesAuth.patch("/users/:id", authMiddleware, adminMiddleware, toggleRoleUser);
+routesAuth.patch("/users/:id", authMiddleware, adminMiddleware, updateRoleUser);
 routesAuth.delete("/users/:id", authMiddleware, adminMiddleware, deleteUser);

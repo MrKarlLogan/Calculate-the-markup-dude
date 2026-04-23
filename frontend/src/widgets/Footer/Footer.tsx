@@ -1,3 +1,5 @@
+"use client";
+
 import { Paragraph } from "@/shared/ui/Paragraph";
 import styles from "./Footer.module.scss";
 import Link from "next/link";

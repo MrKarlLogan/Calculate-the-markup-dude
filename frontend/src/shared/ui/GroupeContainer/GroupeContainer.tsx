@@ -6,11 +6,9 @@ export const GroupeContainer = ({
   className,
   disabled = false,
   children,
-}: TGroupeContainer) => {
-  return (
-    <fieldset className={`${styles.fieldset} ${className}`} disabled={disabled}>
-      <legend className={styles.legend}>{title}</legend>
-      {children}
-    </fieldset>
-  );
-};
+}: TGroupeContainer) => (
+  <fieldset className={`${styles.fieldset} ${className}`} disabled={disabled}>
+    <legend className={styles.legend}>{title}</legend>
+    {children}
+  </fieldset>
+);

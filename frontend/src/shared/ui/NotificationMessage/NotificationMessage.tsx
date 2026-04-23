@@ -1,3 +1,5 @@
+"use client";
+
 import { Paragraph } from "../Paragraph";
 import styles from "./NotificationMessage.module.scss";
 import { TextArea } from "../TextArea";

@@ -4,12 +4,13 @@
   user-select: none;
   appearance: none;
   padding: 0.5rem 1rem;
-  border: none;
+  border: $border;
   border-radius: $radius;
   box-shadow: $shadow;
   background-color: $bg-color;
   color: $text-color;
   text-align: center;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.1s;
 

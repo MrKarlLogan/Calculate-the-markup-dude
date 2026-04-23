@@ -26,7 +26,7 @@ export const getAllUsers = async (
   try {
     const users = await UserRepository.find();
 
-    const response = users.map(({password, ...otherData}) => otherData);
+    const response = users.map(({ password, ...otherData }) => otherData);
 
     res.status(200).json({
       success: true,
@@ -37,14 +37,17 @@ export const getAllUsers = async (
   }
 };
 
-export const toggleRoleUser = async (
-  req: Request,
+export const updateRoleUser = async (
+  req: Request & { user?: TUserPayload },
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { role }: { role: TRoles } = req.body;
     const id = req.params.id.toString();
+
+    if (req.user?.id === id)
+      return next(new ForbiddenError("Нельзя изменить свою роль"));
 
     const updatedUser = await UserRepository.findOne({
       where: { id },
@@ -57,15 +60,13 @@ export const toggleRoleUser = async (
 
     await UserRepository.save(updatedUser);
 
-    const response = {
-      id: updatedUser.id,
-      login: updatedUser.login,
-      role: updatedUser.role,
-    };
-
     res.status(200).json({
       success: true,
-      data: response,
+      data: {
+        id: updatedUser.id,
+        login: updatedUser.login,
+        role: updatedUser.role,
+      },
       message: `Роль пользователя с id ${id} успешно обновлена`,
     });
   } catch (error) {

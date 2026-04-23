@@ -1,3 +1,5 @@
+"use client";
+
 import { GroupeContainer } from "@/shared/ui/GroupeContainer";
 import styles from "./ProductEditor.module.scss";
 import { Button } from "@shared/ui/Button";

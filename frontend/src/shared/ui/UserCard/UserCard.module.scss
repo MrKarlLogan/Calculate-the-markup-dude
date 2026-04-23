@@ -5,6 +5,11 @@
   padding: 1rem;
   border-radius: $radius;
   box-shadow: $shadow;
+  border: $border;
+
+  &:has(.me) {
+    gap: 0;
+  }
 
   .span {
     font-weight: 600;

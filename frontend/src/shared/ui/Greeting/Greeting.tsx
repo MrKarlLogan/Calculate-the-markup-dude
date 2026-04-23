@@ -1,3 +1,5 @@
+"use client";
+
 import { Headline } from "../Headline";
 import { TGreeting } from "./Greeting.type";
 

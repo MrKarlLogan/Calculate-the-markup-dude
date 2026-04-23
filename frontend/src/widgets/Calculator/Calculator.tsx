@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangeEvent, useState } from "react";
 import { Section } from "@shared/ui/Section";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";

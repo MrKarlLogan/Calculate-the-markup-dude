@@ -9,9 +9,14 @@
     font-weight: 700;
     color: $text-color;
     transition: $animation-time;
+    outline: none;
 
     &:hover {
       color: $accent-color;
+    }
+
+    &:focus {
+      color: $bg-color-dark;
     }
   }
 }

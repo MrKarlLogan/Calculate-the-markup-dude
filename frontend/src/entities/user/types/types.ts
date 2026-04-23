@@ -40,6 +40,12 @@ export interface IResponseDeleteUser {
   message: string;
 }
 
+export type TUsersState = {
+  users: IAuthData[];
+  loading: boolean;
+  error: string | null;
+};
+
 export type TRegisterResponse = ISuccessResponse<IAuthData> | IErrorResponse;
 export type TLoginResponse = ISuccessResponse<IAuthData> | IErrorResponse;
 export type TCheckAuthResponse = ISuccessResponse<IAuthData> | IErrorResponse;

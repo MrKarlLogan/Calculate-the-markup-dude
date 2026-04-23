@@ -1,3 +1,5 @@
+"use client";
+
 import { TextInput } from "@shared/ui/TextInput";
 import styles from "./InputsOptions.module.scss";
 import { Paragraph } from "@shared/ui/Paragraph";

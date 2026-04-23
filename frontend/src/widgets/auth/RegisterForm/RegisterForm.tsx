@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./RegisterForm.module.scss";
 import { SyntheticEvent, useState } from "react";
 import { Paragraph } from "@shared/ui/Paragraph";
@@ -156,7 +158,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
             type="submit"
             disabled={disabledButton}
           />
-          <Button text="Уже есть учётная запись" onClick={selectForm} />
+          <Button text="Войти" onClick={selectForm} />
         </div>
       </form>
       {toasts.map((toast) => (

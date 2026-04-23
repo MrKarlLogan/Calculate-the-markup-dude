@@ -1,3 +1,5 @@
+"use client";
+
 import { Section } from "@/shared/ui/Section";
 import styles from "./Constructor.module.scss";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";

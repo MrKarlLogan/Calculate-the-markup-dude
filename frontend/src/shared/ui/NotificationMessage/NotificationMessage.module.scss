@@ -4,6 +4,7 @@
   border-radius: $radius;
   box-shadow: $shadow;
   @include flex(column, center, center, 10px);
+  border: $border;
 
   .title {
     inline-size: 100%;
