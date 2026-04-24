@@ -8,13 +8,13 @@ import { Footer } from "@widgets/Footer";
 import styles from "./CalculatorPage.module.scss";
 import { useEffect, useState } from "react";
 import { Constructor } from "@widgets/Constructor";
-import { Section } from "@shared/ui/Section";
 import { Notification } from "@widgets/Notification";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
 import { UsersEditor } from "@/widgets/UsersEditor";
 import { getLoading } from "@/entities/product/model/productsSlice";
 import { Loader } from "@/shared/ui/Loader";
+import { Container } from "@/shared/ui/Container";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
@@ -40,27 +40,27 @@ export const CalculatorPage = () => {
       />
       <main className={styles.content}>
         {!toggleComponent ? (
-          <Section
+          <Container
             key={toggleComponent ? "constructor" : "calculator"}
             className={styles.content__calculator}
           >
             <Calculator />
-            <Section className={styles.content__other}>
+            <Container className={styles.content__other}>
               <Notification className={styles.content__other_notification} />
               <Agreement className={styles.content__other_agreement} />
-            </Section>
-          </Section>
+            </Container>
+          </Container>
         ) : (
-          <Section className={styles.content__constructor}>
+          <Container className={styles.content__constructor}>
             <Constructor />
-            <Section className={styles.content__other}>
+            <Container className={styles.content__other}>
               <Notification
                 className={styles.content__other_notification_editor}
                 isEdit
               />
               <UsersEditor className={styles.content__other_user_editor} />
-            </Section>
-          </Section>
+            </Container>
+          </Container>
         )}
       </main>
       <Footer />
