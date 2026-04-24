@@ -26,6 +26,10 @@
       transform: translateY(-2px);
     }
 
+    :has(.input:disabled) &::placeholder {
+      color: $bg-color;
+    }
+
     &:focus-visible {
       outline: none;
       box-shadow: $inner-shadow;
@@ -34,8 +38,12 @@
     &:disabled {
       box-shadow: none;
       background-color: $bg-color-light-dark;
-      color: $text-color;
+      color: $bg-color;
       cursor: default;
     }
   }
+}
+
+:has(.input:disabled) .wrapper {
+  color: $bg-color-dark;
 }

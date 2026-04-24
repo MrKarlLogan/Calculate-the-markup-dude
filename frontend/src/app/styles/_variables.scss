@@ -1,18 +1,24 @@
-$accent-color: #4c91eb;
-$white: #f0f4fa;
-$bg-color: #e5ecf6;
-$bg-color-light-dark: #c8cfe4;
-$bg-color-dark: #b1bcdc;
-$text-color: #6d7ea9;
+$accent-color: #b5dbaa;
+$button-color: #5b5b5b;
+$block-color: #838383;
+$white: #818181;
+$bg-color: #727272;
+$bg-color-light-dark: #545454;
+$bg-color-dark: #5b5a5a;
+$text-color: #ebebeb;
 $error: FireBrick;
-$border: 1px solid rgb(51%, 57%, 73%, 0.3);
+$border: 1px solid rgba(45, 45, 45, 0.4);
 $radius: 8px;
 $shadow:
-  3.2px 3.2px 8px $bg-color-light-dark,
-  -3.2px -3.2px 8px $white,
-  inset 1.6px 1.6px 1.6px $white;
+  3.2px 3.2px 8px #404040,
+  -3.2px -3.2px 8px #8f8f8f,
+  inset 1.6px 1.6px 1.6px #acacac;
+$shadow-header:
+  3.2px 3.2px 8px #404040,
+  -3.2px -3.2px 8px #474747,
+  inset 1.6px 1.6px 1.6px #ababab;
 $inner-shadow:
-  inset 3.2px 3.2px 8px $bg-color-light-dark,
-  inset -3.2px -3.2px 8px $white;
+  inset 3.2px 3.2px 8px #404040,
+  inset -3.2px -3.2px 8px #838282;
 $animation-time: 0.3s;
 $max-size: 1600px;

@@ -21,6 +21,10 @@
     transform: translateY(4px);
   }
 
+  :has(.textarea:disabled) &::placeholder {
+    color: $bg-color;
+  }
+
   &::-webkit-scrollbar {
     background-color: transparent;
   }
@@ -34,7 +38,11 @@
   &:disabled {
     box-shadow: none;
     background-color: $bg-color-light-dark;
-    color: $text-color;
+    color: $bg-color;
     cursor: default;
   }
+}
+
+:has(.textarea:disabled) .textarea {
+  color: $bg-color-dark;
 }

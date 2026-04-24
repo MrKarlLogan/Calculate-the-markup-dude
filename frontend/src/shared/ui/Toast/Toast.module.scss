@@ -8,10 +8,15 @@
   padding: 1rem;
   border-radius: $radius;
   background-color: $bg-color-dark;
-  color: $white;
+  color: $accent-color;
   z-index: 1;
   animation: slideIn 0.2s ease;
   user-select: none;
+  box-shadow: $shadow;
+
+  .text {
+    color: $text-color;
+  }
 }
 
 .hide {

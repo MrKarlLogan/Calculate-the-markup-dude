@@ -2,7 +2,9 @@
   inline-size: 100%;
   box-shadow: $shadow;
   padding: 1rem;
+  border: $border;
   border-radius: $radius;
+  background-color: $block-color;
   @include flex(column, center, stretch, 10px);
   animation: opacity $animation-time ease-in-out;
 
@@ -36,7 +38,10 @@
   inline-size: 100%;
   box-shadow: $shadow;
   padding: 1rem;
+  border: $border;
+  border-color: $accent-color;
   border-radius: $radius;
+  background-color: $block-color;
   @include flex(column, center, stretch, 10px);
 
   &__title {

@@ -1,6 +1,7 @@
 .content {
   max-inline-size: $max-size;
   inline-size: 100%;
+  min-block-size: 0;
   block-size: 100%;
   flex: 1;
   overflow-x: hidden;

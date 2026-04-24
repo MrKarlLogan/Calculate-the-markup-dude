@@ -1,7 +1,7 @@
 .card_users {
   inline-size: 100%;
   @include flex(column, center, stretch, 10px);
-  background-color: $bg-color;
+  background-color: $block-color;
   padding: 1rem;
   border-radius: $radius;
   box-shadow: $shadow;
@@ -38,4 +38,8 @@
       font-size: 14px;
     }
   }
+}
+
+.card_users_accent {
+  border-color: $accent-color;
 }

@@ -33,9 +33,15 @@ export const Header = ({ toggle, onToggle }: THeader) => {
               text={toggle ? "Калькулятор" : "Конструктор"}
               onClick={onToggle}
               disabled={loading || editing}
+              className={styles.buttons}
             />
           )}
-          <Button text="Выход" onClick={handleLogout} disabled={editing} />
+          <Button
+            text="Выход"
+            onClick={handleLogout}
+            disabled={editing}
+            className={styles.buttons}
+          />
         </nav>
       </div>
     </header>

@@ -11,7 +11,7 @@ export const registerValidation = celebrate({
       .messages({
         "any.required": "Поле 'Логин' обязательно",
         "string.empty": "Поле 'Логин' обязательно",
-        "string.min": "Логин должен быть не короче 3 символов",
+        "string.min": "Логин должен быть не менее 3 символов",
         "string.max": "Логин не должен превышать 20 символов",
         "string.pattern.base":
           "Логин может содержать только латинские буквы, цифры, точки, дефисы и нижнее подчёркивание",
@@ -26,7 +26,7 @@ export const registerValidation = celebrate({
       .messages({
         "any.required": "Поле 'Пароль' обязательно",
         "string.empty": "Поле 'Пароль' обязательно",
-        "string.min": "Пароль должен быть не короче 6 символов",
+        "string.min": "Пароль должен быть не менее 6 символов",
         "string.max": "Пароль не должен превышать 20 символов",
         "string.pattern.base":
           "Пароль должен состоять из латинских букв и содержать хотя бы одну заглавную букву, одну цифру и один специальный символ",
@@ -34,7 +34,7 @@ export const registerValidation = celebrate({
     name: Joi.string().required().min(2).max(50).trim().messages({
       "any.required": "Поле 'Имя' обязательно",
       "string.empty": "Поле 'Имя' обязательно",
-      "string.min": "Имя должно быть не короче 2 символов",
+      "string.min": "Имя должно быть не менее 2 символов",
       "string.max": "Имя не должно превышать 50 символов",
     }),
     role: Joi.string().valid("admin", "others").default("others").messages({

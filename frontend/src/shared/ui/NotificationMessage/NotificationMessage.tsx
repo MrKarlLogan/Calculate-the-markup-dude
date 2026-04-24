@@ -64,7 +64,7 @@ export const NotificationMessage = ({
 
   if (isCreated)
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} ${styles.container_accent}`}>
         <Paragraph position="start" weight="bold">
           Создание сообщения
         </Paragraph>

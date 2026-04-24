@@ -1,6 +1,7 @@
 .header__wrapper {
   inline-size: 100%;
-  border-block-end: 2px solid $bg-color-light-dark;
+  border-block-end: 1px solid $bg-color-light-dark;
+  background-color: $bg-color-light-dark;
 
   .header {
     max-inline-size: $max-size;
@@ -11,6 +12,15 @@
     .nav {
       @include flex;
       gap: 1rem;
+
+      .buttons {
+        box-shadow: $shadow-header;
+        background-color: $bg-color;
+
+        &:active {
+          box-shadow: $inner-shadow;
+        }
+      }
     }
   }
 }

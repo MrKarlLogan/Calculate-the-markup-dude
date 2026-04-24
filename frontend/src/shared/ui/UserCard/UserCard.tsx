@@ -69,13 +69,18 @@ export const UserCard = ({ user }: { user: IAuthData }) => {
 
   return (
     <>
-      <div className={styles.card_users}>
+      <div
+        className={`${styles.card_users} ${id === user.id && styles.card_users_accent}`}
+      >
         <div className={styles.description}>
           {id === user.id && (
             <Paragraph position="start" weight="bold" className={styles.me}>
               Это вы
             </Paragraph>
           )}
+          <Paragraph position="start">
+            Логин: <span className={styles.span}>{user.login}</span>
+          </Paragraph>
           <Paragraph position="start">
             Пользователь: <span className={styles.span}>{user.name}</span>
           </Paragraph>

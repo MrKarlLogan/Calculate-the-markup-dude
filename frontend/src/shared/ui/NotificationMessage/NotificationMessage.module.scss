@@ -5,6 +5,7 @@
   box-shadow: $shadow;
   @include flex(column, center, center, 10px);
   border: $border;
+  background-color: $block-color;
 
   .title {
     inline-size: 100%;
@@ -16,4 +17,8 @@
       inline-size: max-content;
     }
   }
+}
+
+.container_accent {
+  border-color: $accent-color;
 }

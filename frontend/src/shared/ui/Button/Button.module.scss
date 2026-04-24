@@ -7,7 +7,7 @@
   border: $border;
   border-radius: $radius;
   box-shadow: $shadow;
-  background-color: $bg-color;
+  background-color: $button-color;
   color: $text-color;
   transition: $animation-time;
   user-select: none;
@@ -26,6 +26,7 @@
   &:disabled {
     box-shadow: none;
     background-color: $bg-color-light-dark;
+    color: $bg-color;
     cursor: default;
   }
 }

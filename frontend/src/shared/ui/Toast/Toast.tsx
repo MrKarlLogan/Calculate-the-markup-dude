@@ -25,7 +25,7 @@ export const Toast = ({ title = "Уведомление", text, onClose }: TToas
       <Headline as="h3" position="start" size={18} weight="bold">
         {title}
       </Headline>
-      <Paragraph position="start">{text}</Paragraph>
+      <Paragraph position="start" className={styles.text}>{text}</Paragraph>
     </div>
   );
 

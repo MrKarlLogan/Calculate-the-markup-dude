@@ -5,7 +5,7 @@
 body {
   inline-size: 100%;
   block-size: 100dvh;
-  @include flex;
+  @include flex(column);
   font: {
     family: "Jura", sans-serif;
     size: 16px;

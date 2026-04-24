@@ -2,17 +2,23 @@
   inline-size: 100%;
   padding: 0.7rem;
   border-radius: $radius;
-  border: 2px solid $bg-color-light-dark;
+  border: 1px solid $bg-color-light-dark;
   user-select: none;
   transition: $animation-time;
 
   .legend {
+    color: $accent-color;
     font-weight: 700;
     padding-inline: 0.3rem;
-    border-inline: 2px solid $bg-color-light-dark;
+    border-inline: 1px solid $bg-color-light-dark;
+  }
+
+  :has(.fieldset:disabled) .legend {
+    color: $bg-color-dark;
   }
 
   &:disabled {
+    color: $bg-color-dark;
     opacity: 0.5;
   }
 }

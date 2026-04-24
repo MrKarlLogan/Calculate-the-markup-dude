@@ -39,7 +39,7 @@ export const agreementValidation = celebrate({
                 .trim()
                 .messages({
                   "string.empty": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} обязательно`,
-                  "string.min": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} должно быть не короче 3 символов`,
+                  "string.min": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} должно быть не менее 3 символов`,
                   "string.max": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} не должно превышать 30 символов`,
                   "any.required": `Название ${NAME_FROM_VALIDATION.DISCOUNT_OTHER} обязательно`,
                 }),

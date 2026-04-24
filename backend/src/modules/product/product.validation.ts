@@ -5,7 +5,7 @@ export const productValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().trim().required().min(3).max(50).messages({
       "string.empty": "Наименование товара обязательно",
-      "string.min": "Наименование товара должно быть не короче 3 символов",
+      "string.min": "Наименование товара должно быть не менее 3 символов",
       "string.max": "Наименование товара не должно превышать 50 символов",
       "any.required": "Наименование товара обязательно",
     }),
@@ -19,7 +19,7 @@ export const productValidation = celebrate({
             .max(50)
             .messages({
               "string.empty": `Наименование ${NAME_FROM_VALIDATION.OPTION} обязательно`,
-              "string.min": `Наименование ${NAME_FROM_VALIDATION.OPTION} должно быть не короче 2 символов`,
+              "string.min": `Наименование ${NAME_FROM_VALIDATION.OPTION} должно быть не менее 2 символов`,
               "string.max": `Наименование ${NAME_FROM_VALIDATION.OPTION} не должно превышать 50 символов`,
             }),
           price: Joi.number()
@@ -56,7 +56,7 @@ export const productValidation = celebrate({
             .max(100)
             .messages({
               "string.empty": `Наименование ${NAME_FROM_VALIDATION.DISCOUNT} обязательно`,
-              "string.min": `Наименование ${NAME_FROM_VALIDATION.DISCOUNT} должно быть не короче 3 символов`,
+              "string.min": `Наименование ${NAME_FROM_VALIDATION.DISCOUNT} должно быть не менее 3 символов`,
               "string.max": `Наименование ${NAME_FROM_VALIDATION.DISCOUNT} не должно превышать 100 символов`,
             }),
           discountAmount: Joi.number()
