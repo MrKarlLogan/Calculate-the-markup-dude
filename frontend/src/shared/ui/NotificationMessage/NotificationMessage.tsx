@@ -11,7 +11,7 @@ import {
   deleteNotificationThunk,
 } from "@/entities/notification/api";
 import { TNotificationMessage } from "./NotificationMessage.type";
-import { TValidationError } from "@/entities/product/types/types";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
 
 export const NotificationMessage = ({
   notification,
@@ -37,15 +37,10 @@ export const NotificationMessage = ({
         setText("");
         showFn.toast("Сообщение успешно создано");
       }
-    } catch (error: unknown) {
-      const err = error as TValidationError;
-      const validationMessage = err?.validation?.body?.message;
-      const errorMsg =
-        validationMessage ||
-        err?.message ||
-        "Произошла ошибка при создании сообщения";
-
-      showFn.toast(errorMsg);
+    } catch (error) {
+      showFn.toast(
+        getApiErrorMessage(error, "Произошла ошибка при создании сообщения"),
+      );
     }
   };
 
@@ -60,8 +55,10 @@ export const NotificationMessage = ({
         setText("");
         showFn.toast("Сообщение успешно удалено");
       }
-    } catch {
-      showFn.toast("Произошла ошибка при удалении");
+    } catch (error) {
+      showFn.toast(
+        getApiErrorMessage(error, "Произошла ошибка при удалении сообщения"),
+      );
     }
   };
 

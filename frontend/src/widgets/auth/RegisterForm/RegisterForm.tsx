@@ -12,43 +12,47 @@ import useToast from "@shared/lib/hooks/useToast";
 import authApi from "@/shared/api/authApi";
 import { Headline } from "@shared/ui/Headline";
 import { PasswordInput } from "@shared/ui/PasswordInput";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import { FormState } from "./RegisterForm.type";
+
+const initialState: FormState = {
+  login: "",
+  password: "",
+  name: "",
+  registrationPassword: "",
+};
 
 export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
-  const [isEmpty, setIsEmpty] = useState({
-    login: true,
-    password: true,
-    name: true,
-    role: true,
-    registrationPassword: true,
-  });
+  const [form, setForm] = useState<FormState>(initialState);
+  const [role, setRole] = useState("");
+
   const { toasts, showToast, removeToast } = useToast();
 
   const disabledButton =
-    isEmpty.login ||
-    isEmpty.name ||
-    isEmpty.password ||
-    isEmpty.registrationPassword ||
-    isEmpty.role;
+    !form.login.trim() ||
+    !form.password.trim() ||
+    !form.name.trim() ||
+    !form.registrationPassword.trim() ||
+    !role;
 
-  const handleInput = (event: SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    setIsEmpty((prev) => ({ ...prev, [name]: value.trim() === "" }));
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const login = formData.get("login")?.toString();
-    const password = formData.get("password")?.toString();
-    const name = formData.get("name")?.toString();
-    const role = formData.get("role")?.toString();
-    const registrationPassword = formData
-      .get("registrationPassword")
-      ?.toString();
 
-    if (!login || !password || !name || !role || !registrationPassword)
-      return showToast("Все поля обязательны для заполнения");
+    const { login, password, name, registrationPassword } = form;
+
+    if (!login || !password || !name || !role || !registrationPassword) {
+      showToast("Все поля обязательны для заполнения");
+      return;
+    }
 
     try {
       const result = await authApi.register({
@@ -59,26 +63,21 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         registrationPassword,
       });
 
-      if (result.success) {
-        form.reset();
-
-        setIsEmpty({
-          login: true,
-          password: true,
-          name: true,
-          role: true,
-          registrationPassword: true,
-        });
-
+      if (!result.success) {
         showToast(
-          `Создан новый ${result.data.role === "admin" ? "администратор" : "пользователь"}: ${result.data.name}`,
+          getApiErrorMessage(result, "Произошла ошибка при регистрации"),
         );
-      } else {
-        const errorMessage = result.validation?.body?.message || result.message;
-        showToast(errorMessage || "Произошла ошибка при входе");
+        return;
       }
-    } catch {
-      showToast("Ошибка при получении данных от сервера");
+
+      setForm(initialState);
+      setRole("");
+
+      showToast(`Создан новый пользователь: ${result.data.name}`);
+    } catch (error) {
+      showToast(
+        getApiErrorMessage(error, "Ошибка при получении данных от сервера"),
+      );
     }
   };
 
@@ -93,36 +92,45 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
         >
           Регистрация
         </Headline>
+
         <TextInput
           name="login"
           text="Логин"
           placeholder="Придумайте логин"
           autoComplete="off"
-          onInput={handleInput}
+          value={form.login}
+          onChange={handleInput}
         />
+
         <Paragraph position="start" size={12}>
           <strong>Логин:</strong> только латинские буквы, цифры, точки, дефисы,
           нижнее подчёркивание. Без пробелов
         </Paragraph>
+
         <PasswordInput
           name="password"
           text="Пароль"
           placeholder="Придумайте пароль"
           type="password"
           autoComplete="off"
-          onInput={handleInput}
+          value={form.password}
+          onChange={handleInput}
         />
+
         <Paragraph position="start" size={12}>
           <strong>Пароль:</strong> только латинские буквы, без пробелов.
           Обязательно: одна заглавная буква, одна цифра, один спецсимвол
         </Paragraph>
+
         <TextInput
           name="name"
           text="ФИО пользователя"
           placeholder="Введите фамилию и имя пользователя"
           autoComplete="off"
-          onInput={handleInput}
+          value={form.name}
+          onChange={handleInput}
         />
+
         <GroupeContainer
           title="Роль пользователя"
           className={styles.radioGroupe}
@@ -131,27 +139,34 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
             value="admin"
             text="Администратор"
             name="role"
-            onChange={handleInput}
+            checked={role === "admin"}
+            onChange={(e) => setRole(e.currentTarget.value)}
           />
+
           <Radio
             value="others"
             text="Пользователь"
             name="role"
-            onChange={handleInput}
+            checked={role === "others"}
+            onChange={(e) => setRole(e.currentTarget.value)}
           />
         </GroupeContainer>
+
         <PasswordInput
           name="registrationPassword"
           text="Пароль администратора"
           placeholder="Введите пароль администратора"
           type="password"
           autoComplete="off"
-          onInput={handleInput}
+          value={form.registrationPassword}
+          onChange={handleInput}
         />
+
         <Paragraph position="start" size={12}>
           <strong>Пароль администратора:</strong> служебный ключ доступа для
           создания учётных записей
         </Paragraph>
+
         <div className={styles.buttons}>
           <Button
             text="Зарегистрироваться"
@@ -161,6 +176,7 @@ export const RegisterForm = ({ selectForm }: { selectForm: () => void }) => {
           <Button text="Войти" onClick={selectForm} />
         </div>
       </form>
+
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

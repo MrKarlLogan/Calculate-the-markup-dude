@@ -1,3 +1,5 @@
+import { TValidationError } from "@/types/api";
+
 export type TDiscount = {
   id: string;
   name: string;
@@ -56,17 +58,4 @@ export type TProductRequest = {
   name: string;
   options: TOptionRequest[];
   discounts: TDiscountRequest[];
-};
-
-export type TValidationError = {
-  statusCode: number;
-  error: string;
-  message: string;
-  validation: {
-    body: {
-      source: string;
-      keys: string[];
-      message: string;
-    };
-  };
 };

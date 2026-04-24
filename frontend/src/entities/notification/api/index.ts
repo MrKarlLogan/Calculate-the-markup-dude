@@ -1,19 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import notificationApi from "@shared/api/notificationApi";
 import { TNotificationRequest } from "../types/types";
+import { normalizeError } from "@shared/lib/helpers/normalizeError";
 
 export const fetchNotifications = createAsyncThunk(
   "notification/fetchNotifications",
   async (_, { rejectWithValue }) => {
     try {
       const response = await notificationApi.getAllMessage();
-      return response.data;
+      if (response.success) return response.data;
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при загрузке уведомлений",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -24,14 +22,9 @@ export const createNotificationThunk = createAsyncThunk(
     try {
       const response = await notificationApi.createMessage(data);
       if (response.success) return response.data;
-      if (response.validation) return rejectWithValue(response);
-      return rejectWithValue(response.message || "Ошибка создания уведомления");
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при создании уведомления",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -45,15 +38,9 @@ export const updateNotificationThunk = createAsyncThunk(
     try {
       const response = await notificationApi.updateMessage(data, id);
       if (response.success) return response.data;
-      return rejectWithValue(
-        response.message || "Ошибка обновления уведомления",
-      );
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при обновлении уведомления",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -64,13 +51,9 @@ export const deleteNotificationThunk = createAsyncThunk(
     try {
       const response = await notificationApi.deleteMessage(id);
       if (response.success) return id;
-      return rejectWithValue(response.message || "Ошибка удаления уведомления");
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при удалении уведомления",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );

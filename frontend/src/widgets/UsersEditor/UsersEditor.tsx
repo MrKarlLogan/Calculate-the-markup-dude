@@ -8,11 +8,7 @@ import { Paragraph } from "@/shared/ui/Paragraph";
 import { UserCard } from "@/shared/ui/UserCard";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
 import { getUserId } from "@/entities/user/model/userSlice";
-import {
-  getError,
-  getLoading,
-  getUsers,
-} from "@/entities/user/model/usersSlice";
+import { getLoading, getUsers } from "@/entities/user/model/usersSlice";
 import { useEffect } from "react";
 import { fetchUsersThunk } from "@/entities/user/api";
 
@@ -22,7 +18,6 @@ export const UsersEditor = ({ className }: { className?: string }) => {
 
   const users = useAppSelector(getUsers);
   const loading = useAppSelector(getLoading);
-  const error = useAppSelector(getError);
 
   useEffect(() => {
     dispatch(fetchUsersThunk());
@@ -39,19 +34,6 @@ export const UsersEditor = ({ className }: { className?: string }) => {
         </GroupeContainer>
       </Section>
     );
-
-  if (error) {
-    return (
-      <Section className={className}>
-        <GroupeContainer
-          title="Управление пользователями"
-          className={styles.container}
-        >
-          <Paragraph>{error}</Paragraph>
-        </GroupeContainer>
-      </Section>
-    );
-  }
 
   const sortedUsers =
     users &&

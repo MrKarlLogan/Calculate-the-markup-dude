@@ -12,11 +12,7 @@ import {
 } from "@/entities/product/model/productsSlice";
 import { InputsOptions } from "../InputsOptions";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import {
-  TDiscount,
-  TOption,
-  TValidationError,
-} from "@/entities/product/types/types";
+import { TDiscount, TOption } from "@/entities/product/types/types";
 import { InputsDiscounts } from "../InputsDiscounts";
 import { ConfirmModal } from "@/shared/ui/ConfirmModal";
 import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
@@ -25,6 +21,7 @@ import {
   removeProductThunk,
   updateProductThunk,
 } from "@/entities/product/api";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
 
 const initialNewModel = {
   name: "",
@@ -102,11 +99,16 @@ export const ProductEditor = ({
 
     if (result) {
       try {
-        await dispatch(removeProductThunk(product.id));
+        await dispatch(removeProductThunk(product.id)).unwrap();
         changeProduct.dispatch(changeProduct.initialState);
         showToast?.(`Модель ${product.name} успешно удалена`);
-      } catch {
-        showToast?.(`Произошла ошибка при удалении модели ${product.name}`);
+      } catch (error) {
+        showToast?.(
+          getApiErrorMessage(
+            error,
+            `Произошла ошибка при удалении модели ${product.name}`,
+          ),
+        );
       }
     }
   };
@@ -175,15 +177,13 @@ export const ProductEditor = ({
         dispatch(setEditing(false));
 
         showToast?.(`Модель ${newModel.name} успешно создана`);
-      } catch (error: unknown) {
-        const err = error as TValidationError;
-        const validationMessage = err?.validation?.body?.message;
-        const errorMsg =
-          `Ошибка при создании модели ${newModel.name}: ${validationMessage}` ||
-          `Ошибка при создании модели ${newModel.name}: ${err?.message}` ||
-          `Ошибка при создании модели ${newModel.name}`;
-        dispatch(setEditing(false));
-        showToast?.(errorMsg);
+      } catch (error) {
+        showToast?.(
+          getApiErrorMessage(
+            error,
+            `Произошла ошибка при создании модели ${newModel.name}`,
+          ),
+        );
       }
     }
   };
@@ -451,17 +451,15 @@ export const ProductEditor = ({
         setDiscountsState(null);
 
         showToast?.(
-          `Изменения внесенные в модель ${product?.name} были успешно сохранены`,
+          `Изменения внесенные в модель ${product?.name || ""} были успешно сохранены`,
         );
-      } catch (error: unknown) {
-        const err = error as TValidationError;
-        const validationMessage = err?.validation?.body?.message;
-        const errorMsg =
-          `Ошибка при обновлении модели ${newModel.name}: ${validationMessage}` ||
-          `Ошибка при обновлении модели ${newModel.name}: ${err?.message}` ||
-          `Ошибка при обновлении модели ${newModel.name}`;
-
-        showToast?.(errorMsg);
+      } catch (error) {
+        showToast?.(
+          getApiErrorMessage(
+            error,
+            `Произошла ошибка при обновлении модели ${product?.name || ""}`,
+          ),
+        );
       }
     }
   };

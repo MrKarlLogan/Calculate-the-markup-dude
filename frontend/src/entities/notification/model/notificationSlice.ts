@@ -45,7 +45,7 @@ const notificationSlice = createSlice({
       .addCase(updateNotificationThunk.fulfilled, (state, action) => {
         if (action.payload) {
           const index = state.messages.findIndex(
-            (msg) => msg.id === action.payload.id,
+            (message) => message.id === action.payload?.id,
           );
           if (index !== -1) state.messages[index] = action.payload;
         }

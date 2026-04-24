@@ -1,19 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TProductRequest, TProductsResponse } from "../types/types";
 import productsApi from "@shared/api/productsApi";
+import { normalizeError } from "@shared/lib/helpers/normalizeError";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
       const response: TProductsResponse = await productsApi.getAllProducts();
-      return response.data;
+      if (response.success) return response.data;
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при загрузке продуктов",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -23,19 +21,10 @@ export const createProductThunk = createAsyncThunk(
   async (data: TProductRequest, { rejectWithValue }) => {
     try {
       const response = await productsApi.createProduct(data);
-
       if (response.success) return response.data;
-      if (response.validation) return rejectWithValue(response);
-
-      return rejectWithValue(
-        response.message || "Произошла ошибка при создании продукта",
-      );
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при создании продукта",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -48,19 +37,10 @@ export const updateProductThunk = createAsyncThunk(
   ) => {
     try {
       const response = await productsApi.updateProduct(data, id);
-
       if (response.success) return response.data;
-      if (response.validation) return rejectWithValue(response);
-
-      return rejectWithValue(
-        response.message || "Произошла ошибка при обновлении продукта",
-      );
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при обновлении продукта",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -70,16 +50,10 @@ export const removeProductThunk = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await productsApi.removeProducts(id);
-
       if (response.success) return id;
-
-      return rejectWithValue(response.message || "Ошибка удаления продукта");
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при удалении продукта",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );

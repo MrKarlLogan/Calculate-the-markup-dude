@@ -11,6 +11,7 @@ import useToast from "@/shared/lib/hooks/useToast";
 import { ConfirmModal } from "../ConfirmModal";
 import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
 import { deleteUserThunk, updateUsersRoleThunk } from "@/entities/user/api";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
 
 export const UserCard = ({ user }: { user: IAuthData }) => {
   const id = useAppSelector(getUserId);
@@ -25,30 +26,44 @@ export const UserCard = ({ user }: { user: IAuthData }) => {
       `Сделать пользователя ${user.name} администратором? Это действие нельзя будет отменить.`,
     );
 
-    if (result) {
-      const response = await dispatch(
+    if (!result) return;
+
+    try {
+      await dispatch(
         updateUsersRoleThunk({
           data: { role: "admin" },
           id: user.id,
         }),
-      );
+      ).unwrap();
 
-      if (response.meta.requestStatus === "fulfilled")
-        showToast(`Пользователь ${user.name} теперь администратор`);
-      else showToast(`Ошибка при изменении роли пользователя ${user.name}`);
+      showToast(`Пользователь ${user.name} теперь администратор`);
+    } catch (error) {
+      showToast(
+        getApiErrorMessage(
+          error,
+          `Произошла ошибка при изменении роли пользователя ${user.name}`,
+        ),
+      );
     }
   };
+
   const handleDelete = async () => {
     const result = await showConfirm(
       `Вы действительно хотите удалить пользователя ${user.name}`,
     );
 
-    if (result) {
-      const response = await dispatch(deleteUserThunk(user.id));
+    if (!result) return;
 
-      if (response.meta.requestStatus === "fulfilled")
-        showToast(`Пользователь ${user.name} успешно удален`);
-      else showToast(`Ошибка при удалении пользователя ${user.name}`);
+    try {
+      await dispatch(deleteUserThunk(user.id)).unwrap();
+      showToast(`Пользователь ${user.name} успешно удален`);
+    } catch (error) {
+      showToast(
+        getApiErrorMessage(
+          error,
+          `Произошла ошибка при удалении пользователя ${user.name}`,
+        ),
+      );
     }
   };
 

@@ -16,10 +16,10 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const getMeResult = await authApi.checkAuth();
+        const me = await authApi.checkAuth();
 
-        if (getMeResult.success) {
-          dispatch(setUser(getMeResult.data));
+        if (me.success) {
+          dispatch(setUser(me.data));
           setIsAuth(true);
           setIsLoading(false);
           return;
@@ -32,7 +32,6 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
           if (newMeResult.success) {
             dispatch(setUser(newMeResult.data));
             setIsAuth(true);
-            setIsLoading(false);
             return;
           }
         }

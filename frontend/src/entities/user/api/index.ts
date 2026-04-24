@@ -1,6 +1,7 @@
 import usersApi from "@/shared/api/usersApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IAuthData } from "../types/types";
+import { normalizeError } from "@/shared/lib/helpers/normalizeError";
 
 export const fetchUsersThunk = createAsyncThunk(
   "users/fetchUsers",
@@ -8,13 +9,9 @@ export const fetchUsersThunk = createAsyncThunk(
     try {
       const response = await usersApi.getAllusers();
       if (response.success) return response.data;
-      else return rejectWithValue(response.message);
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при загрузке пользователей",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -28,15 +25,9 @@ export const updateUsersRoleThunk = createAsyncThunk(
     try {
       const response = await usersApi.updateUser(data, id);
       if (response.success) return response.data;
-      return rejectWithValue(
-        response.message || "Ошибка при обновлении роли пользователя",
-      );
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при обновлении роли пользователя",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );
@@ -47,15 +38,9 @@ export const deleteUserThunk = createAsyncThunk(
     try {
       const response = await usersApi.deleteUser(id);
       if (response.success) return id;
-      return rejectWithValue(
-        response.message || "Ошибка при удалении пользователя",
-      );
+      return rejectWithValue(normalizeError(response));
     } catch (error) {
-      return rejectWithValue(
-        error instanceof Error
-          ? error.message
-          : "Произошла ошибка при удалении пользователя",
-      );
+      return rejectWithValue(normalizeError(error));
     }
   },
 );

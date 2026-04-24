@@ -11,41 +11,56 @@ import useToast from "@shared/lib/hooks/useToast";
 import authApi from "@/shared/api/authApi";
 import { Headline } from "@shared/ui/Headline";
 import { PasswordInput } from "@shared/ui/PasswordInput";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import { LoginFormState } from "./LoginForm.type";
+
+const initialState: LoginFormState = {
+  login: "",
+  password: "",
+};
 
 export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
   const router = useRouter();
   const { toasts, showToast, removeToast } = useToast();
-  const [isEmpty, setIsEmpty] = useState({
-    login: true,
-    password: true,
-  });
-  const disabledButton = isEmpty.login || isEmpty.password;
+
+  const [form, setForm] = useState<LoginFormState>(initialState);
+
+  const disabledButton = !form.login.trim() || !form.password.trim();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setIsEmpty((prev) => ({ ...prev, [name]: value.trim() === "" }));
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const login = formData.get("login")?.toString();
-    const password = formData.get("password")?.toString();
+    const { login, password } = form;
 
-    if (!login || !password)
-      return showToast("Все поля обязательны для заполнения");
+    if (!login || !password) {
+      showToast("Все поля обязательны для заполнения");
+      return;
+    }
 
     try {
       const result = await authApi.login({ login, password });
 
-      if (result.success) router.push(CLIENT_PATH.HOME);
-      else {
-        const errorMessage = result.validation?.body?.message || result.message;
-        showToast(errorMessage || "Произошла ошибка при входе");
+      if (!result.success) {
+        showToast(
+          getApiErrorMessage(result, "Произошла ошибка при входе в приложение"),
+        );
+        return;
       }
-    } catch {
-      showToast("Ошибка при получении данных от сервера");
+
+      router.push(CLIENT_PATH.HOME);
+    } catch (error) {
+      showToast(
+        getApiErrorMessage(error, "Ошибка при получении данных от сервера"),
+      );
     }
   };
 
@@ -60,23 +75,29 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
         >
           Вход
         </Headline>
+
         <TextInput
           name="login"
           text="Логин:"
           placeholder="Введите логин"
+          value={form.login}
           onChange={handleChange}
         />
+
         <PasswordInput
           name="password"
           text="Пароль:"
           placeholder="Введите пароль"
+          value={form.password}
           onChange={handleChange}
         />
+
         <div className={styles.buttons}>
           <Button text="Войти" type="submit" disabled={disabledButton} />
           <Button text="Регистрация" onClick={selectForm} />
         </div>
       </form>
+
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
