@@ -3,4 +3,5 @@ export type FormState = {
   password: string;
   name: string;
   registrationPassword: string;
+  role: "admin" | "others" | "";
 };

@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
-import authApi from "@/shared/api/authApi";
+import authApi from "@shared/api/authApi";
 import { Headline } from "@shared/ui/Headline";
 import { PasswordInput } from "@shared/ui/PasswordInput";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 import { LoginFormState } from "./LoginForm.type";
 
 const initialState: LoginFormState = {
