@@ -202,6 +202,12 @@ export const getMe = async (
     const user = await UserRepository.findOne({ where: { id: decoded.id } });
     if (!user) return next(new UnauthorizedError("Пользователь не найден"));
 
+    if (user.role !== decoded.role) {
+      clearAuthCookies(res);
+      const { accessToken, refreshToken } = generateTokens(user);
+      setAuthCookies(res, accessToken, refreshToken);
+    }
+
     res.json({
       success: true,
       data: {
