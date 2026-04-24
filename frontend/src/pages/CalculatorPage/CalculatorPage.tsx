@@ -10,17 +10,27 @@ import { useEffect, useState } from "react";
 import { Constructor } from "@widgets/Constructor";
 import { Section } from "@shared/ui/Section";
 import { Notification } from "@widgets/Notification";
-import { useAppDispatch } from "@shared/lib/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
 import { UsersEditor } from "@/widgets/UsersEditor";
+import { getLoading } from "@/entities/product/model/productsSlice";
+import { Loader } from "@/shared/ui/Loader";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
   const dispath = useAppDispatch();
+  const loading = useAppSelector(getLoading);
 
   useEffect(() => {
     dispath(fetchProducts());
   }, [dispath]);
+
+  if (loading)
+    return (
+      <MainLayout>
+        <Loader />
+      </MainLayout>
+    );
 
   return (
     <MainLayout>

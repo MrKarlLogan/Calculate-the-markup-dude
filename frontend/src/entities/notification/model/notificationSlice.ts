@@ -67,11 +67,11 @@ const notificationSlice = createSlice({
   },
   selectors: {
     getMessages: (state) => state.messages,
-    getStatusLoading: (state) => state.loading,
+    getLoading: (state) => state.loading,
     getError: (state) => state.error,
   },
 });
 
-export const { getMessages, getStatusLoading, getError } =
+export const { getMessages, getLoading, getError } =
   notificationSlice.selectors;
 export default notificationSlice.reducer;

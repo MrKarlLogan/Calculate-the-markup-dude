@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { fetchNotifications } from "@/entities/notification/api";
 import {
   getMessages,
-  getStatusLoading,
+  getLoading,
 } from "@/entities/notification/model/notificationSlice";
 import { LoaderComponent } from "@/shared/ui/LoaderComponent";
 import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
@@ -26,7 +26,7 @@ export const Notification = ({
 }) => {
   const dispatch = useAppDispatch();
   const notifications = useAppSelector(getMessages);
-  const loading = useAppSelector(getStatusLoading);
+  const loading = useAppSelector(getLoading);
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
     useConfirmModal();
   const { toasts, showToast, removeToast } = useToast();

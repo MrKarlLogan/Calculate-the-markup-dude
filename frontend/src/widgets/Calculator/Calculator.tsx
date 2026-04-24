@@ -4,10 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { Section } from "@shared/ui/Section";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { useAppSelector } from "@shared/lib/hooks/redux";
-import {
-  getProducts,
-  getStatusLoading,
-} from "@entities/product/model/productsSlice";
+import { getProducts, getLoading } from "@entities/product/model/productsSlice";
 import { LoaderComponent } from "@shared/ui/LoaderComponent";
 import { Radio } from "@shared/ui/Radio";
 import { Checkbox } from "@shared/ui/Checkbox";
@@ -34,7 +31,7 @@ const initialStateCalculator: TCalculator = {
 
 export const Calculator = () => {
   const products = useAppSelector(getProducts);
-  const loading = useAppSelector(getStatusLoading);
+  const loading = useAppSelector(getLoading);
   const role = useAppSelector(getRole);
   const isAdmin = role === "admin";
 

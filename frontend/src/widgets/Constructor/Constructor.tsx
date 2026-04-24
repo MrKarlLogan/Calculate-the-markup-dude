@@ -6,7 +6,7 @@ import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import {
   getProducts,
-  getStatusLoading,
+  getLoading,
   setEditing,
 } from "@entities/product/model/productsSlice";
 import { Radio } from "@shared/ui/Radio";
@@ -29,7 +29,7 @@ const initialStateConstructor: TConstructor = {
 export const Constructor = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(getProducts);
-  const loading = useAppSelector(getStatusLoading);
+  const loading = useAppSelector(getLoading);
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
     useConfirmModal();
   const { toasts, showToast, removeToast } = useToast();

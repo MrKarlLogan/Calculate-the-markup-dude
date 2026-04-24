@@ -108,7 +108,7 @@ const productsSlice = createSlice({
     getProducts: (state) => state.products,
     getProductById: (state, id: string) =>
       state.products.find((product) => product.id === id),
-    getStatusLoading: (state) => state.loading,
+    getLoading: (state) => state.loading,
     getError: (state) => state.error,
     getEditing: (state) => state.editing,
   },
@@ -125,7 +125,7 @@ export const {
 export const {
   getProducts,
   getProductById,
-  getStatusLoading,
+  getLoading,
   getError,
   getEditing,
 } = productsSlice.selectors;
