@@ -43,3 +43,7 @@
     }
   }
 }
+
+:has(.input:disabled) .wrapper {
+  color: $bg-color-dark;
+}

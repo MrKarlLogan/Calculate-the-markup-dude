@@ -25,6 +25,7 @@
 
     &__content {
       flex: 1;
+      min-block-size: 0;
       @include flex(column, start, center, 10px);
     }
   }

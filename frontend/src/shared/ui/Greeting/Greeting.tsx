@@ -2,6 +2,7 @@
 
 import { Headline } from "../Headline";
 import { TGreeting } from "./Greeting.type";
+import styles from "./Greeting.module.scss";
 
 export const Greeting = ({ name }: TGreeting) => {
   const currentHour = new Date().getHours();
@@ -23,7 +24,7 @@ export const Greeting = ({ name }: TGreeting) => {
 
   return (
     <Headline size={18} position="start" as="h3" weight="bold">
-      {currentGreeting}, {name}
+      {currentGreeting}, <span className={styles.name}>{name}</span>
     </Headline>
   );
 };

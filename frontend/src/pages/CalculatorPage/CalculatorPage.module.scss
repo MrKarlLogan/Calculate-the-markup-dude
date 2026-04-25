@@ -1,8 +1,6 @@
 .content {
   max-inline-size: $max-size;
   inline-size: 100%;
-  min-block-size: 0;
-  block-size: 100%;
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
@@ -31,9 +29,9 @@
 
   &__calculator,
   &__constructor {
+    min-block-size: 0;
     inline-size: 100%;
-    block-size: 100%;
-    @include grid(2fr 1fr, auto);
+    @include grid(2fr 1fr, 100%);
     padding: 0;
     animation: opacity $animation-time ease-in-out;
 
@@ -49,19 +47,20 @@
 
   &__other {
     inline-size: 100%;
-    block-size: 100%;
     @include flex(column, start, center);
     padding: 0;
 
     &_notification,
     &_agreement {
-      block-size: 470px;
+      min-height: 0;
+      flex: 1;
     }
 
     &_notification_editor,
     &_user_editor {
       @include flex(column, start, center);
-      block-size: 470px;
+      min-height: 0;
+      flex: 1;
     }
   }
 }
