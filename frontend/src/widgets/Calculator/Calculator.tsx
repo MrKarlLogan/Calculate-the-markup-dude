@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Section } from "@shared/ui/Section";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { useAppSelector } from "@shared/lib/hooks/redux";
 import { getProducts, getLoading } from "@entities/product/model/productsSlice";
@@ -16,6 +15,7 @@ import { TCalculator } from "./Calculator.type";
 import { getRole } from "@entities/user/model/userSlice";
 import { NumericInput } from "@shared/ui/NumericInput";
 import { Paragraph } from "@/shared/ui/Paragraph";
+import { Container } from "@/shared/ui/Container";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -87,15 +87,15 @@ export const Calculator = () => {
 
   if (loading)
     return (
-      <Section>
+      <Container className={styles.wrapper}>
         <GroupeContainer title="Калькулятор" className={styles.container}>
           <LoaderComponent />
         </GroupeContainer>
-      </Section>
+      </Container>
     );
 
   return (
-    <Section>
+    <Container className={styles.wrapper}>
       <GroupeContainer title="Калькулятор" className={styles.container}>
         <GroupeContainer
           title="Выбор модели"
@@ -165,7 +165,7 @@ export const Calculator = () => {
             </Paragraph>
           )}
         </GroupeContainer>
-        <div className={styles.mainCalculate}>
+        <Container className={styles.mainCalculate}>
           <GroupeContainer
             title="Дополнительные условия"
             className={styles.conditions}
@@ -249,7 +249,7 @@ export const Calculator = () => {
               weight="bold"
             />
           </GroupeContainer>
-        </div>
+        </Container>
         <GroupeContainer
           title="Сообщение"
           className={styles.message}
@@ -265,13 +265,13 @@ export const Calculator = () => {
             }
           />
           {isAdmin ? (
-            <div className={styles.adminButtons}>
+            <Container className={styles.adminButtons}>
               <Button
                 text="Согласовать"
                 onClick={() => console.log(calculator)}
               />
               <Button text="Отказать" onClick={() => console.log(calculator)} />
-            </div>
+            </Container>
           ) : (
             <Button
               text="Отправить на согласование"
@@ -280,6 +280,6 @@ export const Calculator = () => {
           )}
         </GroupeContainer>
       </GroupeContainer>
-    </Section>
+    </Container>
   );
 };

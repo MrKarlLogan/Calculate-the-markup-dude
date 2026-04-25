@@ -5,6 +5,6 @@ export const Container = ({
   className,
   children,
 }: {
-  className: string;
+  className?: string;
   children: ReactNode;
 }) => <div className={`${styles.container} ${className}`}>{children}</div>;

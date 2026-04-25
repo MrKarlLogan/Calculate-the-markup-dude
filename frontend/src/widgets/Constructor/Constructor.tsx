@@ -1,6 +1,5 @@
 "use client";
 
-import { Section } from "@/shared/ui/Section";
 import styles from "./Constructor.module.scss";
 import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
@@ -19,6 +18,7 @@ import { ConfirmModal } from "@shared/ui/ConfirmModal";
 import { Toast } from "@/shared/ui/Toast";
 import useToast from "@/shared/lib/hooks/useToast";
 import { Paragraph } from "@/shared/ui/Paragraph";
+import { Container } from "@/shared/ui/Container";
 
 const initialStateConstructor: TConstructor = {
   modelId: null,
@@ -59,16 +59,16 @@ export const Constructor = () => {
 
   if (loading)
     return (
-      <Section>
+      <Container className={styles.wrapper}>
         <GroupeContainer title="Конструктор" className={styles.container}>
           <LoaderComponent />
         </GroupeContainer>
-      </Section>
+      </Container>
     );
 
   return (
     <>
-      <Section>
+      <Container className={styles.wrapper}>
         <GroupeContainer title="Конструктор" className={styles.container}>
           <GroupeContainer
             title="Выбор модели"
@@ -112,7 +112,7 @@ export const Constructor = () => {
             />
           </GroupeContainer>
         </GroupeContainer>
-      </Section>
+      </Container>
       {modal && (
         <ConfirmModal
           text={modal.text}

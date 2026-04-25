@@ -1,46 +1,51 @@
-.container {
-  flex: 1;
-  @include flex(column, start, center, 10px);
+.wrapper {
+  padding: 1rem;
+  @include flex(column, start);
 
-  .products {
+  .container {
     flex: 1;
-    @include grid(
-      repeat(auto-fill, minmax(150px, auto)),
-      auto,
-      10px,
-      center,
-      stretch
-    );
-  }
+    @include flex(column, start, center, 10px);
 
-  .products_empty {
-    flex: 1;
-    @include grid(1fr, auto, 10px, center, center);
-  }
-
-  .mainCalculate {
-    inline-size: 100%;
-    @include flex;
-
-    .conditions {
+    .products {
       flex: 1;
-      block-size: 100%;
-      @include flex(column, center, end, 10px);
+      @include grid(
+        repeat(auto-fill, minmax(150px, auto)),
+        auto,
+        10px,
+        center,
+        stretch
+      );
     }
 
-    .calculate {
+    .products_empty {
       flex: 1;
-      block-size: 100%;
-      @include flex(column, center, center, 30px);
+      @include grid(1fr, auto, 10px, center, center);
     }
-  }
 
-  .message {
-    flex: 1;
-    @include grid(4fr 1fr, auto, 10px);
+    .mainCalculate {
+      inline-size: 100%;
+      @include flex(row, center, stretch);
 
-    .adminButtons {
-      @include flex(column, center, center, 10px);
+      .conditions {
+        flex: 1;
+        block-size: 100%;
+        @include flex(column, start, stretch, 10px);
+      }
+
+      .calculate {
+        flex: 1;
+        block-size: 100%;
+        @include flex(column, start, stretch, 30px);
+      }
+    }
+
+    .message {
+      flex: 1;
+      @include grid(4fr 1fr, auto, 10px);
+
+      .adminButtons {
+        @include flex(column, center, center, 10px);
+      }
     }
   }
 }
