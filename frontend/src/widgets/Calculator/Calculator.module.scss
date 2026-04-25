@@ -1,18 +1,44 @@
 .wrapper {
   padding: 1rem;
-  @include flex(column, start);
+  @include flex(column, center);
 
   .container {
+    min-block-size: 0;
     flex: 1;
-    @include flex(column, start, center, 10px);
+    @include flex(column, start, stretch, 10px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar {
+      inline-size: 8px;
+      block-size: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: $bg-color-dark;
+      border-radius: $radius;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $text-color;
+      border: 2px solid $bg-color-dark;
+      border-radius: $radius;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: $accent-color;
+      cursor: pointer;
+    }
 
     .products {
+      min-block-size: max-content;
       flex: 1;
       @include grid(
         repeat(auto-fill, minmax(150px, auto)),
         auto,
         10px,
-        center,
+        stretch,
         stretch
       );
     }
@@ -23,19 +49,17 @@
     }
 
     .mainCalculate {
+      flex: 3;
       inline-size: 100%;
+      min-block-size: max-content;
       @include flex(row, center, stretch);
 
       .conditions {
-        flex: 1;
-        block-size: 100%;
         @include flex(column, start, stretch, 10px);
       }
 
       .calculate {
-        flex: 1;
-        block-size: 100%;
-        @include flex(column, start, stretch, 30px);
+        @include flex(column, start, stretch, 10px);
       }
     }
 

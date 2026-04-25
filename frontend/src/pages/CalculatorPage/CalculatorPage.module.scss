@@ -52,14 +52,14 @@
 
     &_notification,
     &_agreement {
-      min-height: 0;
+      min-block-size: 0;
       flex: 1;
     }
 
     &_notification_editor,
     &_user_editor {
       @include flex(column, start, center);
-      min-height: 0;
+      min-block-size: 0;
       flex: 1;
     }
   }

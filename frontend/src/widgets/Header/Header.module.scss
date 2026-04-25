@@ -20,6 +20,11 @@
         &:active {
           box-shadow: $inner-shadow;
         }
+
+        &:disabled {
+          background-color: $bg-color-dark;
+          box-shadow: none;
+        }
       }
     }
   }

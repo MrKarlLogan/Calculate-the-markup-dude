@@ -1,8 +1,10 @@
 .container {
   inline-size: 100%;
-  @include flex(row, space-between, center, 10px);
+  @include flex(column, center, stretch, 10px);
   font-size: var(--size);
   font-weight: var(--weight);
+  border-block-end: $border;
+  padding-block-end: 1rem;
 
   .error {
     color: $error;
@@ -10,5 +12,6 @@
 
   .num {
     color: $accent-color;
+    align-self: end;
   }
 }
