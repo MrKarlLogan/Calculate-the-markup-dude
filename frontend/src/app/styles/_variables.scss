@@ -1,24 +1,45 @@
 $accent-color: #97ed9a;
-$button-color: #696969;
+$button-color: #505b48;
 $block-color: #878787;
+$input-color: #555555;
+$groupe-color: #737373;
 $white: #818181;
+$placeholder: #b3b3b3;
 $bg-color: #7f7f7f;
-$bg-color-light-dark: #595858;
+$bg-color-light-dark: #5c5c5c;
 $bg-color-dark: #5b5a5a;
 $text-color: #ebebeb;
-$error: FireBrick;
+$error: #a01a1a;
 $border: 1px solid rgba(45, 45, 45, 0.4);
 $radius: 8px;
 $shadow:
   3.2px 3.2px 8px #5b5a5a,
-  -3.2px -3.2px 8px #929292,
+  -3.2px -3.2px 8px #848484,
   inset 1.6px 1.6px 1.6px #acacac;
+$shadow-button:
+  3.2px 3.2px 8px #5b5a5a,
+  -3.2px -3.2px 8px #848484,
+  inset 1.6px 1.6px 1.6px #809b81;
 $shadow-header:
   3.2px 3.2px 8px #505050,
   -3.2px -3.2px 8px #4b4b4b,
   inset 1.6px 1.6px 1.6px #999999;
+$shadow-after:
+  3.2px 3.2px 8px #3d3d3d,
+  -3.2px -3.2px 8px #ababab;
 $inner-shadow:
   inset 3.2px 3.2px 8px #5b5a5a,
   inset -3.2px -3.2px 8px #949494;
+$inner-shadow-container:
+  inset 3.2px 3.2px 8px #575757,
+  inset -3.2px -3.2px 8px #838383;
+$inner-shadow-input:
+  inset 3.2px 3.2px 8px #343434,
+  inset -3.2px -3.2px 8px #797979;
+$inner-shadow-button:
+  inset 3.2px 3.2px 8px #373737,
+  inset -3.2px -3.2px 8px #667664;
 $animation-time: 0.3s;
 $max-size: 1600px;
+$gradient: linear-gradient(90deg, $block-color, rgba(150, 182, 141, 0.5));
+$inner-gradient: linear-gradient(90deg, rgba(150, 182, 141, 0.5), $block-color);

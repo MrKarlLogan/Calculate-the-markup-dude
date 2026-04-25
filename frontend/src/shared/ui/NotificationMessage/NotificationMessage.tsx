@@ -71,10 +71,16 @@ export const NotificationMessage = ({
         <TextArea
           value={text}
           onChange={(event) => setText(event.target.value)}
+          rows={3}
         >
           {text}
         </TextArea>
-        <Button text="Создать" onClick={handleAddMessage} disabled={!text} />
+        <Button
+          text="Создать"
+          onClick={handleAddMessage}
+          disabled={!text}
+          className={styles.create_button}
+        />
       </div>
     );
 
@@ -82,8 +88,8 @@ export const NotificationMessage = ({
     <div className={styles.container}>
       <div className={styles.title}>
         <Paragraph
-          size={12}
-          position="start"
+          size={14}
+          position={isEdit ? "start" : "end"}
           weight="bold"
           className={styles.date}
         >

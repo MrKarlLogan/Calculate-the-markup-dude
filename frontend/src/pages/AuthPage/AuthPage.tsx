@@ -17,10 +17,10 @@ export const AuthPage = () => {
     <MainLayout>
       <div className={styles.container}>
         <Section className={styles.welcome}>
-          <Headline size={30} weight="bold">
+          <Headline size={30} weight="bold" className={styles.welcome__title}>
             Добро пожаловать
           </Headline>
-          <Paragraph>
+          <Paragraph className={styles.welcome__text}>
             Для дальнейшей работы необходимо выполнить вход или произвести
             регистрацию
           </Paragraph>

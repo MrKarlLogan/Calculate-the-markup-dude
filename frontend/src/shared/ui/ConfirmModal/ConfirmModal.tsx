@@ -6,6 +6,7 @@ import styles from "./ConfirmModal.module.scss";
 import { Paragraph } from "../Paragraph";
 import { Button } from "../Button";
 import { IConfirmModal } from "./ConfirmModal.type";
+import { Headline } from "../Headline";
 
 export const ConfirmModal = ({
   text,
@@ -32,7 +33,17 @@ export const ConfirmModal = ({
   const confirmModalContent = (
     <div className={`${styles.modal} ${!isVisible ? styles.hide : ""}`}>
       <div className={styles.content}>
-        <Paragraph size={18}>{text}</Paragraph>
+        <Headline
+          position="start"
+          size={20}
+          weight="bold"
+          className={styles.content__title}
+        >
+          Необходимо подтвердить действие
+        </Headline>
+        <Paragraph position="start" size={18}>
+          {text}
+        </Paragraph>
         <div className={styles.buttons}>
           <Button text={positiveAnswer} type="button" onClick={handleConfirm} />
           <Button text={negativeAnswer} type="button" onClick={handleCancel} />

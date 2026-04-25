@@ -3,7 +3,8 @@
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,14 +12,18 @@
   animation: fadeIn 0.2s ease;
 
   .content {
-    inline-size: 30%;
-    @include flex(column, center, center, 1rem);
+    inline-size: 50%;
+    @include flex(column, center, center, 20px);
     padding: 1rem;
+    border: $border;
     border-radius: $radius;
     background-color: $bg-color;
     color: $text-color;
     user-select: none;
-    border: $border;
+
+    &__title {
+      color: $accent-color;
+    }
   }
 
   .buttons {

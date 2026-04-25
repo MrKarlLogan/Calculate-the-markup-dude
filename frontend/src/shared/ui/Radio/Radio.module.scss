@@ -19,8 +19,9 @@
   }
 
   &:has(input:checked) {
+    background-color: $button-color;
     color: $accent-color;
-    box-shadow: $inner-shadow;
+    box-shadow: $inner-shadow-button;
   }
 
   .input_radio {

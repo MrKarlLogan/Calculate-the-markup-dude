@@ -6,12 +6,12 @@
   border-block-end: $border;
   padding-block-end: 1rem;
 
-  .error {
-    color: $error;
-  }
-
   .num {
     color: $accent-color;
     align-self: end;
+  }
+
+  .error {
+    color: $error;
   }
 }

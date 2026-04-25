@@ -7,11 +7,20 @@
   border: $border;
   background-color: $block-color;
 
+  .create_button {
+    block-size: max-content;
+  }
+
   .title {
     inline-size: 100%;
     @include flex(row, space-between, center, 10px);
-    border-block-end: 2px solid $bg-color-dark;
+    border-block-end: $border;
     padding-block-end: 0.5rem;
+
+    .date {
+      align-self: start;
+      color: $accent-color;
+    }
 
     .deleteButton {
       inline-size: max-content;
@@ -20,5 +29,5 @@
 }
 
 .container_accent {
-  border-color: $accent-color;
+  background: $gradient;
 }

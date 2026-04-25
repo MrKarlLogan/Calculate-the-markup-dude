@@ -13,8 +13,9 @@
   }
 
   .title {
-    border-block-end: 2px solid $bg-color-light-dark;
+    border-block-end: $border;
     padding-bottom: 10px;
+    color: $accent-color;
   }
 
   @media (max-width: 1400px) {

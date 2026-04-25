@@ -5,20 +5,18 @@
   padding: 0.5rem 0.8rem;
   border: $border;
   border-radius: $radius;
-  box-shadow: $shadow;
-  background-color: $bg-color;
+  background-color: $input-color;
   color: $accent-color;
   resize: none;
   transition: $animation-time;
 
   &:focus-visible {
     outline: none;
-    box-shadow: $inner-shadow;
+    box-shadow: $inner-shadow-input;
   }
 
   &::placeholder {
-    color: $text-color;
-    transform: translateY(4px);
+    color: $placeholder;
   }
 
   :has(.textarea:disabled) &::placeholder {

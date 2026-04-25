@@ -6,7 +6,7 @@
   padding: 0.5rem 1rem;
   border: $border;
   border-radius: $radius;
-  box-shadow: $shadow;
+  box-shadow: $shadow-button;
   background-color: $button-color;
   color: $text-color;
   transition: $animation-time;
@@ -15,7 +15,7 @@
 
   &:not(:disabled):active {
     color: $accent-color;
-    box-shadow: $inner-shadow;
+    box-shadow: $inner-shadow-button;
   }
 
   &:focus-visible {

@@ -14,15 +14,14 @@
     padding: 0.5rem 0.8rem;
     border: $border;
     border-radius: $radius;
-    box-shadow: $shadow;
-    background-color: $bg-color;
+    background-color: $input-color;
     color: $accent-color;
     transition: $animation-time;
     pointer-events: auto;
 
     &::placeholder {
       font-size: 12px;
-      color: $text-color;
+      color: $placeholder;
       transform: translateY(-2px);
     }
 
@@ -32,7 +31,7 @@
 
     &:focus-visible {
       outline: none;
-      box-shadow: $inner-shadow;
+      box-shadow: $inner-shadow-input;
     }
 
     &:disabled {

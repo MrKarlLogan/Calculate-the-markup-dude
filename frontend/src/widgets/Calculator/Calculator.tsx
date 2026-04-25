@@ -230,7 +230,7 @@ export const Calculator = () => {
             />
           </GroupeContainer>
           <GroupeContainer
-            title="Расчёт стоимости"
+            title="Расчет стоимости"
             className={styles.calculate}
             disabled={!calculator.optionId}
           >

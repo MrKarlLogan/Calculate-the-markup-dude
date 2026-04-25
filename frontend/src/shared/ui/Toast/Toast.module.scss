@@ -2,17 +2,17 @@
   position: fixed;
   inline-size: 30%;
   max-inline-size: 400px;
-  bottom: calc(20px * 2);
-  right: calc((100% - min(100%, $max-size)) / 2 + 20px);
+  top: calc(10px);
+  left: calc((100% - min(100%, $max-size)) / 2 + 10px);
   @include flex(column, center, start, 0.5rem);
   padding: 1rem;
   border-radius: $radius;
-  background-color: $bg-color-dark;
+  background-color: $button-color;
   color: $accent-color;
   z-index: 1;
   animation: slideIn 0.2s ease;
   user-select: none;
-  box-shadow: $shadow;
+  border: $border;
 
   .text {
     color: $text-color;
@@ -25,22 +25,22 @@
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateY(-100%);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes slideOut {
   from {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
   to {
-    transform: translateX(100%);
+    transform: translateY(-100%);
     opacity: 0;
   }
 }

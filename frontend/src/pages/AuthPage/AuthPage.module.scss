@@ -6,14 +6,13 @@
   @include flex;
   position: relative;
   overflow-y: auto;
-  scrollbar-gutter: stable;
 
   &::after {
     position: absolute;
     content: "";
-    inline-size: 3px;
+    inline-size: 1px;
     block-size: 70%;
-    box-shadow: $shadow;
+    box-shadow: $shadow-after;
     border-radius: $radius;
   }
 
@@ -41,5 +40,13 @@
   .welcome,
   .LoginForm {
     gap: 1rem;
+
+    &__title {
+      color: $accent-color;
+    }
+
+    &__text {
+      color: $text-color;
+    }
   }
 }

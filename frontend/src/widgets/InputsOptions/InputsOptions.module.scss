@@ -39,9 +39,8 @@
   box-shadow: $shadow;
   padding: 1rem;
   border: $border;
-  border-color: $accent-color;
   border-radius: $radius;
-  background-color: $block-color;
+  background: $gradient;
   @include flex(column, center, stretch, 10px);
 
   &__title {
