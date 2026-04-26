@@ -1,14 +1,13 @@
 "use client";
 
 import { Section } from "@shared/ui/Section";
-import styles from "./Agreement.module.scss";
-import { GroupeContainer } from "@/shared/ui/GroupeContainer";
+import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
 
 export const Agreement = ({ className }: { className?: string }) => (
   <Section className={className}>
-    <GroupeContainer title="Согласование" className={styles.container}>
+    <MainContainer title="Согласование">
       <p>В разработке</p>
-    </GroupeContainer>
+    </MainContainer>
   </Section>
 );
 

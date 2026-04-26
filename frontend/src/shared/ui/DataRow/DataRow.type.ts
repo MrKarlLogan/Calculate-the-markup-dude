@@ -4,4 +4,5 @@ export type TDataRow = {
   unit?: string;
   size?: number;
   weight?: "regular" | "bold";
+  className?: string;
 };

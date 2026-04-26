@@ -8,6 +8,8 @@
   background-color: $block-color;
 
   .create_button {
+    align-self: end;
+    inline-size: max-content;
     block-size: max-content;
   }
 

@@ -1,74 +1,50 @@
 .wrapper {
-  padding: 1rem;
-  @include flex(column, center);
+  @include flex(column, start);
 
-  .container {
-    min-block-size: 0;
+  .products {
+    min-block-size: max-content;
     flex: 1;
-    @include flex(column, start, stretch, 10px);
-    overflow-x: hidden;
-    overflow-y: auto;
+    @include grid(
+      repeat(auto-fill, minmax(150px, auto)),
+      auto,
+      10px,
+      stretch,
+      stretch
+    );
+  }
 
-    &::-webkit-scrollbar {
-      inline-size: 8px;
-      block-size: 8px;
+  .products_empty {
+    flex: 1;
+    @include grid(1fr, auto, 10px, center, center);
+  }
+
+  .mainCalculate {
+    flex: 3;
+    inline-size: 100%;
+    min-block-size: max-content;
+    @include flex(row, center, stretch, 10px);
+    padding: 0;
+
+    .conditions {
+      @include flex(column, start, stretch, 10px);
     }
 
-    &::-webkit-scrollbar-track {
-      background-color: $bg-color-dark;
-      border-radius: $radius;
-    }
+    .calculate {
+      @include flex(column, start, stretch, 10px);
 
-    &::-webkit-scrollbar-thumb {
-      background-color: $text-color;
-      border: 2px solid $bg-color-dark;
-      border-radius: $radius;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: $accent-color;
-      cursor: pointer;
-    }
-
-    .products {
-      min-block-size: max-content;
-      flex: 1;
-      @include grid(
-        repeat(auto-fill, minmax(150px, auto)),
-        auto,
-        10px,
-        stretch,
-        stretch
-      );
-    }
-
-    .products_empty {
-      flex: 1;
-      @include grid(1fr, auto, 10px, center, center);
-    }
-
-    .mainCalculate {
-      flex: 3;
-      inline-size: 100%;
-      min-block-size: max-content;
-      @include flex(row, center, stretch);
-
-      .conditions {
-        @include flex(column, start, stretch, 10px);
-      }
-
-      .calculate {
-        @include flex(column, start, stretch, 10px);
+      &__border {
+        border-block-end: none;
+        padding-block-end: 0;
       }
     }
+  }
 
-    .message {
-      flex: 1;
-      @include grid(4fr 1fr, auto, 10px);
+  .message {
+    flex: 1;
+    @include grid(4fr 1fr, auto, 10px);
 
-      .adminButtons {
-        @include flex(column, center, center, 10px);
-      }
+    .adminButtons {
+      @include flex(column, center, center, 10px);
     }
   }
 }

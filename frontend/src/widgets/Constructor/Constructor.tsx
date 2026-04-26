@@ -19,6 +19,7 @@ import { Toast } from "@/shared/ui/Toast";
 import useToast from "@/shared/lib/hooks/useToast";
 import { Paragraph } from "@/shared/ui/Paragraph";
 import { Container } from "@/shared/ui/Container";
+import { MainContainer } from "@/shared/ui/MainContainer/MainContainer";
 
 const initialStateConstructor: TConstructor = {
   modelId: null,
@@ -60,16 +61,16 @@ export const Constructor = () => {
   if (loading)
     return (
       <Container className={styles.wrapper}>
-        <GroupeContainer title="Конструктор" className={styles.container}>
+        <MainContainer title="Конструктор">
           <LoaderComponent />
-        </GroupeContainer>
+        </MainContainer>
       </Container>
     );
 
   return (
     <>
       <Container className={styles.wrapper}>
-        <GroupeContainer title="Конструктор" className={styles.container}>
+        <MainContainer title="Конструктор" className={styles.editor}>
           <GroupeContainer
             title="Выбор модели"
             className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
@@ -92,26 +93,21 @@ export const Constructor = () => {
               <Paragraph>Модели для выбора отсуствуют</Paragraph>
             )}
           </GroupeContainer>
-          <GroupeContainer
-            title="Создание и редактирование"
-            className={styles.editor}
-          >
-            <ProductEditor
-              key={selectModel.modelId}
-              showToast={showToast}
-              productId={selectModel.modelId || ""}
-              hasChange={setHasChange}
-              createdProduct={{
-                state: createNewProduct,
-                dispatch: setCreateNewProduct,
-              }}
-              changeProduct={{
-                initialState: initialStateConstructor,
-                dispatch: setSelectModel,
-              }}
-            />
-          </GroupeContainer>
-        </GroupeContainer>
+          <ProductEditor
+            key={selectModel.modelId}
+            showToast={showToast}
+            productId={selectModel.modelId || ""}
+            hasChange={setHasChange}
+            createdProduct={{
+              state: createNewProduct,
+              dispatch: setCreateNewProduct,
+            }}
+            changeProduct={{
+              initialState: initialStateConstructor,
+              dispatch: setSelectModel,
+            }}
+          />
+        </MainContainer>
       </Container>
       {modal && (
         <ConfirmModal

@@ -8,9 +8,10 @@ export const DataRow = ({
   unit = "руб.",
   size = 16,
   weight = "regular",
+  className,
 }: TDataRow) => (
   <div
-    className={styles.container}
+    className={`${styles.container} ${className}`}
     style={{ "--size": `${size}px`, "--weight": weight } as CSSProperties}
   >
     <span className={styles.text}>{`${text}: `}</span>

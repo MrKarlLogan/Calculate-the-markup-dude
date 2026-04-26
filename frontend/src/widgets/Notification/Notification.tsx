@@ -1,21 +1,20 @@
 "use client";
 
 import { Section } from "@shared/ui/Section";
-import styles from "./Notification.module.scss";
-import { GroupeContainer } from "@/shared/ui/GroupeContainer";
-import { NotificationMessage } from "@/shared/ui/NotificationMessage";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
+import { NotificationMessage } from "@shared/ui/NotificationMessage";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { useEffect } from "react";
-import { fetchNotifications } from "@/entities/notification/api";
+import { fetchNotifications } from "@entities/notification/api";
 import {
   getMessages,
   getLoading,
-} from "@/entities/notification/model/notificationSlice";
-import { LoaderComponent } from "@/shared/ui/LoaderComponent";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
-import { ConfirmModal } from "@/shared/ui/ConfirmModal";
-import { Toast } from "@/shared/ui/Toast";
-import useToast from "@/shared/lib/hooks/useToast";
+} from "@entities/notification/model/notificationSlice";
+import { LoaderComponent } from "@shared/ui/LoaderComponent";
+import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
+import { ConfirmModal } from "@shared/ui/ConfirmModal";
+import { Toast } from "@shared/ui/Toast";
+import useToast from "@shared/lib/hooks/useToast";
+import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
 
 export const Notification = ({
   className,
@@ -38,21 +37,19 @@ export const Notification = ({
   if (loading)
     return (
       <Section className={className}>
-        <GroupeContainer
+        <MainContainer
           title={!isEdit ? "Информация" : "Информационный редактор"}
-          className={styles.container}
         >
           <LoaderComponent />
-        </GroupeContainer>
+        </MainContainer>
       </Section>
     );
 
   return (
     <>
       <Section className={className}>
-        <GroupeContainer
+        <MainContainer
           title={!isEdit ? "Информация" : "Информационный редактор"}
-          className={styles.container}
         >
           {isEdit && (
             <NotificationMessage
@@ -71,7 +68,7 @@ export const Notification = ({
                 />
               ))
               .reverse()}
-        </GroupeContainer>
+        </MainContainer>
       </Section>
       {modal && (
         <ConfirmModal

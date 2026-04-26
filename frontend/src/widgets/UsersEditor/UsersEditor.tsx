@@ -1,16 +1,15 @@
 "use client";
 
-import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import { Section } from "@shared/ui/Section";
-import styles from "./UsersEditor.module.scss";
-import { LoaderComponent } from "@/shared/ui/LoaderComponent";
-import { Paragraph } from "@/shared/ui/Paragraph";
-import { UserCard } from "@/shared/ui/UserCard";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
-import { getUserId } from "@/entities/user/model/userSlice";
-import { getLoading, getUsers } from "@/entities/user/model/usersSlice";
+import { LoaderComponent } from "@shared/ui/LoaderComponent";
+import { Paragraph } from "@shared/ui/Paragraph";
+import { UserCard } from "@shared/ui/UserCard";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
+import { getUserId } from "@entities/user/model/userSlice";
+import { getLoading, getUsers } from "@entities/user/model/usersSlice";
 import { useEffect } from "react";
-import { fetchUsersThunk } from "@/entities/user/api";
+import { fetchUsersThunk } from "@entities/user/api";
+import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
 
 export const UsersEditor = ({ className }: { className?: string }) => {
   const id = useAppSelector(getUserId);
@@ -26,12 +25,9 @@ export const UsersEditor = ({ className }: { className?: string }) => {
   if (loading)
     return (
       <Section className={className}>
-        <GroupeContainer
-          title="Управление пользователями"
-          className={styles.container}
-        >
+        <MainContainer title="Управление пользователями">
           <LoaderComponent />
-        </GroupeContainer>
+        </MainContainer>
       </Section>
     );
 
@@ -49,17 +45,14 @@ export const UsersEditor = ({ className }: { className?: string }) => {
 
   return (
     <Section className={className}>
-      <GroupeContainer
-        title="Управление пользователями"
-        className={styles.container}
-      >
+      <MainContainer title="Управление пользователями">
         {users && users.length === 0 ? (
           <Paragraph>Пользователи не найдены</Paragraph>
         ) : (
           sortedUsers &&
           sortedUsers.map((user) => <UserCard key={user.id} user={user} />)
         )}
-      </GroupeContainer>
+      </MainContainer>
     </Section>
   );
 };

@@ -5,4 +5,5 @@
   block-size: 100dvh;
   background-color: $bg-color;
   @include flex(column);
+  background: linear-gradient(150deg, #b7b7b7, #838383, #6f6f6f);
 }

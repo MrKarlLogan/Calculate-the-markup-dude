@@ -16,6 +16,7 @@ import { getRole } from "@entities/user/model/userSlice";
 import { NumericInput } from "@shared/ui/NumericInput";
 import { Paragraph } from "@/shared/ui/Paragraph";
 import { Container } from "@/shared/ui/Container";
+import { MainContainer } from "@/shared/ui/MainContainer/MainContainer";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -88,15 +89,15 @@ export const Calculator = () => {
   if (loading)
     return (
       <Container className={styles.wrapper}>
-        <GroupeContainer title="Калькулятор" className={styles.container}>
+        <MainContainer title="Калькулятор">
           <LoaderComponent />
-        </GroupeContainer>
+        </MainContainer>
       </Container>
     );
 
   return (
     <Container className={styles.wrapper}>
-      <GroupeContainer title="Калькулятор" className={styles.container}>
+      <MainContainer title="Калькулятор">
         <GroupeContainer
           title="Выбор модели"
           className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
@@ -172,6 +173,7 @@ export const Calculator = () => {
             disabled={!calculator.optionId}
           >
             <NumericInput
+              className={styles.conditions__inputs}
               text="Скидка за кредит / лизинг"
               placeholder="Введите сумму возврата по кредиту / лизингу"
               value={calculator.creditDiscount || ""}
@@ -183,6 +185,7 @@ export const Calculator = () => {
               }
             />
             <NumericInput
+              className={styles.conditions__inputs}
               text="Прочие скидки"
               placeholder="Введите сумму прочих скидок"
               value={calculator.otherDiscount || ""}
@@ -194,6 +197,7 @@ export const Calculator = () => {
               }
             />
             <NumericInput
+              className={styles.conditions__inputs}
               text="Стоимость дополнительного оборудования"
               placeholder="Введите стоимость дополнительного оборудования"
               value={calculator.additionalEquipment || ""}
@@ -205,6 +209,7 @@ export const Calculator = () => {
               }
             />
             <NumericInput
+              className={styles.conditions__inputs}
               text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
               placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
               value={calculator.plannedProfit || ""}
@@ -217,6 +222,7 @@ export const Calculator = () => {
               disabled={!!calculator.customPrice}
             />
             <NumericInput
+              className={styles.conditions__inputs}
               text="Ваше предложение по стоимости"
               placeholder="Введите стоимость, которую хотите предложить"
               value={calculator.customPrice || ""}
@@ -243,6 +249,7 @@ export const Calculator = () => {
             />
             <DataRow text="Плановая наценка" value={markup} />
             <DataRow
+              className={styles.calculate__border}
               text="Итоговая стоимость"
               value={actualPrice}
               size={18}
@@ -279,7 +286,7 @@ export const Calculator = () => {
             />
           )}
         </GroupeContainer>
-      </GroupeContainer>
+      </MainContainer>
     </Container>
   );
 };

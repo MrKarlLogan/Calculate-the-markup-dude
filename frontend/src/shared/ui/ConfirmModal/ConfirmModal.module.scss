@@ -12,7 +12,7 @@
   animation: fadeIn 0.2s ease;
 
   .content {
-    inline-size: 50%;
+    inline-size: 500px;
     @include flex(column, center, center, 20px);
     padding: 1rem;
     border: $border;
