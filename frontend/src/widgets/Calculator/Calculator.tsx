@@ -12,7 +12,7 @@ import { DataRow } from "@shared/ui/DataRow";
 import styles from "./Calculator.module.scss";
 import { TextArea } from "@shared/ui/TextArea";
 import { TCalculator } from "./Calculator.type";
-import { getRole } from "@entities/user/model/userSlice";
+import { getUser } from "@entities/user/model/userSlice";
 import { NumericInput } from "@shared/ui/NumericInput";
 import { Paragraph } from "@/shared/ui/Paragraph";
 import { Container } from "@/shared/ui/Container";
@@ -33,8 +33,8 @@ const initialStateCalculator: TCalculator = {
 export const Calculator = () => {
   const products = useAppSelector(getProducts);
   const loading = useAppSelector(getLoading);
-  const role = useAppSelector(getRole);
-  const isAdmin = role === "admin";
+  const me = useAppSelector(getUser);
+  const isAdmin = me?.role === "admin";
 
   const [calculator, setCalculator] = useState(initialStateCalculator);
 

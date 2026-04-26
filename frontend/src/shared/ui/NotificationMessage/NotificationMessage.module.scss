@@ -19,9 +19,27 @@
     border-block-end: $border;
     padding-block-end: 0.5rem;
 
-    .date {
-      align-self: start;
-      color: $accent-color;
+    .info {
+      inline-size: 100%;
+      @include flex(column, center, center, 10px);
+
+      &__created {
+        inline-size: 100%;
+        @include flex(row, space-between, center, 10px);
+
+        &_date {
+          align-self: start;
+          color: $accent-color;
+        }
+      }
+
+      &__author {
+        align-self: start;
+
+        &_name {
+          color: $accent-color;
+        }
+      }
     }
 
     .deleteButton {

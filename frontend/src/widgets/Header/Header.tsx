@@ -7,15 +7,14 @@ import authApi from "@/shared/api/authApi";
 import { useRouter } from "next/navigation";
 import { CLIENT_PATH } from "@shared/config/constants";
 import { useAppSelector } from "@shared/lib/hooks/redux";
-import { getRole, getUserName } from "@entities/user/model/userSlice";
+import { getUser } from "@entities/user/model/userSlice";
 import { THeader } from "./Header.type";
 import { getEditing, getLoading } from "@/entities/product/model/productsSlice";
 
 export const Header = ({ toggle, onToggle }: THeader) => {
   const router = useRouter();
   const loading = useAppSelector(getLoading);
-  const user = useAppSelector(getUserName);
-  const role = useAppSelector(getRole);
+  const user = useAppSelector(getUser);
   const editing = useAppSelector(getEditing);
 
   const handleLogout = async () => {
@@ -26,9 +25,9 @@ export const Header = ({ toggle, onToggle }: THeader) => {
   return (
     <header className={styles.header__wrapper}>
       <div className={styles.header}>
-        <Greeting name={user ?? "пользователь"} />
+        <Greeting name={user?.name ?? "пользователь"} />
         <nav className={styles.nav}>
-          {role === "admin" && (
+          {user?.role === "admin" && (
             <Button
               text={toggle ? "Калькулятор" : "Конструктор"}
               onClick={onToggle}

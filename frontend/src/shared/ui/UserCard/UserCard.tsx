@@ -5,7 +5,7 @@ import { Paragraph } from "../Paragraph";
 import { Button } from "../Button";
 import styles from "./UserCard.module.scss";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
-import { getUserId } from "@/entities/user/model/userSlice";
+import { getUser } from "@/entities/user/model/userSlice";
 import { Toast } from "../Toast";
 import useToast from "@/shared/lib/hooks/useToast";
 import { ConfirmModal } from "../ConfirmModal";
@@ -14,7 +14,7 @@ import { deleteUserThunk, updateUsersRoleThunk } from "@/entities/user/api";
 import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
 
 export const UserCard = ({ user }: { user: IAuthData }) => {
-  const id = useAppSelector(getUserId);
+  const me = useAppSelector(getUser);
   const dispatch = useAppDispatch();
 
   const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
@@ -70,10 +70,10 @@ export const UserCard = ({ user }: { user: IAuthData }) => {
   return (
     <>
       <div
-        className={`${styles.card_users} ${id === user.id && styles.card_users_accent}`}
+        className={`${styles.card_users} ${me?.id === user.id && styles.card_users_accent}`}
       >
         <div className={styles.description}>
-          {id === user.id && (
+          {me?.id === user.id && (
             <Paragraph position="start" weight="bold" className={styles.me}>
               Это вы
             </Paragraph>
@@ -92,14 +92,14 @@ export const UserCard = ({ user }: { user: IAuthData }) => {
           </Paragraph>
         </div>
         <div className={styles.buttons}>
-          {user.role !== "admin" && id !== user.id && (
+          {user.role !== "admin" && me?.id !== user.id && (
             <Button
               className={styles.button}
               text="Сделать администратором"
               onClick={handleToggle}
             />
           )}
-          {id !== user.id && (
+          {me?.id !== user.id && (
             <Button
               className={styles.button}
               text="Удалить"

@@ -10,6 +10,9 @@ export const Notification = new EntitySchema<INotification>({
       primary: true,
       generated: "uuid",
     },
+    author: {
+      type: "varchar",
+    },
     message: {
       type: "varchar",
     },

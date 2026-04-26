@@ -5,14 +5,14 @@ import { LoaderComponent } from "@shared/ui/LoaderComponent";
 import { Paragraph } from "@shared/ui/Paragraph";
 import { UserCard } from "@shared/ui/UserCard";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
-import { getUserId } from "@entities/user/model/userSlice";
+import { getUser } from "@entities/user/model/userSlice";
 import { getLoading, getUsers } from "@entities/user/model/usersSlice";
 import { useEffect } from "react";
 import { fetchUsersThunk } from "@entities/user/api";
 import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
 
 export const UsersEditor = ({ className }: { className?: string }) => {
-  const id = useAppSelector(getUserId);
+  const me = useAppSelector(getUser);
   const dispatch = useAppDispatch();
 
   const users = useAppSelector(getUsers);
@@ -34,8 +34,8 @@ export const UsersEditor = ({ className }: { className?: string }) => {
   const sortedUsers =
     users &&
     [...users].sort((a, b) => {
-      if (a.id === id) return -1;
-      if (b.id === id) return 1;
+      if (a.id === me?.id) return -1;
+      if (b.id === me?.id) return 1;
 
       if (a.role === "admin" && b.role !== "admin") return -1;
       if (a.role !== "admin" && b.role === "admin") return 1;

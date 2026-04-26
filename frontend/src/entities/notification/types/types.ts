@@ -1,5 +1,6 @@
 export type TNotification = {
   id: string;
+  author: string;
   message: string;
   created: string;
 };
