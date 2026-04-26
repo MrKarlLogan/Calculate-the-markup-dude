@@ -15,11 +15,11 @@ export const generateTokens = (user: TUserPayload) => {
       role: user.role,
     },
     config.JWT_SECRET!,
-    { expiresIn: "1h" },
+    { expiresIn: "15m" },
   );
 
   const refreshToken = jwt.sign({ id: user.id }, config.JWT_REFRESH_SECRET!, {
-    expiresIn: "30d",
+    expiresIn: "7d",
   });
 
   return { accessToken, refreshToken };
@@ -59,14 +59,14 @@ export const setAuthCookies = (
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "strict" : "lax",
-    maxAge: 60 * 60 * 1000,
+    maxAge: 15 * 60 * 1000,
   });
 
   res.cookie(COOKIES_NAME.REFRESH_TOKEN, refreshToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "strict" : "lax",
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
 

@@ -56,7 +56,7 @@ export const LoginForm = ({ selectForm }: { selectForm: () => void }) => {
         return;
       }
 
-      router.push(CLIENT_PATH.HOME);
+      router.replace(CLIENT_PATH.HOME);
     } catch (error) {
       showToast(
         getApiErrorMessage(error, "Ошибка при получении данных от сервера"),

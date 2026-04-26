@@ -20,7 +20,7 @@ export const Header = ({ toggle, onToggle }: THeader) => {
 
   const handleLogout = async () => {
     const result = await authApi.logout();
-    if (result.success) router.push(CLIENT_PATH.AUTH);
+    if (result.success) router.replace(CLIENT_PATH.AUTH);
   };
 
   return (

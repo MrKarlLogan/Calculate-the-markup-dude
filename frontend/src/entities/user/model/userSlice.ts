@@ -10,6 +10,9 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<IAuthData>) => {
       state.user = action.payload;
     },
+    clearUser: (state) => {
+      state.user = null;
+    },
   },
   selectors: {
     getUserId: (state) => state.user?.id,
@@ -21,5 +24,5 @@ const userSlice = createSlice({
 
 export const { getUserId, getLogin, getUserName, getRole } =
   userSlice.selectors;
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -190,22 +190,58 @@ export const getMe = async (
 ) => {
   try {
     const accessToken = req.cookies[COOKIES_NAME.ACCESS_TOKEN];
-    if (!accessToken)
-      return next(new UnauthorizedError("Access Token не найден"));
+    const refreshToken = req.cookies[COOKIES_NAME.REFRESH_TOKEN];
 
-    const decoded = verifyAccessToken(accessToken);
+    if (!accessToken && !refreshToken)
+      return next(new UnauthorizedError("Токены не найдены"));
+
+    let decoded = null;
+
+    if (accessToken) decoded = verifyAccessToken(accessToken);
+
+    if (!decoded && refreshToken) {
+      const refreshDecoded = verifyRefreshToken(refreshToken);
+
+      if (!refreshDecoded) {
+        clearAuthCookies(res);
+        return next(new UnauthorizedError("Время активной сессии истекло"));
+      }
+
+      const user = await UserRepository.findOne({
+        where: { id: refreshDecoded.id },
+      });
+
+      if (!user) {
+        clearAuthCookies(res);
+        return next(new UnauthorizedError("Пользователь не найден"));
+      }
+
+      const { accessToken: newAccess, refreshToken: newRefresh } =
+        generateTokens(user);
+      setAuthCookies(res, newAccess, newRefresh);
+
+      decoded = {
+        id: user.id,
+        login: user.login,
+        role: user.role,
+      };
+    }
+
     if (!decoded) {
       clearAuthCookies(res);
-      return next(new UnauthorizedError("Невалидный access token"));
+      return next(new UnauthorizedError("Невалидный токен"));
     }
 
     const user = await UserRepository.findOne({ where: { id: decoded.id } });
-    if (!user) return next(new UnauthorizedError("Пользователь не найден"));
+    if (!user) {
+      clearAuthCookies(res);
+      return next(new UnauthorizedError("Пользователь не найден"));
+    }
 
     if (user.role !== decoded.role) {
-      clearAuthCookies(res);
-      const { accessToken, refreshToken } = generateTokens(user);
-      setAuthCookies(res, accessToken, refreshToken);
+      const { accessToken: newAccess, refreshToken: newRefresh } =
+        generateTokens(user);
+      setAuthCookies(res, newAccess, newRefresh);
     }
 
     res.json({

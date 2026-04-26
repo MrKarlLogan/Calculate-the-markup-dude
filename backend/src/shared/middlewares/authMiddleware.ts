@@ -3,25 +3,59 @@ import jwt from "jsonwebtoken";
 import config from "@/config";
 import UnauthorizedError from "../errors/unauthorized-error";
 import { COOKIES_NAME } from "../constants";
-import { TUserPayload } from "../utils/auth";
+import {
+  clearAuthCookies,
+  generateTokens,
+  setAuthCookies,
+  TUserPayload,
+  verifyAccessToken,
+  verifyRefreshToken,
+} from "../utils/auth";
+import { UserRepository } from "@/data-source";
 
-export const authMiddleware = (
+export const authMiddleware = async (
   req: Request & { user?: TUserPayload },
-  _res: Response,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
     const accessToken = req.cookies[COOKIES_NAME.ACCESS_TOKEN];
-    if (!accessToken)
-      return next(
-        new UnauthorizedError("Токен не найден. Требуется авторизация"),
-      );
+    const refreshToken = req.cookies[COOKIES_NAME.REFRESH_TOKEN];
 
-    const decoded = jwt.verify(accessToken, config.JWT_SECRET!) as TUserPayload;
+    if (accessToken) {
+      const decoded = verifyAccessToken(accessToken);
 
-    req.user = decoded;
+      if (decoded) {
+        req.user = decoded;
+        return next();
+      }
+    }
 
-    next();
+    if (refreshToken) {
+      const refreshDecoded = verifyRefreshToken(refreshToken);
+
+      if (refreshDecoded) {
+        const user = await UserRepository.findOne({
+          where: { id: refreshDecoded.id },
+        });
+
+        if (user) {
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            generateTokens(user);
+          setAuthCookies(res, newAccessToken, newRefreshToken);
+
+          req.user = { id: user.id, login: user.login, role: user.role };
+          return next();
+        }
+      }
+    }
+
+    clearAuthCookies(res);
+    return next(
+      new UnauthorizedError(
+        "Время активной сессии истекло. Сейчас вы автоматически перейдете на страницу авторизации",
+      ),
+    );
   } catch (error) {
     return next(new UnauthorizedError("Недействительный токен"));
   }

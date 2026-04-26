@@ -9,43 +9,25 @@ import { CLIENT_PATH } from "@shared/config/constants";
 export const PublicRoute = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const getMeResult = await authApi.checkAuth();
+        const me = await authApi.checkAuth();
 
-        if (getMeResult.success) {
-          setIsAuth(true);
-          router.push(CLIENT_PATH.HOME);
+        if (me.success) {
+          router.replace(CLIENT_PATH.HOME);
           return;
         }
+      } catch {}
 
-        const refreshResult = await authApi.refreshToken();
-
-        if (refreshResult.success) {
-          const newMeResult = await authApi.checkAuth();
-          if (newMeResult.success) {
-            setIsAuth(true);
-            router.push(CLIENT_PATH.HOME);
-            return;
-          }
-        }
-
-        setIsAuth(false);
-      } catch {
-        setIsAuth(false);
-      } finally {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     };
 
     checkAuth();
   }, [router]);
 
   if (isLoading) return <LoadingPage />;
-  if (isAuth) return null;
 
   return children;
 };
