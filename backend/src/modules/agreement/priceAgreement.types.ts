@@ -1,15 +1,14 @@
-import { IDiscount, TOtherDiscount } from "../discount";
-import { TOption } from "../product";
-
 type TAgreementData = {
-  product: {
-    id: string;
-    name: string;
+  product: string;
+  option: string;
+  discounts: string[];
+  otherDiscount: {
+    creditDiscount?: number;
+    otherDiscount?: number;
+    additionalEquipment?: number | null;
   };
-  option: TOption;
-  discounts: IDiscount[];
-  otherDiscount: TOtherDiscount[];
-  message: string;
+  plannedProfit: number;
+  message?: string;
   total: number;
 };
 
@@ -17,6 +16,7 @@ export interface IPriceAgreement {
   id: string;
   data: TAgreementData;
   userId: string;
+  userName: string;
   isAgreed: boolean | null;
   responseMessage?: string | null;
   created: string;

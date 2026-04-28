@@ -1,0 +1,51 @@
+.container {
+  inline-size: 100%;
+  background-color: $bg-color;
+  padding: 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  @include flex(column, center, center, 10px);
+  border: $border;
+  background-color: $block-color;
+
+  .status {
+    inline-size: 100%;
+    @include flex(row, space-between, center, 10px);
+    padding-block-end: 10px;
+    border-block-end: $border;
+
+    &__date,
+    &__result {
+      color: $accent-color;
+    }
+  }
+
+  .discounts {
+    inline-size: 100%;
+    @include flex(column, center, start, 10px);
+    padding-block-end: 10px;
+    border-block-end: $border;
+
+    &__items {
+      color: $accent-color;
+      list-style: inside;
+    }
+  }
+
+  .name,
+  .product,
+  .total {
+    color: $accent-color;
+  }
+
+  .message {
+    inline-size: 100%;
+    align-self: start;
+    padding-block-end: 10px;
+    border-block-end: $border;
+
+    &__text {
+      color: $accent-color;
+    }
+  }
+}

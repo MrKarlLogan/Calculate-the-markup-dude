@@ -1,0 +1,4 @@
+.agreement__list {
+  inline-size: 100%;
+  @include flex(column, center, center, 10px);
+}

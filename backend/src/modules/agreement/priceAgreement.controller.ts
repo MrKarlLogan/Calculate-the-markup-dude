@@ -18,16 +18,13 @@ export const findPriceAgreements = async (
   next: NextFunction,
 ) => {
   try {
-    if (!req.user)
-      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
-
     let agreements;
 
-    if (req.user.role === USER_ROLES.ADMIN)
+    if (req.user?.role === USER_ROLES.ADMIN)
       agreements = await AgreementRepository.find();
     else
       agreements = await AgreementRepository.find({
-        where: { userId: req.user.id },
+        where: { userId: req.user?.id },
       });
 
     res.status(200).json({
@@ -49,9 +46,6 @@ export const findPriceAgreementById = async (
   next: NextFunction,
 ) => {
   try {
-    if (!req.user)
-      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
-
     const id = req.params.id.toString();
     const agreement = await AgreementRepository.findOne({ where: { id } });
 
@@ -60,7 +54,10 @@ export const findPriceAgreementById = async (
         new NotFoundError(`Согласование стоимости с id: ${id} не найдено`),
       );
 
-    if (req.user.role !== USER_ROLES.ADMIN && agreement.userId !== req.user.id)
+    if (
+      req.user?.role !== USER_ROLES.ADMIN &&
+      agreement.userId !== req.user?.id
+    )
       return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
 
     res.status(200).json({
@@ -82,11 +79,8 @@ export const createPriceAgreement = async (
   next: NextFunction,
 ) => {
   try {
-    if (!req.user)
-      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
-
     const data: Omit<IPriceAgreement, "id"> = req.body;
-    data.userId = req.user.id;
+    data.userId = req.user?.id || "";
 
     const newAgreement = AgreementRepository.create(data);
     const savedAgreement = await AgreementRepository.save(newAgreement);
@@ -105,9 +99,13 @@ export const createPriceAgreement = async (
         );
     }
 
-    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
     notifyAdmins(WEBSOCKET_EVENT_NAME.CREATED, savedAgreement);
 
+    notifyUser(
+      savedAgreement.userId,
+      WEBSOCKET_EVENT_NAME.CREATED,
+      savedAgreement,
+    );
     res.status(201).json({
       success: true,
       data: savedAgreement,
@@ -142,14 +140,15 @@ export const updatePriceAgreements = async (
     updateAgreement.isAgreed = isAgreed;
     updateAgreement.responseMessage = responseMessage || null;
 
-    await AgreementRepository.save(updateAgreement);
+    const savedAgrement = await AgreementRepository.save(updateAgreement);
 
-    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
     notifyUser(
       updateAgreement.userId,
       WEBSOCKET_EVENT_NAME.UPDATED,
-      updateAgreement,
+      savedAgrement,
     );
+
+    notifyAdmins(WEBSOCKET_EVENT_NAME.UPDATED, savedAgrement);
 
     res.status(200).json({
       success: true,
@@ -171,9 +170,6 @@ export const deletePriceAgreements = async (
   next: NextFunction,
 ) => {
   try {
-    if (!req.user)
-      return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
-
     const id = req.params.id.toString();
     const deletedAgreement = await AgreementRepository.findOne({
       where: { id },
@@ -185,21 +181,18 @@ export const deletePriceAgreements = async (
       );
 
     if (
-      req.user.role !== USER_ROLES.ADMIN &&
-      deletedAgreement.userId !== req.user.id
-    ) {
+      req.user?.role !== USER_ROLES.ADMIN &&
+      deletedAgreement.userId !== req.user?.id
+    )
       return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
-    }
 
     await AgreementRepository.remove(deletedAgreement);
 
-    // TODO: Когда будет фронт, проверить передаваемые данные. Провести оптимизацию
-    notifyAdmins(WEBSOCKET_EVENT_NAME.DELETED, deletedAgreement);
-    notifyUser(
-      deletedAgreement.userId,
-      WEBSOCKET_EVENT_NAME.DELETED,
-      deletedAgreement,
-    );
+    console.log("deletedAgreement.id:", deletedAgreement?.id);
+    console.log("deletedAgreement keys:", Object.keys(deletedAgreement || {}));
+
+    notifyAdmins(WEBSOCKET_EVENT_NAME.DELETED, { id });
+    notifyUser(deletedAgreement.userId, WEBSOCKET_EVENT_NAME.DELETED, { id });
 
     res.status(200).json({
       success: true,

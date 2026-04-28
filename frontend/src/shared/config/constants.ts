@@ -8,6 +8,7 @@ export const URL_PATH = {
   REFRESH_TOKEN: "/auth/refresh",
   PRODUCTS: "/products",
   NOTIFICATION: "/notification",
+  AGREEMENT: "/agreement",
 } as const;
 
 export const CLIENT_PATH = {

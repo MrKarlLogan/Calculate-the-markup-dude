@@ -17,6 +17,12 @@ import { NumericInput } from "@shared/ui/NumericInput";
 import { Paragraph } from "@/shared/ui/Paragraph";
 import { Container } from "@/shared/ui/Container";
 import { MainContainer } from "@/shared/ui/MainContainer/MainContainer";
+import agreementApi from "@/shared/api/agreementApi";
+import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
+import useToast from "@/shared/lib/hooks/useToast";
+import { ConfirmModal } from "@/shared/ui/ConfirmModal";
+import { Toast } from "@/shared/ui/Toast";
+import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -35,6 +41,9 @@ export const Calculator = () => {
   const loading = useAppSelector(getLoading);
   const me = useAppSelector(getUser);
   const isAdmin = me?.role === "admin";
+  const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
+    useConfirmModal();
+  const { toasts, showToast, removeToast } = useToast();
 
   const [calculator, setCalculator] = useState(initialStateCalculator);
 
@@ -86,6 +95,46 @@ export const Calculator = () => {
   const options = selectedProduct?.options || [];
   const discounts = selectedProduct?.discounts || [];
 
+  const handleCreateAgreement = async () => {
+    const agreementData = {
+      data: {
+        product: selectedProduct?.name || "Не указан",
+        option: selectedOption?.name || "Не указана",
+        discounts:
+          selectedProduct?.discounts
+            .filter((discount) =>
+              calculator.selectedDiscountIds.includes(discount.id),
+            )
+            .map((discount) => discount.name) || [],
+        otherDiscount: {
+          creditDiscount: calculator.creditDiscount,
+          otherDiscount: calculator.otherDiscount,
+          additionalEquipment: calculator.additionalEquipment,
+        },
+        plannedProfit: markup,
+        message: calculator.message || "",
+        total: actualPrice,
+      },
+      userName: me?.name || "Пользователь",
+    };
+
+    const result = await showConfirm("Отправить расчет на согласование?");
+
+    if (!result) return;
+
+    try {
+      const response = await agreementApi.createMessage(agreementData);
+      if (response.success) {
+        showToast("Согласование успешно отправлено");
+        setCalculator((prev) => ({ ...prev, message: "" }));
+      }
+    } catch (error) {
+      showToast(
+        getApiErrorMessage(error, "Произошла ошибка при отправке согласования"),
+      );
+    }
+  };
+
   if (loading)
     return (
       <Container className={styles.wrapper}>
@@ -96,197 +145,220 @@ export const Calculator = () => {
     );
 
   return (
-    <Container className={styles.wrapper}>
-      <MainContainer title="Калькулятор">
-        <GroupeContainer
-          title="Выбор модели"
-          className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
-        >
-          {products.length !== 0 ? (
-            products.map((product) => (
-              <Radio
-                key={product.id}
-                text={product.name}
-                value={product.id}
-                name="model"
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleModelChange(event.target.value)
-                }
-              />
-            ))
-          ) : (
-            <Paragraph>Модели для выбора отсутствуют</Paragraph>
-          )}
-        </GroupeContainer>
-        <GroupeContainer
-          title="Выбор комплектация"
-          className={`${options.length !== 0 ? styles.products : styles.products_empty}`}
-        >
-          {options.length !== 0 ? (
-            calculator.modelId &&
-            options.map((option) => (
-              <Radio
-                key={option.id}
-                text={option.name}
-                value={option.id}
-                name="options"
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleOptionChange(event.target.value)
-                }
-              />
-            ))
-          ) : (
-            <Paragraph>
-              Для отображения всех доступных комплектаций необходимо выбрать
-              модель
-            </Paragraph>
-          )}
-        </GroupeContainer>
-        <GroupeContainer
-          title="Доступные поддержки"
-          className={`${discounts.length !== 0 ? styles.products : styles.products_empty}`}
-        >
-          {discounts.length !== 0 ? (
-            calculator.optionId &&
-            discounts.map((discount) => (
-              <Checkbox
-                key={discount.id}
-                value={discount.id}
-                text={`${discount.name} - ${discount.discountAmount} руб.`}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleDiscountsChange(discount.id, event.target.checked)
-                }
-              />
-            ))
-          ) : (
-            <Paragraph>
-              {!selectedProduct && discounts.length === 0
-                ? "Для отображения всех доступных поддержек необходимо выбрать комплектацию"
-                : "У данной модели нет поддержек"}
-            </Paragraph>
-          )}
-        </GroupeContainer>
-        <Container className={styles.mainCalculate}>
+    <>
+      {" "}
+      <Container className={styles.wrapper}>
+        <MainContainer title="Калькулятор">
           <GroupeContainer
-            title="Дополнительные условия"
-            className={styles.conditions}
-            disabled={!calculator.optionId}
+            title="Выбор модели"
+            className={`${products.length !== 0 ? styles.products : styles.products_empty}`}
           >
-            <NumericInput
-              className={styles.conditions__inputs}
-              text="Скидка за кредит / лизинг"
-              placeholder="Введите сумму возврата по кредиту / лизингу"
-              value={calculator.creditDiscount || ""}
-              onChange={(event) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  creditDiscount: Number(event.target.value),
-                }))
-              }
-            />
-            <NumericInput
-              className={styles.conditions__inputs}
-              text="Прочие скидки"
-              placeholder="Введите сумму прочих скидок"
-              value={calculator.otherDiscount || ""}
-              onChange={(event) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  otherDiscount: Number(event.target.value),
-                }))
-              }
-            />
-            <NumericInput
-              className={styles.conditions__inputs}
-              text="Стоимость дополнительного оборудования"
-              placeholder="Введите стоимость дополнительного оборудования"
-              value={calculator.additionalEquipment || ""}
-              onChange={(event) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  additionalEquipment: Number(event.target.value),
-                }))
-              }
-            />
-            <NumericInput
-              className={styles.conditions__inputs}
-              text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
-              placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
-              value={calculator.plannedProfit || ""}
-              onChange={(event) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  plannedProfit: Number(event.target.value),
-                }))
-              }
-              disabled={!!calculator.customPrice}
-            />
-            <NumericInput
-              className={styles.conditions__inputs}
-              text="Ваше предложение по стоимости"
-              placeholder="Введите стоимость, которую хотите предложить"
-              value={calculator.customPrice || ""}
-              maxLength={8}
-              onChange={(event) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  customPrice: Number(event.target.value),
-                }))
-              }
-            />
+            {products.length !== 0 ? (
+              products.map((product) => (
+                <Radio
+                  key={product.id}
+                  text={product.name}
+                  value={product.id}
+                  name="model"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleModelChange(event.target.value)
+                  }
+                />
+              ))
+            ) : (
+              <Paragraph>Модели для выбора отсутствуют</Paragraph>
+            )}
           </GroupeContainer>
           <GroupeContainer
-            title="Расчет стоимости"
-            className={styles.calculate}
-            disabled={!calculator.optionId}
+            title="Выбор комплектация"
+            className={`${options.length !== 0 ? styles.products : styles.products_empty}`}
           >
-            <DataRow text="Прайсовая стоимость" value={basePrice} />
-            <DataRow text="Себестоимость" value={cost} />
-            <DataRow text="Сумма примененных скидок" value={totalDiscount} />
-            <DataRow
-              text="Сумма дополнительного оборудования"
-              value={calculator.additionalEquipment}
-            />
-            <DataRow text="Плановая наценка" value={markup} />
-            <DataRow
-              className={styles.calculate__border}
-              text="Итоговая стоимость"
-              value={actualPrice}
-              size={18}
-              weight="bold"
-            />
+            {options.length !== 0 ? (
+              calculator.modelId &&
+              options.map((option) => (
+                <Radio
+                  key={option.id}
+                  text={option.name}
+                  value={option.id}
+                  name="options"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleOptionChange(event.target.value)
+                  }
+                />
+              ))
+            ) : (
+              <Paragraph>
+                Для отображения всех доступных комплектаций необходимо выбрать
+                модель
+              </Paragraph>
+            )}
           </GroupeContainer>
-        </Container>
-        <GroupeContainer
-          title="Сообщение"
-          className={styles.message}
-          disabled={isAdmin || !calculator.optionId}
-        >
-          <TextArea
-            value={calculator.message || ""}
-            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setCalculator((prev) => ({
-                ...prev,
-                message: event.target.value,
-              }))
-            }
-          />
-          {isAdmin ? (
-            <Container className={styles.adminButtons}>
+          <GroupeContainer
+            title="Доступные поддержки"
+            className={`${discounts.length !== 0 ? styles.products : styles.products_empty}`}
+          >
+            {discounts.length !== 0 ? (
+              calculator.optionId &&
+              discounts.map((discount) => (
+                <Checkbox
+                  key={discount.id}
+                  value={discount.id}
+                  text={`${discount.name} - ${discount.discountAmount} руб.`}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleDiscountsChange(discount.id, event.target.checked)
+                  }
+                />
+              ))
+            ) : (
+              <Paragraph>
+                {!selectedProduct && discounts.length === 0
+                  ? "Для отображения всех доступных поддержек необходимо выбрать комплектацию"
+                  : "У данной модели нет поддержек"}
+              </Paragraph>
+            )}
+          </GroupeContainer>
+          <Container className={styles.mainCalculate}>
+            <GroupeContainer
+              title="Дополнительные условия"
+              className={styles.conditions}
+              disabled={!calculator.optionId}
+            >
+              <NumericInput
+                className={styles.conditions__inputs}
+                text="Скидка за кредит / лизинг"
+                placeholder="Введите сумму возврата по кредиту / лизингу"
+                value={calculator.creditDiscount || ""}
+                onChange={(event) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    creditDiscount: Number(event.target.value),
+                  }))
+                }
+              />
+              <NumericInput
+                className={styles.conditions__inputs}
+                text="Прочие скидки"
+                placeholder="Введите сумму прочих скидок"
+                value={calculator.otherDiscount || ""}
+                onChange={(event) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    otherDiscount: Number(event.target.value),
+                  }))
+                }
+              />
+              <NumericInput
+                className={styles.conditions__inputs}
+                text="Стоимость дополнительного оборудования"
+                placeholder="Введите стоимость дополнительного оборудования"
+                value={calculator.additionalEquipment || ""}
+                onChange={(event) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    additionalEquipment: Number(event.target.value),
+                  }))
+                }
+              />
+              <NumericInput
+                className={styles.conditions__inputs}
+                text={`Планируемый заработок ${!!calculator.customPrice ? "(не учитывается)" : ""}`}
+                placeholder={`${!!calculator.customPrice ? "Сейчас это поле неактивно" : "Введите сумму запланированного заработка"}`}
+                value={calculator.plannedProfit || ""}
+                onChange={(event) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    plannedProfit: Number(event.target.value),
+                  }))
+                }
+                disabled={!!calculator.customPrice}
+              />
+              <NumericInput
+                className={styles.conditions__inputs}
+                text="Ваше предложение по стоимости"
+                placeholder="Введите стоимость, которую хотите предложить"
+                value={calculator.customPrice || ""}
+                maxLength={8}
+                onChange={(event) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    customPrice: Number(event.target.value),
+                  }))
+                }
+              />
+            </GroupeContainer>
+            <GroupeContainer
+              title="Расчет стоимости"
+              className={styles.calculate}
+              disabled={!calculator.optionId}
+            >
+              <DataRow text="Прайсовая стоимость" value={basePrice} />
+              <DataRow text="Себестоимость" value={cost} />
+              <DataRow text="Сумма примененных скидок" value={totalDiscount} />
+              <DataRow
+                text="Сумма дополнительного оборудования"
+                value={calculator.additionalEquipment}
+              />
+              <DataRow text="Плановая наценка" value={markup} />
+              <DataRow
+                className={styles.calculate__border}
+                text="Итоговая стоимость"
+                value={actualPrice}
+                size={18}
+                weight="bold"
+              />
+            </GroupeContainer>
+          </Container>
+          <GroupeContainer
+            title="Сообщение"
+            className={styles.message}
+            disabled={isAdmin || !calculator.optionId}
+          >
+            <TextArea
+              value={calculator.message || ""}
+              onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                setCalculator((prev) => ({
+                  ...prev,
+                  message: event.target.value,
+                }))
+              }
+            />
+            {isAdmin ? (
+              <Container className={styles.adminButtons}>
+                <Button
+                  text="Согласовать"
+                  onClick={() => console.log(calculator)}
+                />
+                <Button
+                  text="Отказать"
+                  onClick={() => console.log(calculator)}
+                />
+              </Container>
+            ) : (
               <Button
-                text="Согласовать"
-                onClick={() => console.log(calculator)}
+                text="Отправить на согласование"
+                onClick={handleCreateAgreement}
               />
-              <Button text="Отказать" onClick={() => console.log(calculator)} />
-            </Container>
-          ) : (
-            <Button
-              text="Отправить на согласование"
-              onClick={() => console.log(calculator)}
-            />
-          )}
-        </GroupeContainer>
-      </MainContainer>
-    </Container>
+            )}
+          </GroupeContainer>
+        </MainContainer>
+      </Container>
+      {modal && (
+        <ConfirmModal
+          text={modal.text}
+          positiveAnswer={modal.positiveAnswer}
+          negativeAnswer={modal.negativeAnswer}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          onClose={handleClose}
+        />
+      )}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          text={toast.text}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
+    </>
   );
 };

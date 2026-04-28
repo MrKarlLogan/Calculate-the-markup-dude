@@ -15,7 +15,9 @@ export const PriceAgreement = new EntitySchema<IPriceAgreement>({
     },
     userId: {
       type: "uuid",
-      nullable: false,
+    },
+    userName: {
+      type: "varchar",
     },
     isAgreed: {
       type: "boolean",
