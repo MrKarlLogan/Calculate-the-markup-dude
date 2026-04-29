@@ -3,49 +3,42 @@ import { TAgreement } from "@/entities/priceAgreement/types/types";
 import agreementApi from "@/shared/api/agreementApi";
 import { config } from "@/shared/config";
 
-export const useWebSocket = (userId?: string, isAdmin?: boolean) => {
+export const useWebSocket = (
+  userId?: string,
+  isAdmin?: boolean,
+  onEvent?: (event: string, data: TAgreement) => void,
+) => {
   const [agreements, setAgreements] = useState<TAgreement[]>([]);
   const [loading, setLoading] = useState(true);
-  const wsRef = useRef<WebSocket | null>(null);
-  const isMountedRef = useRef(true);
+  const socket = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    let isActive = true;
-
     const loadHistory = async () => {
       try {
         const response = await agreementApi.getAllMessages();
-        const data = response.data;
+        const unique = Array.from(
+          new Map(response.data.map((item) => [item.id, item])).values(),
+        );
 
-        if (isActive) {
-          const unique = Array.from(
-            new Map(data.map((item) => [item.id, item])).values(),
-          );
-          setAgreements(unique.reverse());
-          setLoading(false);
-        }
-      } catch {
-        if (isActive) setLoading(false);
+        setAgreements([...unique].reverse());
+      } finally {
+        setLoading(false);
       }
     };
 
     loadHistory();
-
-    return () => {
-      isActive = false;
-      isMountedRef.current = false;
-    };
   }, []);
 
   useEffect(() => {
     if (!userId) return;
 
     let reconnectTimeout: NodeJS.Timeout;
-    let shouldReconnect = true;
+    let isActive = true;
 
     const connect = () => {
+      if (socket.current?.readyState === WebSocket.OPEN) return;
       const ws = new WebSocket(config.WS_URL);
-      wsRef.current = ws;
+      socket.current = ws;
 
       ws.onopen = () => {
         ws.send(
@@ -59,23 +52,23 @@ export const useWebSocket = (userId?: string, isAdmin?: boolean) => {
       ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
 
+        onEvent?.(message.event, message.data);
+
         setAgreements((prev) => {
           switch (message.event) {
             case "agreement:created":
-              if (prev.some((agrement) => agrement.id === message.data.id))
-                return prev;
-
-              return [message.data, ...prev];
+              return [
+                message.data,
+                ...prev.filter((item) => item.id !== message.data.id),
+              ];
 
             case "agreement:updated":
-              if (prev.some((agrement) => agrement.id === message.data.id))
-                return prev.map((agrement) =>
-                  agrement.id === message.data.id ? message.data : agrement,
-                );
-              return [message.data, ...prev];
+              return prev.map((item) =>
+                item.id === message.data.id ? message.data : item,
+              );
 
             case "agreement:deleted":
-              return prev.filter((agrement) => agrement.id !== message.data.id);
+              return prev.filter((item) => item.id !== message.data.id);
 
             default:
               return prev;
@@ -84,20 +77,21 @@ export const useWebSocket = (userId?: string, isAdmin?: boolean) => {
       };
 
       ws.onclose = () => {
-        if (shouldReconnect) reconnectTimeout = setTimeout(connect, 3000);
+        if (!isActive) return;
+        if (reconnectTimeout) clearTimeout(reconnectTimeout);
+        reconnectTimeout = setTimeout(connect, 3000);
       };
     };
 
     connect();
 
     return () => {
-      shouldReconnect = false;
+      isActive = false;
       if (reconnectTimeout) clearTimeout(reconnectTimeout);
-      if (wsRef.current?.readyState === WebSocket.OPEN) {
-        wsRef.current.close();
-      }
+      socket.current?.close();
+      socket.current = null;
     };
   }, [userId, isAdmin]);
 
-  return { agreements, loading, setAgreements };
+  return { agreements, loading };
 };

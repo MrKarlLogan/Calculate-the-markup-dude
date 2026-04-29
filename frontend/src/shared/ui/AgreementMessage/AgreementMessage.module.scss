@@ -14,9 +14,42 @@
     padding-block-end: 10px;
     border-block-end: $border;
 
-    &__date,
-    &__result {
+    &__date {
       color: $accent-color;
+    }
+
+    &__result {
+      font-weight: 600;
+      color: $pending;
+    }
+
+    &__positive {
+      font-weight: 600;
+      color: $accent-color;
+    }
+
+    &__negative {
+      font-weight: 600;
+      color: $error;
+    }
+  }
+
+  .agreement_details {
+    inline-size: 100%;
+
+    .agreement_details__summary {
+      padding-block-end: 10px;
+      border-block-end: $border;
+      transition: $animation-time;
+      cursor: pointer;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+
+    &__information {
+      @include flex(column, center, stretch, 10px);
     }
   }
 

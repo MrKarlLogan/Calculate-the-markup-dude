@@ -4,18 +4,18 @@ import { useAppSelector } from "@/shared/lib/hooks/redux";
 import { getUser } from "@/entities/user/model/userSlice";
 import { DataRow } from "../DataRow";
 import { Button } from "../Button";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
-import useToast from "@/shared/lib/hooks/useToast";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
-import agreementApi from "@/shared/api/agreementApi";
-import { Toast } from "../Toast";
-import { ConfirmModal } from "../ConfirmModal";
 
-export const AgreementMessage = ({ data }: { data: TAgreement }) => {
+export const AgreementMessage = ({
+  data,
+  handlers,
+}: {
+  data: TAgreement;
+  handlers: {
+    update: (id: string, data: TAgreement) => void;
+    delete: (id: string, data: TAgreement) => void;
+  };
+}) => {
   const me = useAppSelector(getUser);
-  const { modal, showConfirm, handleConfirm, handleCancel, handleClose } =
-    useConfirmModal();
-  const { toasts, showToast, removeToast } = useToast();
 
   const setStatus = (status: boolean | null) => {
     switch (status) {
@@ -30,116 +30,86 @@ export const AgreementMessage = ({ data }: { data: TAgreement }) => {
     }
   };
 
-  const handleDeleteAgreement = async (id: string) => {
-    const result = await showConfirm(
-      `${me?.role !== "admin" ? (data.isAgreed !== null ? "Вы уверены, что хотите удалить данное согласовение? Это действие нельзя будет отменить." : "Вы уверены, что не будете дожидаться решения? Это действие приведет к полному удалению ранее отправленного согласования. Удалить согласование цены?") : data.isAgreed !== null ? "Вы уверены, что хотите удалить данное согласовение? Это действие нельзя будет отменить." : "Вы ещё не приняли решение по согласованию. Вы точно хотите его удалить?"}`,
-    );
-
-    if (!result) return;
-
-    try {
-      const response = await agreementApi.deleteMessage(id);
-      if (response.success) {
-        showToast("Согласование успешно удалено");
-      }
-    } catch (error) {
-      showToast(
-        getApiErrorMessage(error, "Произошла ошибка при удалении согласования"),
-      );
-    }
-  };
-
   return (
-    <>
-      {" "}
-      <article className={styles.container}>
-        <span className={styles.status}>
-          <span className={styles.status__date}>
-            {new Date(data.created || "").toLocaleDateString("ru-RU")}
-          </span>
-          <span>
-            Статус:{" "}
-            <span className={styles.status__result}>
-              {setStatus(data.isAgreed)}
-            </span>
+    <article className={styles.container}>
+      <span className={styles.status}>
+        <span className={styles.status__date}>
+          {new Date(data.created || "").toLocaleDateString("ru-RU")}
+        </span>
+        <span>
+          Статус:{" "}
+          <span
+            className={`${styles.status__result} ${data.isAgreed !== null && (data.isAgreed ? styles.status__positive : styles.status__negative)}`}
+          >
+            {setStatus(data.isAgreed)}
           </span>
         </span>
-        <h3>
-          <span className={styles.name}>
-            {data.userName === me?.name ? "Вы" : data.userName}
-          </span>{" "}
-          {data.userName === me?.name ? "просите" : "просит"} согласовать цену{" "}
-          <span className={styles.total}>
-            {data.data.total.toLocaleString("ru-RU")} руб.
-          </span>{" "}
-          на{" "}
-          <span>
-            <span className={styles.product}>{data.data.product}</span> в
-            комплектации{" "}
-            <span className={styles.product}>{data.data.option}</span>
-          </span>
-          .
-        </h3>
-        {data.data.discounts.length > 0 ? (
-          <ul className={styles.discounts}>
-            Список примененных поддержек:{" "}
-            {data.data.discounts.map((discount) => (
-              <li
-                key={`${discount}-${data.id}`}
-                className={styles.discounts__items}
-              >
-                {discount}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Примененных поддержке нет</p>
-        )}
-        <DataRow
-          text="Скидка за кредит:"
-          value={data.data.otherDiscount.creditDiscount || 0}
-        />
-        <DataRow
-          text="Прочие скидки:"
-          value={data.data.otherDiscount.otherDiscount || 0}
-        />
-        <DataRow
-          text="Сумма доп.оборудования:"
-          value={data.data.otherDiscount.additionalEquipment || 0}
-        />
-        <DataRow
-          text="Плановая наценка:"
-          value={data.data.plannedProfit || 0}
-        />
-        <p className={styles.message}>
-          Сообщение:{" "}
-          <span className={styles.message__text}>{data.data.message}</span>
-        </p>
-        {me?.role === "admin" && <Button text="Принять решение" />}
-        {
-          <Button
-            text="Удалить"
-            onClick={() => handleDeleteAgreement(data.id)}
+      </span>
+      <h3>
+        <span className={styles.name}>
+          {data.userName === me?.name ? "Вы" : data.userName}
+        </span>{" "}
+        {data.userName === me?.name ? "просите" : "просит"} согласовать цену{" "}
+        <span className={styles.total}>
+          {data.data.total.toLocaleString("ru-RU")} руб.
+        </span>{" "}
+        на{" "}
+        <span>
+          <span className={styles.product}>{data.data.product}</span> в
+          комплектации{" "}
+          <span className={styles.product}>{data.data.option}</span>
+        </span>
+        .
+      </h3>
+      <details className={styles.agreement_details}>
+        <summary className={styles.agreement_details__summary}>
+          Дополнительная информация
+        </summary>
+        <div className={styles.agreement_details__information}>
+          {data.data.discounts.length > 0 && (
+            <ul className={styles.discounts}>
+              Список примененных поддержек:{" "}
+              {data.data.discounts.map((discount) => (
+                <li
+                  key={`${discount}-${data.id}`}
+                  className={styles.discounts__items}
+                >
+                  {discount}
+                </li>
+              ))}
+            </ul>
+          )}
+          <DataRow
+            text="Скидка за кредит:"
+            value={data.data.otherDiscount.creditDiscount || 0}
           />
-        }
-      </article>
-      {modal && (
-        <ConfirmModal
-          text={modal.text}
-          positiveAnswer={modal.positiveAnswer}
-          negativeAnswer={modal.negativeAnswer}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-          onClose={handleClose}
+          <DataRow
+            text="Прочие скидки:"
+            value={data.data.otherDiscount.otherDiscount || 0}
+          />
+          <DataRow
+            text="Сумма доп.оборудования:"
+            value={data.data.otherDiscount.additionalEquipment || 0}
+          />
+          <DataRow
+            text="Плановая наценка:"
+            value={data.data.plannedProfit || 0}
+          />
+          {data.data.message !== "" && (
+            <p className={styles.message}>
+              Сообщение:{" "}
+              <span className={styles.message__text}>{data.data.message}</span>
+            </p>
+          )}
+        </div>
+      </details>
+      {me?.role === "admin" && data.isAgreed === null && (
+        <Button
+          text="Принять решение"
+          onClick={() => handlers.update(data.id, data)}
         />
       )}
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          text={toast.text}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
-    </>
+      {<Button text="Удалить" onClick={() => handlers.delete(data.id, data)} />}
+    </article>
   );
 };
