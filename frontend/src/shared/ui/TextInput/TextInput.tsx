@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "./TextInput.module.scss";
 import { TTextInput } from "./TextInput.type";
 

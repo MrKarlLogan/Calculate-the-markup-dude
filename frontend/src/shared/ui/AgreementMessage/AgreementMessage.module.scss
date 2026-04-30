@@ -71,6 +71,10 @@
     color: $accent-color;
   }
 
+  .total_negative {
+    color: $error;
+  }
+
   .message {
     inline-size: 100%;
     align-self: start;

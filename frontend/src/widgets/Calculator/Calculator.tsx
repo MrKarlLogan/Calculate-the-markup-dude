@@ -166,7 +166,9 @@ export const Calculator = () => {
                 />
               ))
             ) : (
-              <Paragraph>Модели для выбора отсутствуют</Paragraph>
+              <Paragraph className={styles.products_empty__text}>
+                Модели для выбора отсутствуют
+              </Paragraph>
             )}
           </GroupeContainer>
           <GroupeContainer
@@ -187,7 +189,7 @@ export const Calculator = () => {
                 />
               ))
             ) : (
-              <Paragraph>
+              <Paragraph className={styles.products_empty__text}>
                 Для отображения всех доступных комплектаций необходимо выбрать
                 модель
               </Paragraph>
@@ -210,7 +212,7 @@ export const Calculator = () => {
                 />
               ))
             ) : (
-              <Paragraph>
+              <Paragraph className={styles.products_empty__text}>
                 {!selectedProduct && discounts.length === 0
                   ? "Для отображения всех доступных поддержек необходимо выбрать комплектацию"
                   : "У данной модели нет поддержек"}

@@ -36,6 +36,10 @@
   .products_empty {
     flex: 1;
     @include grid(1fr, auto, 10px, center, center);
+
+    &__text {
+      color: $placeholder;
+    }
   }
 
   .mainCalculate {

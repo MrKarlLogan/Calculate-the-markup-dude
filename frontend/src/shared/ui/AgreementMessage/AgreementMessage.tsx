@@ -50,7 +50,9 @@ export const AgreementMessage = ({
           {data.userName === me?.name ? "Вы" : data.userName}
         </span>{" "}
         {data.userName === me?.name ? "просите" : "просит"} согласовать цену{" "}
-        <span className={styles.total}>
+        <span
+          className={`${styles.total} ${data.data.total < 0 && styles.total_negative}`}
+        >
           {data.data.total.toLocaleString("ru-RU")} руб.
         </span>{" "}
         на{" "}

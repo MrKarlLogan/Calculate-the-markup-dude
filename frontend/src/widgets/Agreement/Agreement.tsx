@@ -15,6 +15,7 @@ import { ConfirmModal } from "@shared/ui/ConfirmModal";
 import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import agreementApi from "@shared/api/agreementApi";
 import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
+import { Paragraph } from "@shared/ui/Paragraph";
 
 export const Agreement = ({ className }: { className?: string }) => {
   const user = useAppSelector(getUser);
@@ -100,19 +101,25 @@ export const Agreement = ({ className }: { className?: string }) => {
     <>
       <Section className={className}>
         <MainContainer title="Согласование">
-          <ul className={styles.agreement__list}>
-            {agreements.map((agreement) => (
-              <li key={agreement.id}>
-                <AgreementMessage
-                  data={agreement}
-                  handlers={{
-                    update: handleUpdateAgreement,
-                    delete: handleDeleteAgreement,
-                  }}
-                />
-              </li>
-            ))}
-          </ul>
+          {agreements.length !== 0 ? (
+            <ul className={styles.agreement__list}>
+              {agreements.map((agreement) => (
+                <li key={agreement.id}>
+                  <AgreementMessage
+                    data={agreement}
+                    handlers={{
+                      update: handleUpdateAgreement,
+                      delete: handleDeleteAgreement,
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className={styles.agreements}>
+              <Paragraph>Согласования отсутсвуют</Paragraph>
+            </div>
+          )}
         </MainContainer>
       </Section>
       {modal && (

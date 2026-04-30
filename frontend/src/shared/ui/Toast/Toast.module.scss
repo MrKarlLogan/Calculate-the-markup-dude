@@ -1,21 +1,30 @@
-.toast {
+.overlay {
   position: fixed;
-  inline-size: 30%;
-  max-inline-size: 400px;
-  top: calc(10px);
-  left: calc((100% - min(100%, $max-size)) / 2 + 10px);
-  @include flex(column, center, start, 0.5rem);
-  padding: 1rem;
-  border-radius: $radius;
-  background-color: $button-color;
-  color: $accent-color;
+  top: calc(15px);
+  left: calc((100% - min(100%, $max-size)) / 2 + 15px);
+  padding: 0.3rem;
   z-index: 1;
   animation: slideIn 0.2s ease;
   user-select: none;
+  border-radius: calc($radius + 5px);
   border: $border;
+  inline-size: 30%;
+  max-inline-size: 400px;
+  background-color: rgba(105, 126, 104, 0.5);
+  backdrop-filter: blur(2);
 
-  .text {
-    color: $text-color;
+  .toast {
+    inline-size: 100%;
+    @include flex(column, center, start, 0.5rem);
+    border-radius: $radius;
+    border: $border;
+    background-color: $button-color;
+    color: $accent-color;
+    padding: 1rem;
+
+    .text {
+      color: $text-color;
+    }
   }
 }
 

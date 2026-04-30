@@ -15,6 +15,8 @@ import { ConfirmModal } from "@shared/ui/ConfirmModal";
 import { Toast } from "@shared/ui/Toast";
 import useToast from "@shared/lib/hooks/useToast";
 import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
+import { Paragraph } from "@shared/ui/Paragraph";
+import styles from "./Notification.module.scss";
 
 export const Notification = ({
   className,
@@ -57,17 +59,22 @@ export const Notification = ({
               showFn={{ modal: showConfirm, toast: showToast }}
             />
           )}
-          {notifications &&
-            notifications
-              .map((notification) => (
-                <NotificationMessage
-                  key={notification.id}
-                  notification={notification}
-                  isEdit={isEdit}
-                  showFn={{ modal: showConfirm, toast: showToast }}
-                />
-              ))
-              .reverse()}
+          {notifications.length !== 0
+            ? notifications
+                .map((notification) => (
+                  <NotificationMessage
+                    key={notification.id}
+                    notification={notification}
+                    isEdit={isEdit}
+                    showFn={{ modal: showConfirm, toast: showToast }}
+                  />
+                ))
+                .reverse()
+            : !isEdit && (
+                <div className={styles.notifications}>
+                  <Paragraph>Сообщения отсутствуют</Paragraph>
+                </div>
+              )}
         </MainContainer>
       </Section>
       {modal && (

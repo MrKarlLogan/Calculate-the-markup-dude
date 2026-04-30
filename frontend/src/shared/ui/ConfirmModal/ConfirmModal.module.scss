@@ -12,7 +12,7 @@
   animation: fadeIn 0.2s ease;
 
   .content {
-    inline-size: min(800px, 80%);
+    inline-size: min(700px, 80%);
     @include flex(column, center, center, 20px);
     padding: 1rem;
     border: $border;
@@ -31,7 +31,7 @@
     @include flex(row, end, center, 10px);
 
     &__button {
-      inline-size: 25%;
+      flex: 1;
     }
   }
 }

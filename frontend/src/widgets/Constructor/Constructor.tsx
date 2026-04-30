@@ -90,7 +90,9 @@ export const Constructor = () => {
                 />
               ))
             ) : (
-              <Paragraph>Модели для выбора отсуствуют</Paragraph>
+              <Paragraph className={styles.products_empty__text}>
+                Модели для выбора отсуствуют
+              </Paragraph>
             )}
           </GroupeContainer>
           <ProductEditor

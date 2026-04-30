@@ -391,16 +391,20 @@ export const ProductEditor = ({
       currentOptions.every(
         (option) =>
           option.name?.trim() &&
+          option.name?.trim().length >= 2 &&
           option.cost > 0 &&
           option.price > 0 &&
           option.cost < option.price,
       );
 
     const discountValid = currentDiscounts.every(
-      (discount) => discount.name?.trim() && discount.discountAmount > 0,
+      (discount) =>
+        discount.name?.trim() &&
+        discount.name?.trim().length >= 3 &&
+        discount.discountAmount > 0,
     );
 
-    const modelValid = currentModel.trim().length > 0;
+    const modelValid = currentModel.trim().length >= 3;
 
     return optionValid && discountValid && modelValid;
   }, [
@@ -489,7 +493,11 @@ export const ProductEditor = ({
                   text="Создать модель"
                   className={styles.buttons_all}
                   onClick={handleSaveNewProduct}
-                  disabled={!newModel.name.trim() || !isValidData}
+                  disabled={
+                    !newModel.name.trim() ||
+                    newModel.name.trim().length < 3 ||
+                    !isValidData
+                  }
                 />
                 <Button
                   text="Отменить"

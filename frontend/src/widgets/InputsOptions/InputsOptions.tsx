@@ -1,5 +1,3 @@
-"use client";
-
 import { TextInput } from "@shared/ui/TextInput";
 import styles from "./InputsOptions.module.scss";
 import { Paragraph } from "@shared/ui/Paragraph";
@@ -38,7 +36,8 @@ export const InputsOptions = ({
             className={styles.container_created__button_create}
             onClick={created?.onCreate}
             disabled={
-              !created?.value.name ||
+              !created?.value.name.trim() ||
+              created?.value.name.trim().length < 2 ||
               !created?.value.cost ||
               !created?.value.price ||
               created?.value.cost >= created?.value.price

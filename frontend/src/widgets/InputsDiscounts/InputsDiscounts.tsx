@@ -1,5 +1,3 @@
-"use client";
-
 import { TextInput } from "@shared/ui/TextInput";
 import styles from "./InputsDiscounts.module.scss";
 import { Paragraph } from "@shared/ui/Paragraph";
@@ -38,7 +36,8 @@ export const InputsDiscounts = ({
             className={styles.container_created__button_create}
             onClick={created?.onCreate}
             disabled={
-              !created?.value.name ||
+              !created?.value.name.trim() ||
+              created.value.name.trim().length < 3 ||
               !created.value.discountAmount ||
               created.value.discountAmount < 0
             }

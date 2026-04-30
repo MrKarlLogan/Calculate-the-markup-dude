@@ -21,11 +21,15 @@ export const Toast = ({ title = "Уведомление", text, onClose }: TToas
   }, [onClose]);
 
   const toastContent = (
-    <div className={`${styles.toast} ${!isVisible ? styles.hide : ""}`}>
-      <Headline as="h3" position="start" size={18} weight="bold">
-        {title}
-      </Headline>
-      <Paragraph position="start" className={styles.text}>{text}</Paragraph>
+    <div className={`${styles.overlay}  ${!isVisible ? styles.hide : ""}`}>
+      <div className={styles.toast}>
+        <Headline as="h3" position="start" size={18} weight="bold">
+          {title}
+        </Headline>
+        <Paragraph position="start" className={styles.text}>
+          {text}
+        </Paragraph>
+      </div>
     </div>
   );
 

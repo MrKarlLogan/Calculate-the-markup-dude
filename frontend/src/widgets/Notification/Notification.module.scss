@@ -1,0 +1,5 @@
+.notifications {
+  block-size: 100%;
+  @include flex;
+  color: $placeholder;
+}

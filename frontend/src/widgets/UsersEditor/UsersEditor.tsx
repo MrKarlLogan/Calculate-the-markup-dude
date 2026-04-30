@@ -6,10 +6,10 @@ import { Paragraph } from "@shared/ui/Paragraph";
 import { UserCard } from "@shared/ui/UserCard";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { getUser } from "@entities/user/model/userSlice";
-import { getLoading, getUsers } from "@entities/user/model/usersSlice";
 import { useEffect } from "react";
 import { fetchUsersThunk } from "@entities/user/api";
 import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
+import { getLoading, getUsers } from "@entities/user/model/usersSlice";
 
 export const UsersEditor = ({ className }: { className?: string }) => {
   const me = useAppSelector(getUser);
