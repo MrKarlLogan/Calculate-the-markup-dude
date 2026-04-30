@@ -1,4 +1,4 @@
-import { TNotification } from "@/entities/notification/types/types";
+import { TNotification } from "@entities/notification/types/types";
 
 export type TNotificationMessage = {
   notification?: TNotification;

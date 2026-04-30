@@ -12,7 +12,7 @@
   animation: fadeIn 0.2s ease;
 
   .content {
-    inline-size: 500px;
+    inline-size: min(800px, 80%);
     @include flex(column, center, center, 20px);
     padding: 1rem;
     border: $border;
@@ -28,15 +28,10 @@
 
   .buttons {
     inline-size: 100%;
-    @include flex(row, center, center, 10px);
+    @include flex(row, end, center, 10px);
 
-    .button {
-      flex: 1;
-      padding: 0.5rem 1rem;
-      background-color: $bg-color;
-      color: $text-color;
-      border-radius: $radius;
-      cursor: pointer;
+    &__button {
+      inline-size: 25%;
     }
   }
 }

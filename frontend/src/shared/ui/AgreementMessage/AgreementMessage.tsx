@@ -1,7 +1,7 @@
-import { TAgreement } from "@/entities/priceAgreement/types/types";
+import { TAgreement } from "@entities/priceAgreement/types/types";
 import styles from "./AgreementMessage.module.scss";
-import { useAppSelector } from "@/shared/lib/hooks/redux";
-import { getUser } from "@/entities/user/model/userSlice";
+import { useAppSelector } from "@shared/lib/hooks/redux";
+import { getUser } from "@entities/user/model/userSlice";
 import { DataRow } from "../DataRow";
 import { Button } from "../Button";
 

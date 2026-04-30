@@ -23,10 +23,6 @@ export const PriceAgreement = new EntitySchema<IPriceAgreement>({
       type: "boolean",
       nullable: true,
     },
-    responseMessage: {
-      type: "varchar",
-      nullable: true,
-    },
     created: {
       type: "timestamp",
       createDate: true,

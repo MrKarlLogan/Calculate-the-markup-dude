@@ -15,7 +15,7 @@ export const AppDataSource = new DataSource({
   database: config.DB_NAME,
   // TO-DO сменить на false при деплое
   // dropSchema: true,
-  synchronize: false,
+  synchronize: true,
   logging: ["error", "log"],
   entities: [User, Product, Option, Discount, PriceAgreement, Notification],
 });

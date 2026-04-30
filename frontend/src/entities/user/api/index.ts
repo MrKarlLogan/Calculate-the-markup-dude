@@ -1,7 +1,7 @@
-import usersApi from "@/shared/api/usersApi";
+import usersApi from "@shared/api/usersApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IAuthData } from "../types/types";
-import { normalizeError } from "@/shared/lib/helpers/normalizeError";
+import { normalizeError } from "@shared/lib/helpers/normalizeError";
 
 export const fetchUsersThunk = createAsyncThunk(
   "users/fetchUsers",

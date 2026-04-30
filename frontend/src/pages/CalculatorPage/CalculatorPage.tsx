@@ -11,10 +11,10 @@ import { Constructor } from "@widgets/Constructor";
 import { Notification } from "@widgets/Notification";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import { fetchProducts } from "@entities/product/api";
-import { UsersEditor } from "@/widgets/UsersEditor";
-import { getLoading } from "@/entities/product/model/productsSlice";
-import { Loader } from "@/shared/ui/Loader";
-import { Container } from "@/shared/ui/Container";
+import { UsersEditor } from "@widgets/UsersEditor";
+import { getLoading } from "@entities/product/model/productsSlice";
+import { Loader } from "@shared/ui/Loader";
+import { Container } from "@shared/ui/Container";
 
 export const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);

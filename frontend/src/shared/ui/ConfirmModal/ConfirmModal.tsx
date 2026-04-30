@@ -45,8 +45,18 @@ export const ConfirmModal = ({
           {text}
         </Paragraph>
         <div className={styles.buttons}>
-          <Button text={positiveAnswer} type="button" onClick={handleConfirm} />
-          <Button text={negativeAnswer} type="button" onClick={handleCancel} />
+          <Button
+            text={positiveAnswer}
+            type="button"
+            onClick={handleConfirm}
+            className={styles.buttons__button}
+          />
+          <Button
+            text={negativeAnswer}
+            type="button"
+            onClick={handleCancel}
+            className={styles.buttons__button}
+          />
         </div>
       </div>
     </div>

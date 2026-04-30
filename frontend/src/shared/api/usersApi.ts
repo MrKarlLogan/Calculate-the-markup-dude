@@ -2,7 +2,7 @@ import {
   IAuthData,
   IResponseDeleteUser,
   TApiResponse,
-} from "@/entities/user/types/types";
+} from "@entities/user/types/types";
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 

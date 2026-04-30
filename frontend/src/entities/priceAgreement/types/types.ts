@@ -19,7 +19,6 @@ export type TCreateAgreementRequest = {
 
 export type TUpdateAgreementPayload = {
   isAgreed: boolean;
-  responseMessage: string;
 };
 
 export type TAgreement = {
@@ -28,7 +27,6 @@ export type TAgreement = {
   userId: string;
   userName: string;
   isAgreed: boolean | null;
-  responseMessage: string | null;
   created: string;
 };
 

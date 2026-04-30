@@ -38,20 +38,11 @@ export const agreementValidation = celebrate({
       "string.empty": "Имя пользователя не может быть пустым",
     }),
     isAgreed: Joi.valid(null).optional(),
-    responseMessage: Joi.optional(),
   }),
 });
 
 export const responseValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    responseMessage: Joi.string()
-      .allow("")
-      .max(500)
-      .optional()
-      .trim()
-      .messages({
-        "string.max": "Текст сообщения не должен превышать 500 символов",
-      }),
     isAgreed: Joi.boolean().required().messages({
       "any.required": "Поле 'isAgreed' обязательно",
       "boolean.base": "Поле 'isAgreed' должно быть true или false",

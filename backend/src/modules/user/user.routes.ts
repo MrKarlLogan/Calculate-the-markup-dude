@@ -10,8 +10,8 @@ import {
   updateRoleUser,
 } from "./user.controller";
 import { loginValidation, registerValidation } from "./user.validation";
-import { authMiddleware } from "@/shared/middlewares/authMiddleware";
-import { adminMiddleware } from "@/shared/middlewares/adminMiddleware";
+import { authMiddleware } from "@shared/middlewares/authMiddleware";
+import { adminMiddleware } from "@shared/middlewares/adminMiddleware";
 
 export const routesAuth = Router();
 

@@ -16,7 +16,7 @@ import { COOKIES_NAME } from "@shared/constants";
 import config from "@/config";
 import ForbiddenError from "@shared/errors/forbidden-error";
 import { TLoginUser, TRegisterBody, TRoles } from "./user.types";
-import NotFoundError from "@/shared/errors/not-found-error";
+import NotFoundError from "@shared/errors/not-found-error";
 
 export const getAllUsers = async (
   _req: Request,

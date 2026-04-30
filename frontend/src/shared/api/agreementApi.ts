@@ -4,7 +4,7 @@ import {
   TAgreementResponse,
   TDeleteAgreementResponse,
   TCreateAgreementRequest,
-} from "@/entities/priceAgreement/types/types";
+} from "@entities/priceAgreement/types/types";
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 

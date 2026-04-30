@@ -127,7 +127,7 @@ export const updatePriceAgreements = async (
 ) => {
   try {
     const id = req.params.id.toString();
-    const { isAgreed, responseMessage }: TResponseAgreement = req.body;
+    const { isAgreed }: TResponseAgreement = req.body;
     const updateAgreement = await AgreementRepository.findOne({
       where: { id },
     });
@@ -138,7 +138,6 @@ export const updatePriceAgreements = async (
       );
 
     updateAgreement.isAgreed = isAgreed;
-    updateAgreement.responseMessage = responseMessage || null;
 
     const savedAgrement = await AgreementRepository.save(updateAgreement);
 
@@ -187,9 +186,6 @@ export const deletePriceAgreements = async (
       return next(new ForbiddenError("Отсутствуют необходимые права доступа"));
 
     await AgreementRepository.remove(deletedAgreement);
-
-    console.log("deletedAgreement.id:", deletedAgreement?.id);
-    console.log("deletedAgreement keys:", Object.keys(deletedAgreement || {}));
 
     notifyAdmins(WEBSOCKET_EVENT_NAME.DELETED, { id });
     notifyUser(deletedAgreement.userId, WEBSOCKET_EVENT_NAME.DELETED, { id });

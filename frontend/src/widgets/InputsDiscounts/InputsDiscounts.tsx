@@ -4,7 +4,7 @@ import { TextInput } from "@shared/ui/TextInput";
 import styles from "./InputsDiscounts.module.scss";
 import { Paragraph } from "@shared/ui/Paragraph";
 import { Button } from "@shared/ui/Button";
-import { NumericInput } from "@/shared/ui/NumericInput";
+import { NumericInput } from "@shared/ui/NumericInput";
 import { TInputsDiscounts } from "./InputsDiscounts.type";
 import { ChangeEvent } from "react";
 

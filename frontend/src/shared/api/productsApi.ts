@@ -4,7 +4,7 @@ import {
   TProductRequest,
   TProductsResponse,
   TUpdateProductResponse,
-} from "@/entities/product/types/types";
+} from "@entities/product/types/types";
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 

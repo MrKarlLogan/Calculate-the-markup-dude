@@ -1,4 +1,4 @@
-import { Loader } from "@/shared/ui/Loader";
+import { Loader } from "@shared/ui/Loader";
 import styles from "./LoadingPage.module.scss";
 
 export const LoadingPage = () => (

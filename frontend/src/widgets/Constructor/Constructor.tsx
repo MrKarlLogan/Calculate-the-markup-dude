@@ -15,11 +15,11 @@ import { TConstructor } from "./Constructor.type";
 import { ProductEditor } from "../ProductEditor";
 import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import { ConfirmModal } from "@shared/ui/ConfirmModal";
-import { Toast } from "@/shared/ui/Toast";
-import useToast from "@/shared/lib/hooks/useToast";
-import { Paragraph } from "@/shared/ui/Paragraph";
-import { Container } from "@/shared/ui/Container";
-import { MainContainer } from "@/shared/ui/MainContainer/MainContainer";
+import { Toast } from "@shared/ui/Toast";
+import useToast from "@shared/lib/hooks/useToast";
+import { Paragraph } from "@shared/ui/Paragraph";
+import { Container } from "@shared/ui/Container";
+import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
 
 const initialStateConstructor: TConstructor = {
   modelId: null,

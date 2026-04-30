@@ -2,19 +2,19 @@
 
 import { Section } from "@shared/ui/Section";
 import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
-import { useAppSelector } from "@/shared/lib/hooks/redux";
-import { getUser } from "@/entities/user/model/userSlice";
-import { useWebSocket } from "@/shared/lib/hooks/useWebSocker";
-import { LoaderComponent } from "@/shared/ui/LoaderComponent";
+import { useAppSelector } from "@shared/lib/hooks/redux";
+import { getUser } from "@entities/user/model/userSlice";
+import { useWebSocket } from "@shared/lib/hooks/useWebSocker";
+import { LoaderComponent } from "@shared/ui/LoaderComponent";
 import styles from "./Agreement.module.scss";
-import { AgreementMessage } from "@/shared/ui/AgreementMessage";
-import useToast from "@/shared/lib/hooks/useToast";
-import { Toast } from "@/shared/ui/Toast";
-import { TAgreement } from "@/entities/priceAgreement/types/types";
-import { ConfirmModal } from "@/shared/ui/ConfirmModal";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
-import agreementApi from "@/shared/api/agreementApi";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import { AgreementMessage } from "@shared/ui/AgreementMessage";
+import useToast from "@shared/lib/hooks/useToast";
+import { Toast } from "@shared/ui/Toast";
+import { TAgreement } from "@entities/priceAgreement/types/types";
+import { ConfirmModal } from "@shared/ui/ConfirmModal";
+import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
+import agreementApi from "@shared/api/agreementApi";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 
 export const Agreement = ({ className }: { className?: string }) => {
   const user = useAppSelector(getUser);
@@ -58,7 +58,6 @@ export const Agreement = ({ className }: { className?: string }) => {
     try {
       const response = await agreementApi.updateMessage(id, {
         isAgreed: result,
-        responseMessage: "",
       });
       if (response.success)
         showToast(

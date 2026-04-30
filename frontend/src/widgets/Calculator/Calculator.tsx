@@ -14,15 +14,15 @@ import { TextArea } from "@shared/ui/TextArea";
 import { TCalculator } from "./Calculator.type";
 import { getUser } from "@entities/user/model/userSlice";
 import { NumericInput } from "@shared/ui/NumericInput";
-import { Paragraph } from "@/shared/ui/Paragraph";
-import { Container } from "@/shared/ui/Container";
-import { MainContainer } from "@/shared/ui/MainContainer/MainContainer";
-import agreementApi from "@/shared/api/agreementApi";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
-import useToast from "@/shared/lib/hooks/useToast";
-import { ConfirmModal } from "@/shared/ui/ConfirmModal";
-import { Toast } from "@/shared/ui/Toast";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import { Paragraph } from "@shared/ui/Paragraph";
+import { Container } from "@shared/ui/Container";
+import { MainContainer } from "@shared/ui/MainContainer/MainContainer";
+import agreementApi from "@shared/api/agreementApi";
+import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
+import useToast from "@shared/lib/hooks/useToast";
+import { ConfirmModal } from "@shared/ui/ConfirmModal";
+import { Toast } from "@shared/ui/Toast";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 
 const initialStateCalculator: TCalculator = {
   modelId: null,
@@ -308,38 +308,27 @@ export const Calculator = () => {
               />
             </GroupeContainer>
           </Container>
-          <GroupeContainer
-            title="Сообщение"
-            className={styles.message}
-            disabled={isAdmin || !calculator.optionId}
-          >
-            <TextArea
-              value={calculator.message || ""}
-              onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-                setCalculator((prev) => ({
-                  ...prev,
-                  message: event.target.value,
-                }))
-              }
-            />
-            {isAdmin ? (
-              <Container className={styles.adminButtons}>
-                <Button
-                  text="Согласовать"
-                  onClick={() => console.log(calculator)}
-                />
-                <Button
-                  text="Отказать"
-                  onClick={() => console.log(calculator)}
-                />
-              </Container>
-            ) : (
+          {!isAdmin && (
+            <GroupeContainer
+              title="Сообщение"
+              className={styles.message}
+              disabled={isAdmin || !calculator.optionId}
+            >
+              <TextArea
+                value={calculator.message || ""}
+                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                  setCalculator((prev) => ({
+                    ...prev,
+                    message: event.target.value,
+                  }))
+                }
+              />
               <Button
                 text="Отправить на согласование"
                 onClick={handleCreateAgreement}
               />
-            )}
-          </GroupeContainer>
+            </GroupeContainer>
+          )}
         </MainContainer>
       </Container>
       {modal && (

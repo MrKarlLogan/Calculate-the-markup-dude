@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAuthData, TUsersState } from "@/entities/user/types/types";
+import { IAuthData, TUsersState } from "@entities/user/types/types";
 import { deleteUserThunk, fetchUsersThunk, updateUsersRoleThunk } from "../api";
 
 const initialState: TUsersState = {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { TAgreement } from "@/entities/priceAgreement/types/types";
-import agreementApi from "@/shared/api/agreementApi";
-import { config } from "@/shared/config";
+import { TAgreement } from "@entities/priceAgreement/types/types";
+import agreementApi from "@shared/api/agreementApi";
+import { config } from "@shared/config";
 
 export const useWebSocket = (
   userId?: string,

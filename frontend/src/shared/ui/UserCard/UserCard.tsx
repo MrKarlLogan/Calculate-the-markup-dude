@@ -1,17 +1,17 @@
 "use client";
 
-import { IAuthData } from "@/entities/user/types/types";
+import { IAuthData } from "@entities/user/types/types";
 import { Paragraph } from "../Paragraph";
 import { Button } from "../Button";
 import styles from "./UserCard.module.scss";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
-import { getUser } from "@/entities/user/model/userSlice";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
+import { getUser } from "@entities/user/model/userSlice";
 import { Toast } from "../Toast";
-import useToast from "@/shared/lib/hooks/useToast";
+import useToast from "@shared/lib/hooks/useToast";
 import { ConfirmModal } from "../ConfirmModal";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
-import { deleteUserThunk, updateUsersRoleThunk } from "@/entities/user/api";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
+import { deleteUserThunk, updateUsersRoleThunk } from "@entities/user/api";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 
 export const UserCard = ({ user }: { user: IAuthData }) => {
   const me = useAppSelector(getUser);

@@ -1,6 +1,6 @@
 "use client";
 
-import { GroupeContainer } from "@/shared/ui/GroupeContainer";
+import { GroupeContainer } from "@shared/ui/GroupeContainer";
 import styles from "./ProductEditor.module.scss";
 import { Button } from "@shared/ui/Button";
 import { TProductEditor } from "./ProductEditor.type";
@@ -9,19 +9,19 @@ import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import {
   getProductById,
   setEditing,
-} from "@/entities/product/model/productsSlice";
+} from "@entities/product/model/productsSlice";
 import { InputsOptions } from "../InputsOptions";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { TDiscount, TOption } from "@/entities/product/types/types";
+import { TDiscount, TOption } from "@entities/product/types/types";
 import { InputsDiscounts } from "../InputsDiscounts";
-import { ConfirmModal } from "@/shared/ui/ConfirmModal";
-import useConfirmModal from "@/shared/lib/hooks/useConfirmModal";
+import { ConfirmModal } from "@shared/ui/ConfirmModal";
+import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import {
   createProductThunk,
   removeProductThunk,
   updateProductThunk,
-} from "@/entities/product/api";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
+} from "@entities/product/api";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 
 const initialNewModel = {
   name: "",

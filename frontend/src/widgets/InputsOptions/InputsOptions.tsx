@@ -5,7 +5,7 @@ import styles from "./InputsOptions.module.scss";
 import { Paragraph } from "@shared/ui/Paragraph";
 import { Button } from "@shared/ui/Button";
 import { TInputsOptions } from "./ImputsOptions.type";
-import { NumericInput } from "@/shared/ui/NumericInput";
+import { NumericInput } from "@shared/ui/NumericInput";
 import { ChangeEvent } from "react";
 
 export const InputsOptions = ({

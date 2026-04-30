@@ -1,11 +1,11 @@
 "use client";
 
-import authApi from "@/shared/api/authApi";
+import authApi from "@shared/api/authApi";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { LoadingPage } from "@pages/LoadingPage/LoadingPage";
 import { useAppDispatch } from "@shared/lib/hooks/redux";
-import { setUser, clearUser } from "@/entities/user/model/userSlice";
+import { setUser, clearUser } from "@entities/user/model/userSlice";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

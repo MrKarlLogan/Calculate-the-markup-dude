@@ -1,14 +1,14 @@
 "use client";
 
-import { MainLayout } from "@/widgets/MainLayout";
+import { MainLayout } from "@widgets/MainLayout";
 import styles from "./AuthPage.module.scss";
 import { Section } from "@shared/ui/Section";
 import { Headline } from "@shared/ui/Headline";
 import { Paragraph } from "@shared/ui/Paragraph";
 import { useState } from "react";
 import { Footer } from "@widgets/Footer";
-import { LoginForm } from "@/widgets/auth/LoginForm";
-import { RegisterForm } from "@/widgets/auth/RegisterForm";
+import { LoginForm } from "@widgets/auth/LoginForm";
+import { RegisterForm } from "@widgets/auth/RegisterForm";
 
 export const AuthPage = () => {
   const [selectForm, setSelectForm] = useState<"login" | "register">("login");

@@ -4,7 +4,7 @@ import {
   TNotificationCreateResponse,
   TNotificationUpdateResponse,
   TNotificationDeleteResponse,
-} from "@/entities/notification/types/types";
+} from "@entities/notification/types/types";
 import { URL_PATH } from "../config/constants";
 import { axios_instance } from "./axios-instance";
 

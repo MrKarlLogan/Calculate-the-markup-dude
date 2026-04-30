@@ -11,7 +11,7 @@ $bg-color-dark: #5b5a5a;
 $text-color: #ebebeb;
 $pending: #dde01c;
 $error: #a01a1a;
-$border: 1px solid rgba(45, 45, 45, 0.4);
+$border: 1px solid #2d2d2d66;
 $radius: 8px;
 $shadow:
   3.2px 3.2px 8px #5b5a5a,
@@ -42,5 +42,5 @@ $inner-shadow-button:
   inset -3.2px -3.2px 8px #667664;
 $animation-time: 0.3s;
 $max-size: 1600px;
-$gradient: linear-gradient(90deg, $block-color, rgba(150, 182, 141, 0.5));
-$inner-gradient: linear-gradient(90deg, rgba(150, 182, 141, 0.5), $block-color);
+$gradient: linear-gradient(90deg, $block-color, #96b68d80);
+$inner-gradient: linear-gradient(90deg, #96b68d80, $block-color);

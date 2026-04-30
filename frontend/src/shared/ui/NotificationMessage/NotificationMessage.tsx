@@ -5,14 +5,14 @@ import styles from "./NotificationMessage.module.scss";
 import { TextArea } from "../TextArea";
 import { Button } from "../Button";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/redux";
 import {
   createNotificationThunk,
   deleteNotificationThunk,
-} from "@/entities/notification/api";
+} from "@entities/notification/api";
 import { TNotificationMessage } from "./NotificationMessage.type";
-import { getApiErrorMessage } from "@/shared/lib/helpers/getApiErrorMessage";
-import { getUser } from "@/entities/user/model/userSlice";
+import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
+import { getUser } from "@entities/user/model/userSlice";
 
 export const NotificationMessage = ({
   notification,

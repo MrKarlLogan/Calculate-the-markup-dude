@@ -18,11 +18,9 @@ export interface IPriceAgreement {
   userId: string;
   userName: string;
   isAgreed: boolean | null;
-  responseMessage?: string | null;
   created: string;
 }
 
 export type TResponseAgreement = {
-  responseMessage: string | null;
   isAgreed: boolean;
 };
