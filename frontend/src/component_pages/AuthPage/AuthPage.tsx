@@ -10,7 +10,7 @@ import { Footer } from "@widgets/Footer";
 import { LoginForm } from "@widgets/auth/LoginForm";
 import { RegisterForm } from "@widgets/auth/RegisterForm";
 
-export const AuthPage = () => {
+const AuthPage = () => {
   const [selectForm, setSelectForm] = useState<"login" | "register">("login");
 
   return (
@@ -37,3 +37,5 @@ export const AuthPage = () => {
     </MainLayout>
   );
 };
+
+export default AuthPage;

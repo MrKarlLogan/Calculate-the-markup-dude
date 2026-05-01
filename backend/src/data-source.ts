@@ -13,10 +13,9 @@ export const AppDataSource = new DataSource({
   username: config.DB_USER,
   password: config.DB_PASSWORD,
   database: config.DB_NAME,
-  // TO-DO сменить на false при деплое
   // dropSchema: true,
-  synchronize: true,
-  logging: ["error", "log"],
+  // synchronize: false,
+  // logging: ["error", "log"],
   entities: [User, Product, Option, Discount, PriceAgreement, Notification],
 });
 

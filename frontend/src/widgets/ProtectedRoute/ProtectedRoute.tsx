@@ -3,7 +3,7 @@
 import authApi from "@shared/api/authApi";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { LoadingPage } from "@pages/LoadingPage/LoadingPage";
+import LoadingPage from "@/component_pages/LoadingPage/LoadingPage";
 import { useAppDispatch } from "@shared/lib/hooks/redux";
 import { setUser, clearUser } from "@entities/user/model/userSlice";
 

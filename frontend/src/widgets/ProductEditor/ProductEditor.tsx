@@ -22,6 +22,7 @@ import {
   updateProductThunk,
 } from "@entities/product/api";
 import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
+import { v4 as uuidv4 } from "uuid";
 
 const initialNewModel = {
   name: "",
@@ -196,7 +197,7 @@ export const ProductEditor = ({
 
   const handleAddOption = () => {
     const newOption = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       ...createdOptionValue,
     };
 
@@ -217,7 +218,7 @@ export const ProductEditor = ({
 
   const handleAddDiscount = () => {
     const newDiscount = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       ...createdDiscountValue,
     };
 

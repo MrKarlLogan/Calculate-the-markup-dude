@@ -1,7 +1,7 @@
 "use client";
 
 import { ProtectedRoute } from "@widgets/ProtectedRoute";
-import { CalculatorPage } from "@pages/CalculatorPage";
+import CalculatorPage from "@/component_pages/CalculatorPage/CalculatorPage";
 import { ReduxProvider } from "./store/Provider";
 
 const HomePage = () => (

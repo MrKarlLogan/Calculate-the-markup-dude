@@ -57,15 +57,19 @@ export const setAuthCookies = (
 
   res.cookie(COOKIES_NAME.ACCESS_TOKEN, accessToken, {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "strict" : "lax",
+    // secure: isProduction,
+    // sameSite: isProduction ? "strict" : "lax",
+    secure: false,
+    sameSite: "lax",
     maxAge: 15 * 60 * 1000,
   });
 
   res.cookie(COOKIES_NAME.REFRESH_TOKEN, refreshToken, {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "strict" : "lax",
+    // secure: isProduction,
+    // sameSite: isProduction ? "strict" : "lax",
+    secure: false,
+    sameSite: "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };

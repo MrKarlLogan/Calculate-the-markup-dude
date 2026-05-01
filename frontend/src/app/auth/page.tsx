@@ -1,4 +1,4 @@
-import { AuthPage } from "@pages/AuthPage";
+import AuthPage from "@/component_pages/AuthPage/AuthPage";
 import { PublicRoute } from "@widgets/PublicRoute/PublicRoute";
 
 const Auth = () => (

@@ -16,7 +16,7 @@ import { getLoading } from "@entities/product/model/productsSlice";
 import { Loader } from "@shared/ui/Loader";
 import { Container } from "@shared/ui/Container";
 
-export const CalculatorPage = () => {
+const CalculatorPage = () => {
   const [toggleComponent, setToggleComponent] = useState(false);
   const dispath = useAppDispatch();
   const loading = useAppSelector(getLoading);
@@ -67,3 +67,5 @@ export const CalculatorPage = () => {
     </MainLayout>
   );
 };
+
+export default CalculatorPage;
