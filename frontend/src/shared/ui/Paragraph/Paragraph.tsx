@@ -9,7 +9,7 @@ export const Paragraph = ({
 }: TParagraph) => {
   const styles = {
     inlineSize: "100%",
-    fontSize: `${size}px`,
+    fontSize: `var(--paragraph-size, ${size}px)`,
     fontWeight: weight === "regular" ? "400" : "700",
     textAlign: position,
   };

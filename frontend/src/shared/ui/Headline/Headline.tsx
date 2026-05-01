@@ -10,7 +10,7 @@ export const Headline = ({
 }: THeadline) => {
   const styles = {
     inlineSize: "100%",
-    fontSize: `${size}px`,
+    fontSize: `var(--headline-size, ${size}px)`,
     fontWeight: weight === "regular" ? "400" : "700",
     textAlign: position,
   };

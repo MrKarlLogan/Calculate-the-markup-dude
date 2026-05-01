@@ -13,6 +13,18 @@
   background-color: rgba(105, 126, 104, 0.5);
   backdrop-filter: blur(2);
 
+  @media screen and (max-width: 1000px) {
+    inline-size: 50%;
+  }
+
+  @media screen and (max-width: 640px) {
+    inline-size: 80%;
+  }
+
+  @media screen and (max-width: 480px) {
+    inline-size: 90%;
+  }
+
   .toast {
     inline-size: 100%;
     @include flex(column, center, start, 0.5rem);

@@ -18,17 +18,29 @@
     color: $accent-color;
   }
 
-  @media (max-width: 1400px) {
+  @media screen and (max-width: 1400px) {
     inline-size: 80%;
+  }
+
+  @media screen and (max-width: 1000px) {
+    inline-size: 100%;
   }
 
   .radioGroupe {
     @include flex(row, start, center, 10px);
+
+    @media screen and (max-width: 500px) {
+      @include flex(column, center, center, 10px);
+    }
   }
 
   .buttons {
     margin-block-start: 1rem;
     inline-size: 100%;
     @include flex(row, end, center, 10px);
+
+    @media screen and (max-width: 500px) {
+      @include flex(column, center, center, 10px);
+    }
   }
 }

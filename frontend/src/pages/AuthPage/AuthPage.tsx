@@ -25,7 +25,7 @@ export const AuthPage = () => {
             регистрацию
           </Paragraph>
         </Section>
-        <Section className={styles.LoginForm}>
+        <Section className={styles.loginForm}>
           {selectForm === "login" ? (
             <LoginForm selectForm={() => setSelectForm("register")} />
           ) : (
