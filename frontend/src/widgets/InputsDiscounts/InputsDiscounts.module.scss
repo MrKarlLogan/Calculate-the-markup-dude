@@ -21,11 +21,27 @@
     @include flex(row, center, center, 10px);
     padding-block-end: 1rem;
     border-block-end: 2px solid $bg-color-dark;
+
+    @media screen and (max-width: 500px) {
+      @include flex(column, center, stretch, 10px);
+    }
+  }
+
+  &__button_delete {
+    max-inline-size: max-content;
+
+    @media screen and (max-width: 500px) {
+      align-self: end;
+    }
   }
 
   &__inputs {
     inline-size: 100%;
     @include flex(row, center, center, 10px);
+
+    @media screen and (max-width: 640px) {
+      @include flex(column, center, stretch, 10px);
+    }
   }
 
   &__button_edit,
@@ -47,14 +63,26 @@
     @include flex(row, center, center, 10px);
     padding-block-end: 1rem;
     border-block-end: 2px solid $bg-color-dark;
+
+    @media screen and (max-width: 500px) {
+      @include flex(column, center, stretch, 10px);
+    }
   }
 
   &__button_create {
     max-inline-size: max-content;
+
+    @media screen and (max-width: 500px) {
+      align-self: end;
+    }
   }
 
   &__inputs {
     inline-size: 100%;
     @include flex(row, center, center, 10px);
+
+    @media screen and (max-width: 640px) {
+      @include flex(column, center, stretch, 10px);
+    }
   }
 }
