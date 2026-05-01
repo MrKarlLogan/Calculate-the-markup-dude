@@ -45,7 +45,7 @@ export const AgreementMessage = ({
           </span>
         </span>
       </span>
-      <h3>
+      <h3 className={styles.title}>
         <span className={styles.name}>
           {data.userName === me?.name ? "Вы" : data.userName}
         </span>{" "}

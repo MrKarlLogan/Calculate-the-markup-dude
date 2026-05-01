@@ -1,10 +1,14 @@
 .container {
   inline-size: 100%;
-  @include flex(column, start, center, 1rem);
+  @include flex(column, start, center, 10px);
 
   .buttons {
     inline-size: 100%;
-    @include flex(row, center, center, 1rem);
+    @include flex(row, center, center, 10px);
+
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, stretch, 10px);
+    }
 
     &_all {
       flex: 1;
@@ -14,12 +18,12 @@
   .buttons_create,
   .buttons_save {
     flex: 1;
-    @include flex(column, center, stretch, 0.5rem);
+    @include flex(column, center, stretch, 10px);
   }
 
   .inputs {
     inline-size: 100%;
-    @include flex(column, center, center, 1rem);
+    @include flex(column, center, center, 10px);
 
     &__content {
       min-block-size: 0;

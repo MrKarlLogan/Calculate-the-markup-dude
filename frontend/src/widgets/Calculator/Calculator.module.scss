@@ -49,6 +49,11 @@
     @include flex(row, center, stretch, 10px);
     padding: 0;
 
+    @media screen and (max-width: 768px) {
+      flex: 1;
+      flex-direction: column;
+    }
+
     .conditions {
       flex: 1;
       @include flex(column, start, stretch, 10px);
@@ -67,10 +72,22 @@
 
   .message {
     flex: 1;
-    @include grid(4fr 1fr, auto, 10px);
+    @include flex(row, center, center, 10px);
 
-    .adminButtons {
-      @include flex(column, center, center, 10px);
+    @media screen and (max-width: 640px) {
+      flex-direction: column;
+    }
+
+    &__button {
+      inline-size: max-content;
+
+      @media screen and (max-width: 640px) {
+        align-self: end;
+      }
+
+      @media screen and (max-width: 480px) {
+        inline-size: 100%;
+      }
     }
   }
 }

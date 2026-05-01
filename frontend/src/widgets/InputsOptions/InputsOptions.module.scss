@@ -26,6 +26,10 @@
   &__inputs {
     inline-size: 100%;
     @include flex(row, center, center, 10px);
+
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, stretch, 10px);
+    }
   }
 
   &__button_edit,
@@ -56,5 +60,9 @@
   &__inputs {
     inline-size: 100%;
     @include flex(row, center, center, 10px);
+
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, stretch, 10px);
+    }
   }
 }

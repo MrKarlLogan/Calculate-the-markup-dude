@@ -14,6 +14,10 @@
     padding-block-end: 10px;
     border-block-end: $border;
 
+    @media screen and (max-width: 480px) {
+      @include flex(column, center, stretch, 10px);
+    }
+
     &__date {
       color: $accent-color;
     }
@@ -31,6 +35,10 @@
     &__negative {
       font-weight: 600;
       color: $error;
+    }
+
+    .title {
+      inline-size: 100%;
     }
   }
 

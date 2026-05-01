@@ -9,6 +9,14 @@
     @include flex(row, space-between, center, 1rem);
     padding: 1rem;
 
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, end, 10px);
+    }
+
+    @media screen and (max-width: 480px) {
+      @include flex(column, center, stretch, 10px);
+    }
+
     .nav {
       @include flex;
       gap: 1rem;

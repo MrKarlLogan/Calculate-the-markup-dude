@@ -328,6 +328,7 @@ export const Calculator = () => {
               <Button
                 text="Отправить на согласование"
                 onClick={handleCreateAgreement}
+                className={styles.message__button}
               />
             </GroupeContainer>
           )}
