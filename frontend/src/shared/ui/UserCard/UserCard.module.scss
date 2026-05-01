@@ -33,10 +33,20 @@
   }
 
   .buttons {
-    @include flex(column, center, center, 10px);
+    inline-size: 100%;
+    @include flex(row, end, center, 10px);
+
+    @media screen and (max-width: 460px) {
+      @include flex(column, center, end, 10px);
+    }
 
     .button {
+      inline-size: max-content;
       font-size: 14px;
+
+      @media screen and (max-width: 460px) {
+        inline-size: 100%;
+      }
     }
   }
 }

@@ -105,13 +105,22 @@ export const AgreementMessage = ({
           )}
         </div>
       </details>
-      {me?.role === "admin" && data.isAgreed === null && (
-        <Button
-          text="Принять решение"
-          onClick={() => handlers.update(data.id, data)}
-        />
-      )}
-      {<Button text="Удалить" onClick={() => handlers.delete(data.id, data)} />}
+      <div className={styles.buttons}>
+        {me?.role === "admin" && data.isAgreed === null && (
+          <Button
+            text="Принять решение"
+            onClick={() => handlers.update(data.id, data)}
+            className={styles.buttons__button}
+          />
+        )}
+        {
+          <Button
+            text="Удалить"
+            onClick={() => handlers.delete(data.id, data)}
+            className={styles.buttons__button}
+          />
+        }
+      </div>
     </article>
   );
 };

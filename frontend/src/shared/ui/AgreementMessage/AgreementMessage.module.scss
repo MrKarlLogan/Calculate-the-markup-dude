@@ -36,10 +36,10 @@
       font-weight: 600;
       color: $error;
     }
+  }
 
-    .title {
-      inline-size: 100%;
-    }
+  .title {
+    inline-size: 100%;
   }
 
   .agreement_details {
@@ -91,6 +91,23 @@
 
     &__text {
       color: $accent-color;
+    }
+  }
+
+  .buttons {
+    inline-size: 100%;
+    @include flex(row, end, center, 10px);
+
+    @media screen and (max-width: 420px) {
+      flex-direction: column;
+    }
+
+    &__button {
+      inline-size: max-content;
+
+      @media screen and (max-width: 420px) {
+        inline-size: 100%;
+      }
     }
   }
 }

@@ -30,6 +30,10 @@
     inline-size: 100%;
     @include flex(row, end, center, 10px);
 
+    @media screen and (max-width: 860px) {
+      @include flex(column, end, center, 10px);
+    }
+
     &__button {
       flex: 1;
     }

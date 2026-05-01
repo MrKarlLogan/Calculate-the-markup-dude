@@ -77,6 +77,10 @@
 
     &__text {
       color: $text-color;
+
+      @media screen and (max-width: 768px) {
+        --paragraph-size: 14px;
+      }
     }
   }
 
