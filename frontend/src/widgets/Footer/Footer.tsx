@@ -42,7 +42,7 @@ export const Footer = () => {
             onMouseEnter={handleEasterEggEnter}
             onMouseLeave={handleEasterEggLeave}
           >
-            Берендеев Игорь
+            Centurion
           </Link>
         </Paragraph>
       </footer>

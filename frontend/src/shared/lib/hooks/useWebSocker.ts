@@ -91,7 +91,7 @@ export const useWebSocket = (
       socket.current?.close();
       socket.current = null;
     };
-  }, [userId, isAdmin]);
+  }, [userId, isAdmin, onEvent]);
 
   return { agreements, loading };
 };

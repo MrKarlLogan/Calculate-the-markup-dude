@@ -16,6 +16,7 @@ import useConfirmModal from "@shared/lib/hooks/useConfirmModal";
 import agreementApi from "@shared/api/agreementApi";
 import { getApiErrorMessage } from "@shared/lib/helpers/getApiErrorMessage";
 import { Paragraph } from "@shared/ui/Paragraph";
+import { useCallback } from "react";
 
 export const Agreement = ({ className }: { className?: string }) => {
   const user = useAppSelector(getUser);
@@ -25,10 +26,8 @@ export const Agreement = ({ className }: { className?: string }) => {
     useConfirmModal();
   const { toasts, showToast, removeToast } = useToast();
 
-  const { agreements, loading } = useWebSocket(
-    userId,
-    isAdmin,
-    (event, data) => {
+  const handleWSEvent = useCallback(
+    (event: string, data: TAgreement) => {
       switch (event) {
         case "agreement:created":
           if (userId !== data.userId)
@@ -47,7 +46,10 @@ export const Agreement = ({ className }: { className?: string }) => {
           break;
       }
     },
+    [userId, showToast],
   );
+
+  const { agreements, loading } = useWebSocket(userId, isAdmin, handleWSEvent);
 
   const handleUpdateAgreement = async (id: string) => {
     const result = await showConfirm(

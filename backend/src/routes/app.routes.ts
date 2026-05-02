@@ -5,7 +5,6 @@ import { routesNotification } from "@modules/notification";
 import { routesAgreement } from "@modules/agreement";
 import { routesAuth } from "@modules/user";
 import { authMiddleware } from "@shared/middlewares/authMiddleware";
-import { adminMiddleware } from "@shared/middlewares/adminMiddleware";
 
 const routes = Router();
 
